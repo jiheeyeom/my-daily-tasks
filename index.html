@@ -80,6 +80,21 @@
         .news-list a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
         .news-list a:hover { color: var(--news-link-hover); text-decoration: underline; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+/* ================= 새로 추가되는 CSS ================= */
+#due-date-input, .edit-date {
+    padding: 0 10px; border: 1px solid var(--input-border); border-radius: 6px; 
+    background-color: var(--input-bg); color: var(--text-main); height: 44px;
+}
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.calendar-header button { background: none; border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 4px; cursor: pointer; color: var(--text-main); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
+.calendar-day-name { text-align: center; font-size: 12px; font-weight: bold; padding: 5px 0; color: var(--text-muted); }
+.calendar-day { border: 1px solid var(--border-color); min-height: 80px; padding: 4px; background-color: var(--card-bg); border-radius: 4px; display: flex; flex-direction: column; gap: 2px; }
+.calendar-day.today { background-color: rgba(52, 152, 219, 0.1); border-color: #3498db; }
+.calendar-date-num { font-size: 12px; font-weight: bold; color: var(--text-muted); margin-bottom: 4px; text-align: right; }
+.cal-task { font-size: 10px; padding: 3px 4px; border-radius: 4px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; display: block; }
+.cal-task.completed { opacity: 0.5; text-decoration: line-through; }
+/* =================================================== */
         @media (max-width: 480px) {
             body { padding: 10px 10px 40px; }
             .container { padding: 20px 16px; }
@@ -103,8 +118,8 @@
     <div class="container">
         <div class="header-top">
             <h1>My Daily Tasks <span style="font-size:12px; color:#3498db;">(Cloud Sync ☁️)</span></h1>
-            <div class="header-actions">
-                <button class="icon-btn" id="theme-toggle" aria-label="다크 모드 전환" title="단축키: Alt + D">🌙</button>
+          	<div class="header-actions">
+    <button class="icon-btn" id="view-toggle" title="캘린더/리스트 전환">📅</button> <button class="icon-btn" id="theme-toggle" aria-label="다크 모드 전환" title="단축키: Alt + D">🌙</button>
             </div>
         </div>
 
@@ -142,18 +157,17 @@
             <button id="delete-completed-btn">완료 항목 삭제</button>
         </div>
 
-        <div class="input-section">
-            <input type="text" id="task-input" placeholder="할 일을 입력하세요 (Alt + N)">
-            <select id="category-select">
-                <option value="work">BOM</option>
-                <option value="personal">변경</option>
-                <option value="study">LATER</option>
-            </select>
-            <button id="add-btn">추가</button>
-        </div>
-
+<div class="input-section">
+    <input type="text" id="task-input" placeholder="할 일을 입력하세요 (Alt + N)">
+    <select id="category-select">
+        <option value="work">BOM</option>
+        <option value="personal">변경</option>
+        <option value="study">LATER</option>
+    </select>
+    <input type="date" id="due-date-input" title="마감일 설정"> <button id="add-btn">추가</button>
+</div>
         <ul class="task-list" id="task-list"></ul>
-        <div id="empty-state" class="empty-state">서버에서 할 일을 불러오고 있습니다... 🚀</div>
+<div id="calendar-view" style="display: none; width: 100%;"></div>
 
         <div class="news-section">
             <div class="news-box">
@@ -202,6 +216,11 @@
         const taskList = document.getElementById('task-list');
         const emptyState = document.getElementById('empty-state');
         const themeToggle = document.getElementById('theme-toggle');
+	const dueDateInput = document.getElementById('due-date-input');
+	const viewToggle = document.getElementById('view-toggle');
+	const calendarView = document.getElementById('calendar-view');
+	let isCalendarView = false;
+	let currentCalMonth = new Date();
 
         sortSelect.value = currentSort;
 
@@ -211,8 +230,9 @@
                 id: doc.id, // 파이어베이스가 부여한 고유 ID
                 ...doc.data()
             }));
-            renderTasks();
+          renderTasks();
             updateDashboard();
+            if(isCalendarView) renderCalendar(); 
         });
 
         // 대시보드 업데이트
@@ -274,13 +294,16 @@
                 li.dataset.id = task.id; 
 
                 const tagNames = { work: 'BOM', personal: '변경', study: 'LATER' };
-                li.innerHTML = `
+li.innerHTML = `
                     <div class="view-ui">
                         <input type="checkbox" class="check-btn" ${task.completed ? 'checked' : ''}>
                         <span class="tag tag-${task.category}">${tagNames[task.category]}</span>
                         <div class="task-content" title="더블클릭하여 수정하세요">
                             <span class="task-text">${task.text}</span>
-                            <span class="time-text">${getTimeAgo(task.createdAt)}</span>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="time-text">${getTimeAgo(task.createdAt)} 작성됨</span>
+                                ${task.dueDate ? `<span class="time-text" style="color:#e74c3c; font-weight:bold;">⏰ ${task.dueDate}까지</span>` : ''}
+                            </div>
                         </div>
                         <button class="delete-btn">삭제</button>
                     </div>
@@ -291,7 +314,7 @@
                                 <option value="personal" ${task.category === 'personal' ? 'selected' : ''}>변경</option>
                                 <option value="study" ${task.category === 'study' ? 'selected' : ''}>LATER</option>
                             </select>
-                            <input type="text" class="edit-input" value="${task.text}">
+                            <input type="date" class="edit-date" value="${task.dueDate || ''}"> <input type="text" class="edit-input" value="${task.text}">
                         </div>
                         <span class="edit-hint">Enter로 저장, ESC로 취소</span>
                     </div>
@@ -307,20 +330,99 @@
             });
         }
 
+// ================= 새로 추가되는 캘린더 로직 =================
+        function renderCalendar() {
+            if (!isCalendarView) return; // 캘린더 모드가 아닐 땐 안 그림
+
+            const year = currentCalMonth.getFullYear();
+            const month = currentCalMonth.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+
+            let html = `
+                <div class="calendar-header">
+                    <button id="prev-month">◀ 이전</button>
+                    <h3 style="font-size:16px; margin:0;">${year}년 ${month + 1}월</h3>
+                    <button id="next-month">다음 ▶</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-name">일</div><div class="calendar-day-name">월</div>
+                    <div class="calendar-day-name">화</div><div class="calendar-day-name">수</div>
+                    <div class="calendar-day-name">목</div><div class="calendar-day-name">금</div>
+                    <div class="calendar-day-name">토</div>
+            `;
+
+            // 첫 주 빈칸 채우기
+            for (let i = 0; i < firstDay; i++) { html += `<div class="calendar-day" style="background:transparent; border:none;"></div>`; }
+
+            // 날짜와 할 일 채우기
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isToday = (year === today.getFullYear() && month === today.getMonth() && day === today.getDate());
+                
+                // 이 날짜에 해당하는 할 일 찾기
+                const dayTasks = tasks.filter(t => t.dueDate === dateStr);
+                
+                let tasksHtml = dayTasks.map(t => {
+                    const bgColors = { work: '#4A90E2', personal: '#27AE60', study: '#8E44AD' };
+                    return `<div class="cal-task ${t.completed ? 'completed' : ''}" style="background-color: ${bgColors[t.category]}">${t.text}</div>`;
+                }).join('');
+
+                html += `
+                    <div class="calendar-day ${isToday ? 'today' : ''}">
+                        <div class="calendar-date-num">${day}</div>
+                        ${tasksHtml}
+                    </div>
+                `;
+            }
+            html += `</div>`;
+            calendarView.innerHTML = html;
+
+            // 달 이동 버튼 이벤트 등록
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentCalMonth.setMonth(currentCalMonth.getMonth() - 1); renderCalendar();
+            });
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentCalMonth.setMonth(currentCalMonth.getMonth() + 1); renderCalendar();
+            });
+        }
+
+        // 뷰 전환(토글) 이벤트
+        viewToggle.addEventListener('click', () => {
+            isCalendarView = !isCalendarView;
+            if (isCalendarView) {
+                taskList.style.display = 'none';
+                document.querySelector('.search-sort-row').style.display = 'none'; // 캘린더에선 검색/정렬 숨김
+                calendarView.style.display = 'block';
+                viewToggle.textContent = '📋'; // 아이콘 리스트로 변경
+                renderCalendar();
+            } else {
+                taskList.style.display = 'block';
+                document.querySelector('.search-sort-row').style.display = 'flex';
+                calendarView.style.display = 'none';
+                viewToggle.textContent = '📅'; // 아이콘 캘린더로 변경
+            }
+        });
+        // ==========================================================
+
         // 새 할 일 서버에 추가하기
         async function addTask() {
             const text = taskInput.value.trim();
             if (!text) { alert('할 일을 입력해주세요!'); taskInput.focus(); return; }
+	const dueDate = dueDateInput.value;
             
             // 파이어베이스 DB에 저장
             await addDoc(tasksCollection, {
-                text: text,
-                category: categorySelect.value,
-                completed: false,
+        text: text,
+        category: categorySelect.value,
+        dueDate: dueDate,
+        completed: false,
                 createdAt: Date.now() // 정렬을 위해 생성 시간 저장
             });
             
             taskInput.value = ''; 
+	dueDateInput.value = '';
             taskInput.focus();
         }
 
@@ -368,18 +470,21 @@
         });
 
         // 수정 완료 (Enter)
-        taskList.addEventListener('keydown', async (e) => {
-            if (e.target.classList.contains('edit-input') || e.target.classList.contains('edit-category')) {
-                const item = e.target.closest('.task-item');
+taskList.addEventListener('keydown', async (e) => {
+            if (e.target.classList.contains('edit-input') || e.target.classList.contains('edit-category') || e.target.classList.contains('edit-date')) {
+                const item = e.target.closest('.task-item'); // 👈 하나만 남깁니다.
                 const docId = item.dataset.id;
                 
                 if (e.key === 'Enter') {
                     const newText = item.querySelector('.edit-input').value.trim();
                     const newCategory = item.querySelector('.edit-category').value;
+                    const newDueDate = item.querySelector('.edit-date').value; // 👈 추가
+                    
                     if (newText) {
                         await updateDoc(doc(db, 'my_tasks', docId), { 
                             text: newText, 
-                            category: newCategory 
+                            category: newCategory,
+                            dueDate: newDueDate // 👈 추가
                         });
                         item.classList.remove('editing');
                     }
