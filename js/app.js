@@ -704,36 +704,52 @@ export function createApp({
     }
   }
 
+  // The catalog holds thousands of foods, so the dropdown renders a capped
+  // slice. Without a cap the browser would build every option on each keystroke.
+  const FOOD_OPTION_LIMIT = 200;
+  const FOOD_GROUPS = [
+    [
+      "내 음식",
+      (food) => food.id.startsWith("custom:") || food.id === "saved-meal",
+    ],
+    ["한국 음식 · 식약처", (food) => food.id.startsWith("mfds-")],
+    ["참고 식품 · USDA 외", () => true],
+  ];
+
   function renderFoods(preferredId) {
     const select = $("food-select"),
       previous = preferredId ?? select.value;
     const search = $("food-search").value.trim().toLocaleLowerCase();
-    const foods = availableFoods().filter(
+    const matches = availableFoods().filter(
       (food) =>
         `${food.name} ${food.keywords || ""}`
           .toLocaleLowerCase()
           .includes(search) || food.id === previous,
     );
+    const foods = matches.slice(0, FOOD_OPTION_LIMIT);
+    if (previous && !foods.some((food) => food.id === previous)) {
+      const selected = matches.find((food) => food.id === previous);
+      if (selected) foods.push(selected);
+    }
     const placeholder = el(
       "option",
       "",
-      foods.length
+      matches.length
         ? "음식을 선택해 주세요"
         : "검색 결과 없음 · 내 음식으로 등록해 주세요",
     );
     placeholder.value = "";
     select.replaceChildren(placeholder);
-    for (const [name, custom] of [
-      ["내 음식", true],
-      ["기본 참고 식품 · USDA", false],
-    ]) {
+    const grouped = new Map(FOOD_GROUPS.map(([name]) => [name, []]));
+    for (const food of foods) {
+      const [name] = FOOD_GROUPS.find(([, belongs]) => belongs(food));
+      grouped.get(name).push(food);
+    }
+    for (const [name, items] of grouped) {
+      if (!items.length) continue;
       const group = el("optgroup");
       group.label = name;
-      for (const food of foods.filter(
-        (item) =>
-          (item.id.startsWith("custom:") || item.id === "saved-meal") ===
-          custom,
-      )) {
+      for (const food of items) {
         const option = el(
           "option",
           "",
@@ -742,9 +758,15 @@ export function createApp({
         option.value = food.id;
         group.append(option);
       }
-      if (group.children.length) select.append(group);
+      select.append(group);
     }
     select.value = foods.some((food) => food.id === previous) ? previous : "";
+    setText(
+      "food-count",
+      matches.length > FOOD_OPTION_LIMIT
+        ? `${fmt(matches.length, 0)}종 중 ${FOOD_OPTION_LIMIT}종만 보여요. 검색어를 좁혀 주세요.`
+        : `${fmt(matches.length, 0)}종`,
+    );
     $("custom-food-list").replaceChildren();
     for (const food of state.data.foods) {
       const row = el("li", "record-row"),

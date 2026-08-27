@@ -1,3 +1,5 @@
+import { KOREAN_FOODS } from "./foods-kr.js";
+
 // USDA FoodData Central, SR Legacy (April 2018). See docs/FOOD_DATA.md.
 // All values are per 100 g of edible food, not per portion or 100 ml.
 const references = [
@@ -321,4 +323,5 @@ export const FOOD_CATALOG = [
   ...snackReferences.map(perHundredGrams("USDA SR Legacy")),
   ...coffeeServings.map(perServing("USDA FNDDS 2024-10-31")),
   ...brandServings.map(Object.freeze),
+  ...KOREAN_FOODS,
 ];

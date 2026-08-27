@@ -312,21 +312,32 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
     assert.equal(ids.has(item.id), false);
     ids.add(item.id);
     if (item.baseUnit === "개") {
+      // A serving is only meaningful if its name states the weight it stands for.
       assert.equal(item.baseAmount, 1);
-      assert.match(item.name, /[0-9]+g/);
+      assert.match(item.name, /[0-9]+(\.[0-9]+)?(g|ml)/);
     } else {
       assert.equal(item.baseAmount, 100);
-      assert.equal(item.baseUnit, "g");
+      assert.equal(["g", "ml"].includes(item.baseUnit), true);
     }
-    for (const key of ["kcal", "protein", "carbs", "fat"]) {
-      assert.equal(Number.isFinite(item[key]), true);
-      assert.equal(item[key] >= 0, true);
-    }
+    assert.equal(Number.isFinite(item.kcal) && item.kcal >= 0, true);
+    // Macros may be null: the source leaves them blank and null must not be
+    // counted as a true zero.
+    for (const key of ["protein", "carbs", "fat"])
+      assert.equal(
+        item[key] === null || (Number.isFinite(item[key]) && item[key] >= 0),
+        true,
+      );
     assert.equal(safeUrl(item.sourceUrl), item.sourceUrl);
     assert.equal(item.source.length > 0, true);
     assert.equal(calculateNutrition(item, item.baseAmount).kcal, item.kcal);
   }
-  assert.equal(FOOD_CATALOG.length, 42);
+  // The hand-curated part is pinned; the generated 식약처 rows only need to be
+  // present, since regenerating the workbook changes their count.
+  assert.equal(
+    FOOD_CATALOG.filter((item) => !item.id.startsWith("mfds-")).length,
+    42,
+  );
+  assert.equal(FOOD_CATALOG.length > 10000, true);
 });
 test("unsafe links are not rendered", () => {
   assert.equal(safeUrl("javascript:alert(1)"), "");

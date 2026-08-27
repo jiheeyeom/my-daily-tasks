@@ -23,7 +23,8 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 - [x] `legacyOwnerUid` = `xVhMdeOb3Uh0yVovUmnooRb8mSn2` (firestore.rules 와 동일)
 - [x] GitHub Pages 배포 (main 브랜치 / (root)) — 푸시하면 자동 재빌드
 - [ ] 기존 `my_tasks` 레거시 마이그레이션 실행 (백업 후 진행)
-- [ ] 식약처 식품영양성분 DB(한식·국내 가공식품) 도입 — CSV 직접 다운로드 필요(스크립트 불가)
+- [x] 식약처 음식DB 11,086종 도입 (2025-04-08 워크북)
+- [ ] 가공식품DB(29만 건) 중 필요한 분류만 추려 추가할지 결정
 - [ ] 다른 계정으로 내 데이터 접근 차단 확인 (콘솔 Rules Playground, 계정 2개 필요)
 
 규칙 게시 검증: Firestore REST API로 비로그인 읽기를 시도해 `my_tasks`,
@@ -47,6 +48,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 │   ├── domain.js       # 순수 계산 (영양, 날짜, 할 일, 집계)
 │   ├── firebase-store.js  # Auth + Firestore 접근
 │   ├── foods.js        # 참고 식품 42종 (USDA 기본 17 + 과자 15 + 커피 9 + 브랜드 1)
+│   ├── foods-kr.js     # 생성 파일 · 식약처 음식DB 11,086종 (1.2MB, gzip 196KB)
 │   ├── migration.js    # 기존 my_tasks → users/{uid}/tasks 복사
 │   ├── news.js         # RSS 뉴스 + 오늘의 문구
 │   └── theme.js        # 다크모드 즉시 적용 (렌더 전)
@@ -54,6 +56,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 │   ├── FIREBASE_SETUP.md  # Firebase 설정 절차 (필독)
 │   └── FOOD_DATA.md       # 식품 자료 출처 및 계산 방식
 ├── scripts/
+│   ├── import_food_db.py  # 식약처 xlsx → js/foods-kr.js (수동 실행)
 │   ├── build.mjs       # dist/ 빌드 (공개 파일만 복사)
 │   └── check.mjs       # 정적 검사 (중복 ID, unsafe DOM, import 검증)
 └── tests/
@@ -94,8 +97,15 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **빠른 추가/고정**: 칩은 입력칸을 채우기만 하고 저장은 명시적 제출로만. 고정 목록은
   `preference()` 통해 localStorage 저장(계정 동기화 아님) — Firestore 로 옮기려면 규칙 재게시 필요.
   최근 음식은 저장된 스냅샷을 이름으로 실제 음식에 다시 연결해야 고정 ID가 안정적임.
+- **식약처 원본 워크북은 커밋 금지**: `docs/FOOD DATABASE/` 는 gitignore. 가공식품DB 가 109MB 라
+  GitHub 100MB 파일 상한을 넘김. 생성물 `js/foods-kr.js` 만 커밋하고
+  `python3 scripts/import_food_db.py` 로 재생성.
+- **개인 건강 데이터는 docs/ 에 두지 말 것**: `docs/` 는 GitHub Pages 로 그대로 공개됨.
+  `docs/health_checkups*.json` 는 gitignore 처리했으나, 원칙적으로 `private-data/` 에 둘 것.
+- **선택 상자 200종 상한**: 카탈로그가 1만 종을 넘어 전체 렌더링이 불가. 이미 선택된 음식은
+  상한 밖이어도 목록에 남겨야 제출 시 선택이 사라지지 않음.
 - **식품 추가 규칙**: 값은 반드시 FDC에서 확인 후 추가하고 임의 추정치를 넣지 않음.
-  `foods.js` 항목을 늘리면 `tests/domain.test.js` 의 개수 단언(현재 41)도 함께 수정.
+  손으로 넣는 항목(비-mfds)은 `tests/domain.test.js` 에서 42개로 고정 단언 중 — 늘리면 함께 수정.
   USDA API는 `DEMO_KEY` 로 시간당 10회 제한 — 검색 결과 JSON을 파일로 받아 재사용할 것.
 
 ---

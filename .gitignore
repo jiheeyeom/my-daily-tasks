@@ -9,3 +9,10 @@ backups/
 private-data/
 .DS_Store
 *.zip
+
+# 식약처 원본 워크북 (109MB 파일 포함 · GitHub 100MB 제한 초과)
+# 변환 결과인 js/foods-kr.js 만 커밋합니다. scripts/import_food_db.py 로 재생성하세요.
+docs/FOOD DATABASE/
+
+# 개인 건강 데이터는 공개 저장소·GitHub Pages 로 절대 나가지 않게 합니다.
+docs/health_checkups*.json

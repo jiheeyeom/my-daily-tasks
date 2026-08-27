@@ -235,6 +235,47 @@ test("quick add fills the form from recent meals and pinned foods without writin
   assert.equal(f.store.writes.length, writes);
 });
 
+test("the food dropdown caps its options and keeps the selected food visible", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  const options = () => f.$("food-select").querySelectorAll("option").length;
+  // One placeholder plus the cap; the full catalog is far larger.
+  assert.equal(FOOD_CATALOG.length > 1000, true);
+  assert.equal(options() <= 201, true);
+  assert.match(f.$("food-count").textContent, /검색어를 좁혀/);
+
+  f.value("food-search", "김치찌개");
+  assert.match(f.$("food-count").textContent, /^[0-9,]+종$/);
+  const listed = [...f.$("food-select").querySelectorAll("option")].filter(
+    (option) => option.value,
+  );
+  assert.equal(listed.length > 0, true);
+  assert.equal(
+    listed.every((option) => option.textContent.includes("김치찌개")),
+    true,
+  );
+
+  // Picking a food outside the first 200 and then clearing the search must keep
+  // it selected, or the cap would silently drop the choice before submitting.
+  const chosen = listed[0].value;
+  assert.equal(
+    FOOD_CATALOG.findIndex((food) => food.id === chosen) > 200,
+    true,
+  );
+  f.value("food-select", chosen, "change");
+  f.value("meal-amount", "1");
+  await f.submit("meal-form");
+  const saved = f.store.writes.at(-1);
+  assert.equal(saved.kind, "meals");
+  assert.match(saved.data.food.name, /김치찌개/);
+
+  f.value("food-search", "");
+  const chip = f.$("quick-add-list").children[0];
+  chip.click();
+  assert.equal(f.$("food-select").value, chosen);
+  assert.match(f.$("meal-preview").textContent, /kcal/);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
