@@ -306,20 +306,29 @@ test("filter/search/sort keep completed last and do not mutate the input", () =>
     ["a", "b", "c"],
   );
 });
-test("built-in foods have explicit sources, numeric nutrition and consistent 100g bases", () => {
+test("built-in foods have explicit sources, numeric nutrition and a valid base per unit", () => {
   const ids = new Set();
   for (const item of FOOD_CATALOG) {
     assert.equal(ids.has(item.id), false);
     ids.add(item.id);
-    assert.equal(item.baseAmount, 100);
-    assert.equal(item.baseUnit, "g");
+    if (item.baseUnit === "개") {
+      assert.equal(item.baseAmount, 1);
+      assert.match(item.name, /[0-9]+g/);
+    } else {
+      assert.equal(item.baseAmount, 100);
+      assert.equal(item.baseUnit, "g");
+    }
+    for (const key of ["kcal", "protein", "carbs", "fat"]) {
+      assert.equal(Number.isFinite(item[key]), true);
+      assert.equal(item[key] >= 0, true);
+    }
     assert.match(
       item.sourceUrl,
       /^https:\/\/fdc.nal.usda.gov\/food-details\/[0-9]+\/nutrients$/,
     );
-    assert.equal(calculateNutrition(item, 100).kcal, item.kcal);
+    assert.equal(calculateNutrition(item, item.baseAmount).kcal, item.kcal);
   }
-  assert.equal(FOOD_CATALOG.length, 26);
+  assert.equal(FOOD_CATALOG.length, 41);
 });
 test("unsafe links are not rendered", () => {
   assert.equal(safeUrl("javascript:alert(1)"), "");
