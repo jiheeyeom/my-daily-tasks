@@ -314,7 +314,7 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
     if (item.baseUnit === "개") {
       // A serving is only meaningful if its name states the weight it stands for.
       assert.equal(item.baseAmount, 1);
-      assert.match(item.name, /[0-9]+(\.[0-9]+)?(g|ml)/);
+      assert.match(item.name, /[0-9]+(\.[0-9]+)?(g|ml|mg)/);
     } else {
       assert.equal(item.baseAmount, 100);
       assert.equal(["g", "ml"].includes(item.baseUnit), true);
@@ -334,7 +334,7 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
   // The hand-curated part is pinned; the generated 식약처 rows only need to be
   // present, since regenerating the workbook changes their count.
   assert.equal(
-    FOOD_CATALOG.filter((item) => !item.id.startsWith("mfds-")).length,
+    FOOD_CATALOG.filter((item) => !item.id.startsWith("mfds")).length,
     42,
   );
   assert.equal(FOOD_CATALOG.length > 10000, true);

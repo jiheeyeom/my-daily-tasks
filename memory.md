@@ -24,7 +24,8 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 - [x] GitHub Pages 배포 (main 브랜치 / (root)) — 푸시하면 자동 재빌드
 - [ ] 기존 `my_tasks` 레거시 마이그레이션 실행 (백업 후 진행)
 - [x] 식약처 음식DB 11,086종 도입 (2025-04-08 워크북)
-- [ ] 가공식품DB(29만 건) 중 필요한 분류만 추려 추가할지 결정
+- [x] 가공식품DB 255,785종 + 건강기능식품 3,346종 도입
+- [ ] **firestore.rules 재게시 필요** — checkups 컬렉션 규칙 추가됨. 게시 전에는 건강검진 저장 실패
 - [ ] 다른 계정으로 내 데이터 접근 차단 확인 (콘솔 Rules Playground, 계정 2개 필요)
 
 규칙 게시 검증: Firestore REST API로 비로그인 읽기를 시도해 `my_tasks`,
@@ -49,11 +50,15 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 │   ├── firebase-store.js  # Auth + Firestore 접근
 │   ├── foods.js        # 참고 식품 42종 (USDA 기본 17 + 과자 15 + 커피 9 + 브랜드 1)
 │   ├── foods-kr.js     # 생성 파일 · 식약처 음식DB 11,086종 (1.2MB, gzip 196KB)
+│   ├── foods-supplement.js # 생성 파일 · 건강기능식품 3,346종
 │   ├── migration.js    # 기존 my_tasks → users/{uid}/tasks 복사
 │   ├── news.js         # RSS 뉴스 + 오늘의 문구
 │   └── theme.js        # 다크모드 즉시 적용 (렌더 전)
+├── data/
+│   └── foods-processed.json # 생성 파일 · 가공식품 255,785종 (24MB, gzip 5MB, 눌러서 로드)
 ├── docs/
 │   ├── FIREBASE_SETUP.md  # Firebase 설정 절차 (필독)
+│   ├── HEALTH_CHECKUPS.md # 건강검진 가져오기 · 개인정보 취급
 │   └── FOOD_DATA.md       # 식품 자료 출처 및 계산 방식
 ├── scripts/
 │   ├── import_food_db.py  # 식약처 xlsx → js/foods-kr.js (수동 실행)
@@ -100,6 +105,11 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **식약처 원본 워크북은 커밋 금지**: `docs/FOOD DATABASE/` 는 gitignore. 가공식품DB 가 109MB 라
   GitHub 100MB 파일 상한을 넘김. 생성물 `js/foods-kr.js` 만 커밋하고
   `python3 scripts/import_food_db.py` 로 재생성.
+- **건강검진 기록**: 파일은 브라우저에서만 파싱해 `users/{uid}/checkups` 로 저장. 문서 ID 는
+  `{kind}_{date}` 라 재수입해도 중복되지 않음. 앱은 정상/이상 판정을 하지 않고, 빈 값은 null 유지.
+  자세한 원칙은 docs/HEALTH_CHECKUPS.md.
+- **build.mjs 는 docs/ 를 통째로 복사**하므로 FOOD DATABASE·health_checkups·private-data·backups 를
+  filter 로 제외함. docs/ 에 민감 파일을 두면 dist 로 새어나감.
 - **개인 건강 데이터는 docs/ 에 두지 말 것**: `docs/` 는 GitHub Pages 로 그대로 공개됨.
   `docs/health_checkups*.json` 는 gitignore 처리했으나, 원칙적으로 `private-data/` 에 둘 것.
 - **선택 상자 200종 상한**: 카탈로그가 1만 종을 넘어 전체 렌더링이 불가. 이미 선택된 음식은

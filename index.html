@@ -342,6 +342,15 @@
                 </button>
               </div>
               <p id="food-count" class="help-text"></p>
+              <p class="help-text">
+                <button type="button" id="load-processed" class="text-btn">
+                  가공식품 25만 종 불러오기
+                </button>
+                <span id="processed-status"
+                  >약 5MB를 내려받습니다. 한 번 불러오면 이 기기에서는 다음부터
+                  자동으로 불러와요.</span
+                >
+              </p>
               <p id="food-reference" class="help-text">
                 기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
                 등록해 주세요.
@@ -648,6 +657,37 @@
                 <tbody id="weekly-table-body"></tbody>
               </table>
             </details>
+          </section>
+          <section
+            class="health-section checkup-section"
+            aria-labelledby="checkup-title"
+          >
+            <div class="section-heading">
+              <h3 id="checkup-title">건강검진 수치</h3>
+              <span class="section-kicker">검진표에 적힌 그대로</span>
+            </div>
+            <p class="help-text">
+              검진 결과 JSON 파일을 고르면 <strong>브라우저 안에서만</strong>
+              읽어 내 계정의 개인 공간에 저장합니다. 파일은 어디로도 전송되지
+              않고, 공개 저장소나 이 사이트 파일에는 절대 포함되지 않습니다.
+            </p>
+            <div class="checkup-import">
+              <label class="field"
+                >검진 결과 파일 (.json)<input
+                  type="file"
+                  id="checkup-file"
+                  accept="application/json,.json"
+              /></label>
+              <p id="checkup-import-status" class="help-text" aria-live="polite">
+                아직 불러온 파일이 없어요.
+              </p>
+            </div>
+            <div id="checkup-list" class="checkup-list"></div>
+            <p class="help-text">
+              검진표의 판정과 수치를 그대로 보관합니다. 정상·이상 여부를 앱이
+              판단하지 않고, 이 수치로 식사 목표를 자동으로 정하지도 않습니다.
+              값이 없는 항목은 0이 아니라 ‘—’로 둡니다.
+            </p>
           </section>
         </section>
       </section>

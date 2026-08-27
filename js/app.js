@@ -14,6 +14,10 @@ import {
   makeTask,
   makeWorkout,
   makeWeight,
+  makeCheckup,
+  checkupId,
+  CHECKUP_METRICS,
+  CHECKUP_KINDS,
   nutritionTotals,
   weeklySummary,
   workoutPlan,
@@ -59,7 +63,14 @@ export function createApp({
 } = {}) {
   const win = doc.defaultView;
   const $ = (id) => doc.getElementById(id);
-  const dataKeys = ["tasks", "foods", "meals", "workouts", "weights"];
+  const dataKeys = [
+    "tasks",
+    "foods",
+    "meals",
+    "workouts",
+    "weights",
+    "checkups",
+  ];
   const state = {
     user: null,
     epoch: 0,
@@ -119,9 +130,57 @@ export function createApp({
       /* Private browsing may disable preference storage. */
     }
   };
+  // The 가공식품 workbook is ~5MB, so it is fetched only when asked for. The
+  // choice is remembered per device and the browser caches the file itself.
+  let processedFoods = [],
+    processedLoading = false;
+  async function loadProcessedFoods(remember = true) {
+    if (processedFoods.length || processedLoading) return;
+    processedLoading = true;
+    $("load-processed").disabled = true;
+    setText("processed-status", "가공식품 목록을 불러오는 중…");
+    try {
+      const response = await win.fetch("./data/foods-processed.json");
+      if (!response.ok) throw new Error(String(response.status));
+      const payload = await response.json();
+      processedFoods = payload.rows.map(
+        ([name, kcal, protein, carbs, fat, baseAmount, baseUnit, group], i) =>
+          Object.freeze({
+            id: `${payload.prefix}-${i}`,
+            name,
+            kcal,
+            protein,
+            carbs,
+            fat,
+            keywords: group,
+            baseAmount,
+            baseUnit,
+            source: payload.source,
+            sourceUrl: payload.sourceUrl,
+          }),
+      );
+      if (remember) preference("loadProcessedFoods", "1");
+      $("load-processed").hidden = true;
+      setText(
+        "processed-status",
+        `가공식품 ${fmt(processedFoods.length, 0)}종을 불러왔어요.`,
+      );
+      renderFoods();
+    } catch {
+      $("load-processed").disabled = false;
+      setText(
+        "processed-status",
+        "가공식품 목록을 불러오지 못했어요. 연결을 확인한 뒤 다시 눌러 주세요.",
+      );
+    } finally {
+      processedLoading = false;
+    }
+  }
+
   const availableFoods = () => [
     ...state.data.foods.map((food) => ({ ...food, id: `custom:${food.id}` })),
     ...catalog,
+    ...processedFoods,
     ...(state.temporaryFood ? [state.temporaryFood] : []),
   ];
   const selectedFood = () =>
@@ -329,7 +388,7 @@ export function createApp({
     setText("task-sync-status", status(["tasks"]));
     setText(
       "health-sync-status",
-      status(["foods", "meals", "workouts", "weights"]),
+      status(["foods", "meals", "workouts", "weights", "checkups"]),
     );
     const error = dataKeys.map((key) => state.sync[key]?.error).find(Boolean);
     $("sync-error").hidden = !error;
@@ -353,6 +412,7 @@ export function createApp({
       state.sync[kind] = { server: false, error };
       if (kind === "tasks") renderTasks();
       else if (kind === "foods") renderFoods();
+      else if (kind === "checkups") renderCheckups();
       else renderHealth();
       if (kind === "weights") fillWeight(true);
       showSync();
@@ -373,6 +433,7 @@ export function createApp({
             };
             if (kind === "tasks") renderTasks();
             else if (kind === "foods") renderFoods();
+            else if (kind === "checkups") renderCheckups();
             else {
               renderHealth();
               if (kind === "weights") fillWeight();
@@ -481,10 +542,15 @@ export function createApp({
     resetWorkout();
     renderTasks();
     renderHealth();
+    renderCheckups();
     fillWeight();
+    $("checkup-file").value = "";
+    setText("checkup-import-status", "아직 불러온 파일이 없어요.");
     if (user && config.securityRulesConfigured) {
       watch("tasks", null, subscriptions, state.epoch);
       watch("foods", null, subscriptions, state.epoch);
+      // Checkups span years, so they are not bound to the 7-day health window.
+      watch("checkups", null, subscriptions, state.epoch);
       listenHealth();
     }
     showSync();
@@ -713,6 +779,8 @@ export function createApp({
       (food) => food.id.startsWith("custom:") || food.id === "saved-meal",
     ],
     ["한국 음식 · 식약처", (food) => food.id.startsWith("mfds-")],
+    ["가공식품 · 식약처", (food) => food.id.startsWith("mfdsp-")],
+    ["건강기능식품 · 식약처", (food) => food.id.startsWith("mfdshf-")],
     ["참고 식품 · USDA 외", () => true],
   ];
 
@@ -855,6 +923,156 @@ export function createApp({
     setText("meal-submit", "식사 수정");
     $("meal-cancel").hidden = false;
     $("meal-amount").focus();
+  }
+
+  function renderCheckups() {
+    const target = $("checkup-list");
+    target.replaceChildren();
+    const rows = [...(state.data.checkups || [])].sort((a, b) =>
+      b.date.localeCompare(a.date),
+    );
+    if (!rows.length) {
+      target.append(
+        el(
+          "p",
+          "empty-state",
+          "아직 검진 기록이 없어요. 결과 파일을 불러오면 여기에 표시됩니다.",
+        ),
+      );
+      return;
+    }
+    for (const checkup of rows) {
+      const card = el("article", "checkup-card"),
+        head = el("div", "checkup-head");
+      head.append(
+        el(
+          "strong",
+          "",
+          checkup.label || CHECKUP_KINDS[checkup.kind] || "검진",
+        ),
+        el("small", "", formatDate(checkup.date)),
+      );
+      card.append(head);
+
+      const measured = Object.entries(CHECKUP_METRICS).filter(
+        ([key]) => checkup.measurements?.[key] !== null,
+      );
+      if (measured.length) {
+        const list = el("dl", "checkup-metrics");
+        for (const [key, metric] of measured) {
+          const value = checkup.measurements[key];
+          list.append(
+            el("dt", "", metric.label),
+            el(
+              "dd",
+              "",
+              metric.unit ? `${fmt(value, 2)} ${metric.unit}` : fmt(value, 2),
+            ),
+          );
+        }
+        card.append(list);
+      }
+      const blank = Object.entries(CHECKUP_METRICS).filter(
+        ([key]) => checkup.measurements?.[key] === null,
+      );
+      if (blank.length)
+        card.append(
+          el(
+            "p",
+            "help-text",
+            `검사하지 않았거나 결과가 없는 항목 ${blank.length}개: ${blank
+              .map(([, metric]) => metric.label)
+              .join(", ")}`,
+          ),
+        );
+      if (checkup.note) card.append(el("p", "checkup-note", checkup.note));
+
+      const actions = el("div", "record-actions");
+      actions.append(
+        button(
+          "삭제",
+          () => {
+            if (ask("이 검진 기록을 삭제할까요?"))
+              action(
+                "checkup",
+                "checkups",
+                (uid) => store.remove(uid, "checkups", checkup.id),
+                () => toast("검진 기록을 삭제했어요."),
+              );
+          },
+          "text-btn danger",
+        ),
+      );
+      card.append(actions);
+      target.append(card);
+    }
+  }
+
+  // The checkup file holds private medical data. It is read in the browser and
+  // written straight to the signed-in user's own space; it is never uploaded
+  // anywhere else, and never becomes part of the site's files.
+  function readCheckupFile(raw) {
+    const parsed = JSON.parse(raw);
+    if (parsed?.dataset_type !== "personal_health_checkups")
+      throw new Error("건강검진 결과 파일이 아니에요.");
+    const records = [];
+    for (const item of parsed.general_checkups || [])
+      records.push(
+        makeCheckup({
+          date: item.exam_date,
+          kind: "general",
+          label: `일반건강검진 ${item.year ?? ""}`.trim(),
+          measurements: item.measurements || {},
+          note: (parsed.metric_definitions && item.summary_ko) || "",
+        }),
+      );
+    for (const item of parsed.other_screenings || []) {
+      const results = item.reported_results || {};
+      records.push(
+        makeCheckup({
+          date: item.exam_date,
+          kind: "screening",
+          label: item.type ? `기타 검사 · ${item.type}` : "기타 검사",
+          measurements: {},
+          note: Object.entries(results)
+            .filter(([, value]) => typeof value === "string")
+            .map(([, value]) => value)
+            .join(" · "),
+        }),
+      );
+    }
+    if (!records.length) throw new Error("파일에서 검진 기록을 찾지 못했어요.");
+    return records;
+  }
+
+  async function importCheckups(file) {
+    setText("checkup-import-status", "파일을 읽는 중…");
+    let records;
+    try {
+      records = readCheckupFile(await file.text());
+    } catch (error) {
+      setText(
+        "checkup-import-status",
+        `불러오지 못했어요 · ${friendlyError(error)}`,
+      );
+      return;
+    }
+    await action(
+      "checkup-import",
+      "checkups",
+      async (uid) => {
+        for (const record of records)
+          // The id is derived from kind and date, so re-importing the same file
+          // updates those records instead of duplicating them.
+          await store.save(uid, "checkups", checkupId(record), record);
+        return records.length;
+      },
+      (count) => {
+        $("checkup-file").value = "";
+        setText("checkup-import-status", `검진 기록 ${count}건을 저장했어요.`);
+        toast("건강검진 기록을 저장했어요.");
+      },
+    );
   }
 
   function renderMeals(meals) {
@@ -1372,6 +1590,11 @@ export function createApp({
   });
   on($("meal-amount"), "input", previewMeal);
   on($("food-favorite"), "click", () => toggleFavorite(selectedFood()?.id));
+  on($("load-processed"), "click", () => loadProcessedFoods());
+  on($("checkup-file"), "change", () => {
+    const [file] = $("checkup-file").files;
+    if (file) importCheckups(file);
+  });
   on($("meal-cancel"), "click", resetMeal);
   on($("meal-form"), "submit", (event) => {
     event.preventDefault();
@@ -1608,9 +1831,12 @@ export function createApp({
   renderTheme();
   // Resetting forms during auth changes should not reset a stored sort preference.
   $("sort-select").value = state.sort;
+  if (preference("loadProcessedFoods") === "1") loadProcessedFoods(false);
   const stopAuth = store.observeAuth(authChanged);
   return {
     getState: () => state,
+    // Exposed so the import can be exercised without a real file picker.
+    importCheckups,
     destroy() {
       state.epoch++;
       subscriptions.forEach((stop) => stop());

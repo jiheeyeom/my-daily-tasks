@@ -22,7 +22,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { copyLegacyTasks } from "./migration.js";
 
-const ALLOWED = new Set(["tasks", "foods", "meals", "workouts", "weights"]);
+const ALLOWED = new Set([
+  "tasks",
+  "foods",
+  "meals",
+  "workouts",
+  "weights",
+  "checkups",
+]);
 
 export function createFirebaseStore(config) {
   const app = initializeApp(config);

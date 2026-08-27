@@ -9,8 +9,21 @@ execFileSync(process.execPath, [resolve(root, "scripts/check.mjs")], {
 const output = resolve(root, "dist");
 await mkdir(output, { recursive: true });
 // Allowlist: no tests, credentials, local backups, dependencies or repository metadata.
-for (const name of ["index.html", "styles.css", ".nojekyll", "js", "docs"]) {
-  await cp(resolve(root, name), resolve(output, name), { recursive: true });
+for (const name of [
+  "index.html",
+  "styles.css",
+  ".nojekyll",
+  "js",
+  "docs",
+  "data",
+]) {
+  await cp(resolve(root, name), resolve(output, name), {
+    recursive: true,
+    // docs/ also holds the multi-hundred-MB source workbooks and, on some
+    // machines, private health exports. Neither may reach a published site.
+    filter: (path) =>
+      !/(FOOD DATABASE|health_checkups|private-data|backups)/.test(path),
+  });
 }
 console.log(
   `Static site copied to ${output}. Firebase rules must be published separately.`,

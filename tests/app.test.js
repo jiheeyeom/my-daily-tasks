@@ -159,8 +159,13 @@ test("no auth means no subscriptions or visible private data; setup guard also b
 test("login loads only UID-scoped paths and default yoga is Wednesday", (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
-  assert.equal(f.store.listeners.length, 5);
+  // tasks, foods, checkups plus the three date-scoped health collections.
+  assert.equal(f.store.listeners.length, 6);
   assert.ok(f.store.listeners.every((item) => item.uid === "alice"));
+  assert.deepEqual(
+    [...new Set(f.store.listeners.map((item) => item.kind))].sort(),
+    ["checkups", "foods", "meals", "tasks", "weights", "workouts"],
+  );
   assert.equal(f.$("private-app").hidden, false);
   assert.equal(f.$("day-kcal").textContent, "—");
   assert.match(f.$("plan-title").textContent, /인요가/);
@@ -274,6 +279,125 @@ test("the food dropdown caps its options and keeps the selected food visible", a
   chip.click();
   assert.equal(f.$("food-select").value, chosen);
   assert.match(f.$("meal-preview").textContent, /kcal/);
+});
+
+test("checkup import stores transcribed values, keeps blanks null and does not duplicate", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  assert.match(f.$("checkup-list").textContent, /아직 검진 기록이 없어요/);
+
+  const payload = {
+    dataset_type: "personal_health_checkups",
+    general_checkups: [
+      {
+        year: 2023,
+        exam_date: "2023-12-27",
+        measurements: {
+          height_cm: 165,
+          weight_kg: 49,
+          fasting_glucose_mg_dl: 107,
+          total_cholesterol_mg_dl: null,
+        },
+      },
+    ],
+    other_screenings: [
+      {
+        type: "cervical_cytology",
+        exam_date: "2025-08-14",
+        reported_results: { cytology_diagnosis_ko: "음성" },
+      },
+    ],
+  };
+  const file = { text: async () => JSON.stringify(payload) };
+  await f.app.importCheckups(file);
+  await tick();
+
+  const saved = f.store.writes.filter((item) => item.kind === "checkups");
+  assert.equal(saved.length, 2);
+  // The id comes from kind and date so a second import updates in place.
+  assert.deepEqual(saved.map((item) => item.id).sort(), [
+    "general_2023-12-27",
+    "screening_2025-08-14",
+  ]);
+  const general = saved.find((item) => item.id === "general_2023-12-27").data;
+  assert.equal(general.measurements.height_cm, 165);
+  assert.equal(general.measurements.fasting_glucose_mg_dl, 107);
+  // A blank result must stay null, never 0 and never "normal".
+  assert.equal(general.measurements.total_cholesterol_mg_dl, null);
+  assert.equal(general.measurements.ldl_cholesterol_mg_dl, null);
+  assert.match(f.store.writes.at(-1).data.note, /음성/);
+
+  await f.app.importCheckups(file);
+  await tick();
+  const ids = f.store.writes
+    .filter((item) => item.kind === "checkups")
+    .map((item) => item.id);
+  assert.equal(new Set(ids).size, 2);
+});
+
+test("a file that is not a checkup export is rejected without writing", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  await f.app.importCheckups({ text: async () => '{"dataset_type":"other"}' });
+  await tick();
+  assert.equal(
+    f.store.writes.filter((item) => item.kind === "checkups").length,
+    0,
+  );
+  assert.match(f.$("checkup-import-status").textContent, /불러오지 못했어요/);
+
+  await f.app.importCheckups({ text: async () => "not json at all" });
+  await tick();
+  assert.equal(
+    f.store.writes.filter((item) => item.kind === "checkups").length,
+    0,
+  );
+});
+
+test("processed foods load only when asked and then join the catalog", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  const requests = [];
+  f.dom.window.fetch = async (url) => {
+    requests.push(url);
+    return {
+      ok: true,
+      json: async () => ({
+        prefix: "mfdsp",
+        source: "식약처 가공식품DB",
+        sourceUrl: "https://various.foodsafetykorea.go.kr/nutrient/",
+        rows: [["테스트 과자 · 1회분 30g", 150, 2, 20, 7, 1, "개", "과자류"]],
+      }),
+    };
+  };
+  // Nothing is fetched until the user asks: the file is several megabytes.
+  assert.equal(requests.length, 0);
+
+  f.$("load-processed").click();
+  await tick();
+  assert.deepEqual(requests, ["./data/foods-processed.json"]);
+  assert.equal(f.$("load-processed").hidden, true);
+
+  f.value("food-search", "테스트 과자");
+  const listed = [...f.$("food-select").querySelectorAll("option")].filter(
+    (option) => option.value,
+  );
+  assert.equal(listed.length, 1);
+  assert.equal(listed[0].value, "mfdsp-0");
+  f.value("food-select", "mfdsp-0", "change");
+  assert.equal(f.$("meal-unit").textContent, "개");
+  assert.match(f.$("meal-preview").textContent, /150 kcal/);
+});
+
+test("a failed processed-food download leaves the button usable", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.dom.window.fetch = async () => ({ ok: false, status: 503 });
+  f.$("load-processed").click();
+  await tick();
+  assert.equal(f.$("load-processed").disabled, false);
+  assert.equal(f.$("load-processed").hidden, false);
+  assert.match(f.$("processed-status").textContent, /불러오지 못했어요/);
 });
 
 test("custom food supports ml, missing macros and true zero calories", async (t) => {

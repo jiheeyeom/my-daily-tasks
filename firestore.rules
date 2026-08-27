@@ -65,6 +65,41 @@ service cloud.firestore {
         && date(d.date) && id == d.date && num(d.kg, 20, 400) && str(d.note, 200) && times(d);
     }
 
+    // Checkup results are transcribed numbers. Every metric must be present as a
+    // key so a blank result is stored as null rather than silently missing.
+    function checkupMetrics(m) {
+      return m is map
+        && m.keys().hasOnly(['height_cm', 'weight_kg', 'bmi_kg_m2', 'waist_cm', 'systolic_bp_mmhg', 'diastolic_bp_mmhg', 'hemoglobin_g_dl', 'fasting_glucose_mg_dl', 'total_cholesterol_mg_dl', 'hdl_cholesterol_mg_dl', 'triglycerides_mg_dl', 'ldl_cholesterol_mg_dl', 'creatinine_mg_dl', 'egfr_ml_min_1_73m2', 'ast_iu_l', 'alt_iu_l', 'ggt_iu_l', 'visual_acuity_left_decimal', 'visual_acuity_right_decimal'])
+        && m.keys().hasAll(['height_cm', 'weight_kg', 'bmi_kg_m2', 'waist_cm', 'systolic_bp_mmhg', 'diastolic_bp_mmhg', 'hemoglobin_g_dl', 'fasting_glucose_mg_dl', 'total_cholesterol_mg_dl', 'hdl_cholesterol_mg_dl', 'triglycerides_mg_dl', 'ldl_cholesterol_mg_dl', 'creatinine_mg_dl', 'egfr_ml_min_1_73m2', 'ast_iu_l', 'alt_iu_l', 'ggt_iu_l', 'visual_acuity_left_decimal', 'visual_acuity_right_decimal'])
+        && optionalNum(m.get('height_cm', null), 300)
+        && optionalNum(m.get('weight_kg', null), 400)
+        && optionalNum(m.get('bmi_kg_m2', null), 100)
+        && optionalNum(m.get('waist_cm', null), 300)
+        && optionalNum(m.get('systolic_bp_mmhg', null), 400)
+        && optionalNum(m.get('diastolic_bp_mmhg', null), 300)
+        && optionalNum(m.get('hemoglobin_g_dl', null), 30)
+        && optionalNum(m.get('fasting_glucose_mg_dl', null), 1000)
+        && optionalNum(m.get('total_cholesterol_mg_dl', null), 1000)
+        && optionalNum(m.get('hdl_cholesterol_mg_dl', null), 500)
+        && optionalNum(m.get('triglycerides_mg_dl', null), 5000)
+        && optionalNum(m.get('ldl_cholesterol_mg_dl', null), 1000)
+        && optionalNum(m.get('creatinine_mg_dl', null), 50)
+        && optionalNum(m.get('egfr_ml_min_1_73m2', null), 300)
+        && optionalNum(m.get('ast_iu_l', null), 5000)
+        && optionalNum(m.get('alt_iu_l', null), 5000)
+        && optionalNum(m.get('ggt_iu_l', null), 5000)
+        && optionalNum(m.get('visual_acuity_left_decimal', null), 3)
+        && optionalNum(m.get('visual_acuity_right_decimal', null), 3);
+    }
+    function validCheckup(d, id) {
+      return d.keys().hasAll(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
+        && date(d.date) && d.kind in ['general', 'screening']
+        && id == d.kind + '_' + d.date
+        && nonempty(d.label, 100) && str(d.note, 2000)
+        && checkupMetrics(d.measurements) && times(d);
+    }
+
     match /users/{uid}/tasks/{id} {
       allow read, delete: if owner(uid);
       allow create: if owner(uid) && validTask(request.resource.data);
@@ -89,6 +124,11 @@ service cloud.firestore {
       allow read, delete: if owner(uid);
       allow create: if owner(uid) && validWeight(request.resource.data, id);
       allow update: if owner(uid) && stableCreation() && validWeight(request.resource.data, id);
+    }
+    match /users/{uid}/checkups/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validCheckup(request.resource.data, id);
+      allow update: if owner(uid) && stableCreation() && validCheckup(request.resource.data, id);
     }
     match /my_tasks/{id} {
       allow read: if legacyOwner();

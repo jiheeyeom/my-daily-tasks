@@ -207,6 +207,65 @@ export function makeWeight(input, now = Date.now()) {
   };
 }
 
+// Health checkup metrics, with the plausible range each value must fall in.
+// Values are transcribed from a checkup report; the app stores and shows them
+// and does not judge, diagnose or derive targets from them.
+export const CHECKUP_METRICS = {
+  height_cm: { label: "키", unit: "cm", max: 300 },
+  weight_kg: { label: "체중", unit: "kg", max: 400 },
+  bmi_kg_m2: { label: "체질량지수", unit: "kg/m²", max: 100 },
+  waist_cm: { label: "허리둘레", unit: "cm", max: 300 },
+  systolic_bp_mmhg: { label: "수축기 혈압", unit: "mmHg", max: 400 },
+  diastolic_bp_mmhg: { label: "이완기 혈압", unit: "mmHg", max: 300 },
+  hemoglobin_g_dl: { label: "혈색소", unit: "g/dL", max: 30 },
+  fasting_glucose_mg_dl: { label: "공복혈당", unit: "mg/dL", max: 1000 },
+  total_cholesterol_mg_dl: { label: "총콜레스테롤", unit: "mg/dL", max: 1000 },
+  hdl_cholesterol_mg_dl: { label: "HDL 콜레스테롤", unit: "mg/dL", max: 500 },
+  triglycerides_mg_dl: { label: "중성지방", unit: "mg/dL", max: 5000 },
+  ldl_cholesterol_mg_dl: { label: "LDL 콜레스테롤", unit: "mg/dL", max: 1000 },
+  creatinine_mg_dl: { label: "혈청 크레아티닌", unit: "mg/dL", max: 50 },
+  egfr_ml_min_1_73m2: {
+    label: "신사구체여과율",
+    unit: "mL/min/1.73m²",
+    max: 300,
+  },
+  ast_iu_l: { label: "AST", unit: "IU/L", max: 5000 },
+  alt_iu_l: { label: "ALT", unit: "IU/L", max: 5000 },
+  ggt_iu_l: { label: "감마지티피", unit: "IU/L", max: 5000 },
+  visual_acuity_left_decimal: { label: "시력(좌)", unit: "", max: 3 },
+  visual_acuity_right_decimal: { label: "시력(우)", unit: "", max: 3 },
+};
+export const CHECKUP_KINDS = {
+  general: "일반건강검진",
+  screening: "기타 검사",
+};
+
+export const checkupId = (input) => `${input.kind}_${input.date}`;
+
+export function makeCheckup(input, now = Date.now()) {
+  if (!isDateKey(input.date)) throw new Error("검진일을 확인해 주세요.");
+  if (!Object.hasOwn(CHECKUP_KINDS, input.kind))
+    throw new Error("검진 구분을 확인해 주세요.");
+  const measurements = {};
+  for (const [key, metric] of Object.entries(CHECKUP_METRICS)) {
+    const raw = input.measurements?.[key];
+    // A blank result stays null. It is not zero, and not a normal result.
+    measurements[key] =
+      raw === undefined || raw === null || raw === ""
+        ? null
+        : numberValue(raw, metric.label, { min: 0, max: metric.max });
+  }
+  return {
+    date: input.date,
+    kind: input.kind,
+    label: textValue(input.label || CHECKUP_KINDS[input.kind], "검진명", 100),
+    measurements,
+    note: textValue(input.note || "", "소견", 2000, true),
+    createdAt: input.createdAt ?? now,
+    updatedAt: now,
+  };
+}
+
 export function nutritionTotals(meals) {
   const values = { kcal: 0, protein: 0, carbs: 0, fat: 0 };
   const missing = { kcal: 0, protein: 0, carbs: 0, fat: 0 };
