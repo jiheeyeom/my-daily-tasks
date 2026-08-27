@@ -11,7 +11,7 @@ export const firebaseConfig = {
 export const appConfig = {
   // Enable only AFTER deploying the supplied Firestore rules. See docs/FIREBASE_SETUP.md.
   // This flag prevents accidental writes during setup; only the server-side rules provide security.
-  securityRulesConfigured: false,
+  securityRulesConfigured: true,
   // The owner who may copy the OLD shared my_tasks collection. Never auto-assign the first login.
   // Use the same UID in firestore.rules. Leave empty if legacy migration is not needed.
   legacyOwnerUid: "xVhMdeOb3Uh0yVovUmnooRb8mSn2",
