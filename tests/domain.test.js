@@ -335,7 +335,7 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
   // present, since regenerating the workbook changes their count.
   assert.equal(
     FOOD_CATALOG.filter((item) => !item.id.startsWith("mfds")).length,
-    42,
+    43,
   );
   assert.equal(FOOD_CATALOG.length > 10000, true);
 });

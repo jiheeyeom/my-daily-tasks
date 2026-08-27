@@ -335,6 +335,72 @@ test("checkup import stores transcribed values, keeps blanks null and does not d
   assert.equal(new Set(ids).size, 2);
 });
 
+test("the checkup chart plots year.month points and breaks on missing results", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  assert.equal(f.$("checkup-trend").hidden, true);
+
+  const measurements = (over) => ({
+    height_cm: null,
+    weight_kg: null,
+    bmi_kg_m2: null,
+    waist_cm: null,
+    systolic_bp_mmhg: null,
+    diastolic_bp_mmhg: null,
+    hemoglobin_g_dl: null,
+    fasting_glucose_mg_dl: null,
+    total_cholesterol_mg_dl: null,
+    hdl_cholesterol_mg_dl: null,
+    triglycerides_mg_dl: null,
+    ldl_cholesterol_mg_dl: null,
+    creatinine_mg_dl: null,
+    egfr_ml_min_1_73m2: null,
+    ast_iu_l: null,
+    alt_iu_l: null,
+    ggt_iu_l: null,
+    visual_acuity_left_decimal: null,
+    visual_acuity_right_decimal: null,
+    ...over,
+  });
+  f.store.seed(USER.uid, "checkups", [
+    {
+      id: "general_2023-12-27",
+      date: "2023-12-27",
+      kind: "general",
+      label: "일반건강검진 2023",
+      measurements: measurements({ weight_kg: 49, fasting_glucose_mg_dl: 107 }),
+      note: "",
+    },
+    {
+      id: "general_2025-12-23",
+      date: "2025-12-23",
+      kind: "general",
+      label: "일반건강검진 2025",
+      measurements: measurements({ weight_kg: 53 }),
+      note: "",
+    },
+  ]);
+
+  assert.equal(f.$("checkup-trend").hidden, false);
+  const options = [...f.$("checkup-metric").options].map((o) => o.value);
+  // Only metrics that actually have a value are offered.
+  assert.deepEqual(options, ["weight_kg", "fasting_glucose_mg_dl"]);
+
+  const labels = [...f.$("checkup-chart").querySelectorAll("text")].map(
+    (node) => node.textContent,
+  );
+  assert.equal(labels.includes("2023.12"), true);
+  assert.equal(labels.includes("2025.12"), true);
+  assert.equal(f.$("checkup-chart").querySelectorAll("circle").length, 2);
+  assert.equal(f.$("checkup-chart").querySelectorAll("polyline").length, 1);
+
+  // A metric measured once cannot form a line, and must not be interpolated.
+  f.value("checkup-metric", "fasting_glucose_mg_dl", "change");
+  assert.equal(f.$("checkup-chart").querySelectorAll("polyline").length, 0);
+  assert.match(f.$("checkup-chart").textContent, /한 번만 기록되어/);
+  assert.match(f.$("checkup-chart").textContent, /107/);
+});
+
 test("a file that is not a checkup export is rejected without writing", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

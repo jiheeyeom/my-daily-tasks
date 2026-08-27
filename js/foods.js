@@ -271,6 +271,23 @@ const entry = (fdcId, dataset, fields) =>
 // label, so each one carries its own source and link rather than an FDC id.
 const brandServings = [
   {
+    id: "hosigi-spicy-soy-chicken",
+    name: "호식이두마리치킨 매운간장치킨 · 1마리 650g",
+    kcal: 2327,
+    protein: 174.8,
+    carbs: 86.4,
+    fat: 140.4,
+    keywords: "치킨 호식이 두마리 매운간장 간장매운 후라이드 배달",
+    baseAmount: 1,
+    baseUnit: "개",
+    // The maker publishes allergens and raw weight but not calories, so this
+    // comes from third-party food apps. Two of them agree at 358 kcal/100g,
+    // and 650 g is close to the 679 g the Korea Consumer Agency measured for
+    // this brand's 간장치킨. 탄수화물은 순탄수 기준이라 총 탄수화물은 조금 더 높을 수 있음.
+    source: "제3자 식단앱 공개값 · 제조사 미공개 · 1마리 650g 기준",
+    sourceUrl: "",
+  },
+  {
     id: "fitline-powercocktail",
     name: "FitLine 파워칵테일 · 1포 15g",
     kcal: 45,

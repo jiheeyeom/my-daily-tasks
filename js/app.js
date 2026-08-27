@@ -926,6 +926,7 @@ export function createApp({
   }
 
   function renderCheckups() {
+    renderCheckupTrend();
     const target = $("checkup-list");
     target.replaceChildren();
     const rows = [...(state.data.checkups || [])].sort((a, b) =>
@@ -1006,6 +1007,144 @@ export function createApp({
       card.append(actions);
       target.append(card);
     }
+  }
+
+  // A checkup is a point in time, so the chart plots one point per checkup and
+  // labels it 연도.월. Missing results break the line instead of being filled in.
+  const checkupMonth = (date) => `${date.slice(0, 4)}.${date.slice(5, 7)}`;
+
+  function checkupSeries(metric) {
+    return [...(state.data.checkups || [])]
+      .filter((item) => item.kind === "general")
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map((item) => ({
+        date: item.date,
+        label: checkupMonth(item.date),
+        value: item.measurements?.[metric] ?? null,
+      }));
+  }
+
+  function renderCheckupTrend() {
+    const wrap = $("checkup-trend"),
+      select = $("checkup-metric");
+    const usable = Object.entries(CHECKUP_METRICS).filter(
+      ([key]) =>
+        checkupSeries(key).filter((point) => point.value !== null).length,
+    );
+    if (!usable.length) {
+      wrap.hidden = true;
+      select.replaceChildren();
+      return;
+    }
+    wrap.hidden = false;
+    const previous = select.value;
+    select.replaceChildren();
+    for (const [key, metric] of usable) {
+      const option = el("option", "", metric.label);
+      option.value = key;
+      select.append(option);
+    }
+    select.value = usable.some(([key]) => key === previous)
+      ? previous
+      : usable[0][0];
+    drawCheckupChart(select.value);
+  }
+
+  function drawCheckupChart(metric) {
+    const target = $("checkup-chart"),
+      info = CHECKUP_METRICS[metric];
+    target.replaceChildren();
+    if (!info) return;
+    const series = checkupSeries(metric);
+    const measured = series.filter((point) => point.value !== null);
+    setText(
+      "checkup-chart-caption",
+      `${info.label}${info.unit ? ` · ${info.unit}` : ""}`,
+    );
+    if (measured.length < 2) {
+      target.append(
+        el(
+          "p",
+          "help-text",
+          measured.length
+            ? `${measured[0].label} 한 번만 기록되어 흐름을 그릴 수 없어요. 값은 ${fmt(measured[0].value, 2)}${info.unit ? ` ${info.unit}` : ""}입니다.`
+            : "이 지표는 기록이 없어요.",
+        ),
+      );
+      setText("checkup-chart-note", "");
+      return;
+    }
+    const values = measured.map((point) => point.value),
+      lowest = Math.min(...values),
+      highest = Math.max(...values);
+    // A flat series would divide by zero, so give it a band to sit in.
+    const pad = highest === lowest ? Math.max(Math.abs(highest) * 0.1, 1) : 0,
+      min = lowest - pad,
+      max = highest + pad;
+    const width = 360,
+      left = 34,
+      right = width - 20,
+      step = series.length > 1 ? (right - left) / (series.length - 1) : 0;
+    const svg = doc.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 360 180");
+    svg.setAttribute("role", "img");
+    svg.setAttribute(
+      "aria-label",
+      `${info.label} 검진 기록 ${measured.length}회. ${measured
+        .map((point) => `${point.label} ${fmt(point.value, 2)}`)
+        .join(", ")}`,
+    );
+    const points = series.map((point, index) =>
+      point.value === null
+        ? null
+        : {
+            x: left + index * step,
+            y: 125 - ((point.value - min) / (max - min)) * 90,
+            value: point.value,
+          },
+    );
+    let segment = [];
+    const line = () => {
+      if (segment.length > 1) {
+        const node = doc.createElementNS(svg.namespaceURI, "polyline");
+        node.setAttribute(
+          "points",
+          segment.map((p) => `${p.x},${p.y}`).join(" "),
+        );
+        svg.append(node);
+      }
+      segment = [];
+    };
+    for (const point of [...points, null]) {
+      if (point) segment.push(point);
+      else line();
+    }
+    for (const [index, point] of series.entries()) {
+      const label = doc.createElementNS(svg.namespaceURI, "text");
+      label.setAttribute("x", left + index * step);
+      label.setAttribute("y", 160);
+      label.setAttribute("text-anchor", "middle");
+      label.textContent = point.label;
+      svg.append(label);
+      const plotted = points[index];
+      if (!plotted) continue;
+      const circle = doc.createElementNS(svg.namespaceURI, "circle");
+      circle.setAttribute("cx", plotted.x);
+      circle.setAttribute("cy", plotted.y);
+      circle.setAttribute("r", "4");
+      const value = doc.createElementNS(svg.namespaceURI, "text");
+      value.setAttribute("x", plotted.x);
+      value.setAttribute("y", plotted.y - 12);
+      value.setAttribute("text-anchor", "middle");
+      value.textContent = fmt(plotted.value, 2);
+      svg.append(circle, value);
+    }
+    target.append(svg);
+    const blank = series.length - measured.length;
+    setText(
+      "checkup-chart-note",
+      `검진 ${series.length}회 중 ${measured.length}회 기록${blank ? ` · ${blank}회는 결과가 없어 선을 잇지 않았어요` : ""}. 세로축은 기록된 값의 범위에 맞춰 그려지며, 정상 범위를 뜻하지 않습니다.`,
+    );
   }
 
   // The checkup file holds private medical data. It is read in the browser and
@@ -1591,6 +1730,9 @@ export function createApp({
   on($("meal-amount"), "input", previewMeal);
   on($("food-favorite"), "click", () => toggleFavorite(selectedFood()?.id));
   on($("load-processed"), "click", () => loadProcessedFoods());
+  on($("checkup-metric"), "change", () =>
+    drawCheckupChart($("checkup-metric").value),
+  );
   on($("checkup-file"), "change", () => {
     const [file] = $("checkup-file").files;
     if (file) importCheckups(file);

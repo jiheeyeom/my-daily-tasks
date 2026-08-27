@@ -25,7 +25,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 - [ ] 기존 `my_tasks` 레거시 마이그레이션 실행 (백업 후 진행)
 - [x] 식약처 음식DB 11,086종 도입 (2025-04-08 워크북)
 - [x] 가공식품DB 255,785종 + 건강기능식품 3,346종 도입
-- [ ] **firestore.rules 재게시 필요** — checkups 컬렉션 규칙 추가됨. 게시 전에는 건강검진 저장 실패
+- [x] firestore.rules 재게시 완료 (checkups 컬렉션 포함, 2026-08-27)
 - [ ] 다른 계정으로 내 데이터 접근 차단 확인 (콘솔 Rules Playground, 계정 2개 필요)
 
 규칙 게시 검증: Firestore REST API로 비로그인 읽기를 시도해 `my_tasks`,
@@ -105,6 +105,10 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **식약처 원본 워크북은 커밋 금지**: `docs/FOOD DATABASE/` 는 gitignore. 가공식품DB 가 109MB 라
   GitHub 100MB 파일 상한을 넘김. 생성물 `js/foods-kr.js` 만 커밋하고
   `python3 scripts/import_food_db.py` 로 재생성.
+- **건강검진 그래프**: 일반검진 2회 이상인 지표만 연도.월 꺾은선으로. 결과 없는 회차는 선을 끊고
+  보간하지 않음. 세로축은 기록값 범위이며 정상 범위가 아님.
+- **브랜드 제품 값 출처**: 호식이두마리치킨은 제조사가 열량 미공개 → 제3자 앱 값을 쓰되
+  100g 환산·탄단지 역산·소비자원 실측 중량 세 가지로 교차검증하고 출처에 '제조사 미공개' 명시.
 - **건강검진 기록**: 파일은 브라우저에서만 파싱해 `users/{uid}/checkups` 로 저장. 문서 ID 는
   `{kind}_{date}` 라 재수입해도 중복되지 않음. 앱은 정상/이상 판정을 하지 않고, 빈 값은 null 유지.
   자세한 원칙은 docs/HEALTH_CHECKUPS.md.

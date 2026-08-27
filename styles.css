@@ -1239,3 +1239,52 @@ small {
   background: var(--surface-alt);
   font-size: 0.9rem;
 }
+
+.checkup-trend {
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.checkup-figure {
+  margin: 0.75rem 0 0;
+}
+
+.checkup-figure figcaption {
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.checkup-chart {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checkup-chart svg {
+  width: 100%;
+  height: 180px;
+  overflow: visible;
+}
+
+.checkup-chart svg text {
+  font-family: inherit;
+  font-size: 10px;
+  fill: var(--muted);
+}
+
+.checkup-chart circle {
+  fill: var(--accent);
+}
+
+.checkup-chart polyline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
