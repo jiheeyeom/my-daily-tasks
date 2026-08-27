@@ -44,7 +44,78 @@ const references = [
   [173905, "오트밀 · 물로 조리 후, 무염", 71, 2.54, 12, 1.52, "귀리 오트"],
 ];
 
-export const FOOD_CATALOG = references.map(
+// USDA FoodData Central, Survey (FNDDS), published 2024-10-31. See docs/FOOD_DATA.md.
+// Coffee drinks are not in SR Legacy. FNDDS values are also per 100 g, not per cup.
+const surveyReferences = [
+  [
+    2710375,
+    "브루드 커피 · 무가당 (아메리카노 대용)",
+    1,
+    0.12,
+    0,
+    0.02,
+    "커피 아메리카노 드립",
+  ],
+  [2710378, "에스프레소 · 무가당", 9, 0.12, 1.67, 0.18, "커피 에스프레소 샷"],
+  [
+    2710386,
+    "카페라떼 · 플레인, 2%~전지 우유",
+    43,
+    2.81,
+    4.35,
+    1.61,
+    "커피 라떼 우유",
+  ],
+  [
+    2710389,
+    "카페라떼 · 시럽 향미 (바닐라·카라멜 등)",
+    55,
+    2.72,
+    7.49,
+    1.57,
+    "커피 라떼 바닐라 카라멜 시럽",
+  ],
+  [
+    2710387,
+    "카페라떼 · 무지방 우유, 무가당",
+    30,
+    2.87,
+    4.37,
+    0.1,
+    "커피 라떼 무지방 스키니",
+  ],
+  [
+    2710431,
+    "아이스 카페라떼 · 플레인",
+    27,
+    1.75,
+    2.81,
+    1.01,
+    "커피 라떼 아이스",
+  ],
+  [2710472, "카푸치노 · 2%~전지 우유", 27, 1.71, 2.75, 0.99, "커피 카푸치노"],
+  [
+    2710410,
+    "카페모카 · 2%~전지 우유",
+    64,
+    2.56,
+    10.2,
+    1.47,
+    "커피 모카 초콜릿",
+  ],
+  [
+    2710383,
+    "마키아토 · 가당 (카라멜 마키아토)",
+    40,
+    1.13,
+    6.89,
+    0.8,
+    "커피 마키아토 카라멜",
+  ],
+];
+
+const build =
+  (dataset) =>
   ([fdcId, name, kcal, protein, carbs, fat, keywords]) =>
     Object.freeze({
       id: `usda-${fdcId}`,
@@ -56,7 +127,11 @@ export const FOOD_CATALOG = references.map(
       keywords,
       baseAmount: 100,
       baseUnit: "g",
-      source: `USDA SR Legacy · FDC ${fdcId}`,
+      source: `${dataset} · FDC ${fdcId}`,
       sourceUrl: `https://fdc.nal.usda.gov/food-details/${fdcId}/nutrients`,
-    }),
-);
+    });
+
+export const FOOD_CATALOG = [
+  ...references.map(build("USDA SR Legacy")),
+  ...surveyReferences.map(build("USDA FNDDS 2024-10-31")),
+];

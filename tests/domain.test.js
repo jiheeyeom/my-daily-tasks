@@ -319,7 +319,7 @@ test("built-in foods have explicit sources, numeric nutrition and consistent 100
     );
     assert.equal(calculateNutrition(item, 100).kcal, item.kcal);
   }
-  assert.equal(FOOD_CATALOG.length, 17);
+  assert.equal(FOOD_CATALOG.length, 26);
 });
 test("unsafe links are not rendered", () => {
   assert.equal(safeUrl("javascript:alert(1)"), "");
