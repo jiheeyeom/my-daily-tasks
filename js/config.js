@@ -14,5 +14,5 @@ export const appConfig = {
   securityRulesConfigured: false,
   // The owner who may copy the OLD shared my_tasks collection. Never auto-assign the first login.
   // Use the same UID in firestore.rules. Leave empty if legacy migration is not needed.
-  legacyOwnerUid: "",
+  legacyOwnerUid: "xVhMdeOb3Uh0yVovUmnooRb8mSn2",
 };

@@ -4,7 +4,7 @@ service cloud.firestore {
     function owner(uid) { return request.auth != null && request.auth.uid == uid; }
     // Replace only with the verified owner's Firebase UID. Empty = deny everyone.
     function legacyOwner() {
-      let uid = '';
+      let uid = 'xVhMdeOb3Uh0yVovUmnooRb8mSn2';
       return uid != '' && owner(uid);
     }
     function str(value, max) { return value is string && value.size() <= max; }
