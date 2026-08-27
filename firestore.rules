@@ -1,0 +1,99 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner(uid) { return request.auth != null && request.auth.uid == uid; }
+    // Replace only with the verified owner's Firebase UID. Empty = deny everyone.
+    function legacyOwner() {
+      let uid = '';
+      return uid != '' && owner(uid);
+    }
+    function str(value, max) { return value is string && value.size() <= max; }
+    function nonempty(value, max) { return str(value, max) && value.size() > 0; }
+    function num(value, min, max) { return value is number && value >= min && value <= max; }
+    function optionalNum(value, max) { return value == null || num(value, 0, max); }
+    function date(value) {
+      return value is string && (
+        value.matches('^(20[0-9]{2}|2100)-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$')
+        || value.matches('^20([02468][048]|[13579][26])-02-29$')
+      );
+    }
+    function times(d) {
+      return num(d.createdAt, 0, 4133980800000) && num(d.updatedAt, d.createdAt, 4133980800000);
+    }
+    function stableCreation() { return request.resource.data.createdAt == resource.data.createdAt; }
+    function foodValues(d) {
+      return nonempty(d.name, 100) && num(d.baseAmount, 0.1, 5000)
+        && d.baseUnit in ['g', 'ml', '개'] && num(d.kcal, 0, 10000)
+        && optionalNum(d.protein, 2000) && optionalNum(d.carbs, 2000) && optionalNum(d.fat, 2000)
+        && nonempty(d.source, 240) && str(d.sourceUrl, 500)
+        && (d.sourceUrl == '' || d.sourceUrl.matches('^https?://.+$'));
+    }
+    function foodSnapshot(d) {
+      return d is map
+        && d.keys().hasAll(['name', 'baseAmount', 'baseUnit', 'kcal', 'protein', 'carbs', 'fat', 'source', 'sourceUrl'])
+        && d.keys().hasOnly(['name', 'baseAmount', 'baseUnit', 'kcal', 'protein', 'carbs', 'fat', 'source', 'sourceUrl'])
+        && foodValues(d);
+    }
+    function validTask(d) {
+      return d.keys().hasAll(['text', 'category', 'dueDate', 'completed', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['text', 'category', 'dueDate', 'completed', 'createdAt', 'updatedAt', 'legacySourceId'])
+        && nonempty(d.text, 1000) && d.category in ['work', 'personal', 'study']
+        && (d.dueDate == '' || date(d.dueDate)) && d.completed is bool && times(d)
+        && (!('legacySourceId' in d) || nonempty(d.legacySourceId, 1500));
+    }
+    function validFood(d) {
+      return d.keys().hasAll(['name', 'baseAmount', 'baseUnit', 'kcal', 'protein', 'carbs', 'fat', 'source', 'sourceUrl', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['name', 'baseAmount', 'baseUnit', 'kcal', 'protein', 'carbs', 'fat', 'source', 'sourceUrl', 'createdAt', 'updatedAt'])
+        && foodValues(d) && times(d);
+    }
+    function validMeal(d) {
+      return d.keys().hasAll(['date', 'mealType', 'food', 'amount', 'unit', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['date', 'mealType', 'food', 'amount', 'unit', 'createdAt', 'updatedAt'])
+        && date(d.date) && d.mealType in ['breakfast', 'lunch', 'dinner', 'snack']
+        && foodSnapshot(d.food) && d.unit == d.food.baseUnit
+        && num(d.amount, 0.1, d.unit == '개' ? 100 : 5000) && times(d);
+    }
+    function validWorkout(d) {
+      return d.keys().hasAll(['date', 'kind', 'label', 'minutes', 'planKey', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['date', 'kind', 'label', 'minutes', 'planKey', 'createdAt', 'updatedAt'])
+        && date(d.date) && d.kind in ['yoga', 'walk', 'strength', 'other']
+        && nonempty(d.label, 100) && num(d.minutes, 1, 720) && str(d.planKey, 64) && times(d);
+    }
+    function validWeight(d, id) {
+      return d.keys().hasAll(['date', 'kg', 'note', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['date', 'kg', 'note', 'createdAt', 'updatedAt'])
+        && date(d.date) && id == d.date && num(d.kg, 20, 400) && str(d.note, 200) && times(d);
+    }
+
+    match /users/{uid}/tasks/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validTask(request.resource.data);
+      allow update: if owner(uid) && stableCreation() && validTask(request.resource.data);
+    }
+    match /users/{uid}/foods/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validFood(request.resource.data);
+      allow update: if owner(uid) && stableCreation() && validFood(request.resource.data);
+    }
+    match /users/{uid}/meals/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validMeal(request.resource.data);
+      allow update: if owner(uid) && stableCreation() && validMeal(request.resource.data);
+    }
+    match /users/{uid}/workouts/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validWorkout(request.resource.data);
+      allow update: if owner(uid) && stableCreation() && validWorkout(request.resource.data);
+    }
+    match /users/{uid}/weights/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validWeight(request.resource.data, id);
+      allow update: if owner(uid) && stableCreation() && validWeight(request.resource.data, id);
+    }
+    match /my_tasks/{id} {
+      allow read: if legacyOwner();
+      allow write: if false;
+    }
+    match /{path=**} { allow read, write: if false; }
+  }
+}

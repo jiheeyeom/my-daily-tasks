@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*-debug.log
+*.log
+.firebase/
+.env
+.env.*
+backups/
+private-data/
+.DS_Store
+*.zip

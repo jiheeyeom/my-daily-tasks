@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f7f6" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="description"
+      content="나의 할 일, 식사, 운동과 체중을 한곳에서 기록하세요."
+    />
+    <title>My Daily Tasks · 업무와 건강 기록</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./js/theme.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#app-main">본문으로 건너뛰기</a>
+    <div class="ticker-wrap">
+      <p id="daily-quote" class="quote-text">하루의 작은 기록이 쌓이는 곳.</p>
+      <p id="daily-news" class="news-text">오늘의 뉴스를 불러오는 중입니다.</p>
+    </div>
+    <main id="app-main" class="container">
+      <header class="header-top">
+        <div>
+          <h1>My Daily Tasks <span class="cloud-label">Cloud Sync</span></h1>
+          <p class="subtitle">해야 할 일도, 나를 돌보는 일도.</p>
+        </div>
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          type="button"
+          aria-label="다크 모드 전환"
+          title="Alt + D"
+        >
+          🌙
+        </button>
+      </header>
+      <section id="auth-card" class="auth-card" aria-labelledby="auth-title">
+        <span class="eyebrow">PRIVATE DAILY SPACE</span>
+        <h2 id="auth-title">나만의 기록으로 시작해요</h2>
+        <p>
+          구글 계정으로 로그인하면 업무와 건강 기록을<br class="desktop-br" />
+          내 기기 사이에서 안전하게 이어갈 수 있어요.
+        </p>
+        <button id="login-btn" class="primary-btn google-btn" type="button">
+          Google로 로그인
+        </button>
+        <p id="auth-status" class="muted" role="status">
+          로그인 상태를 확인하고 있습니다.
+        </p>
+        <noscript
+          ><p class="error-text">
+            이 페이지는 JavaScript를 켜야 사용할 수 있습니다.
+          </p></noscript
+        >
+      </section>
+      <section id="account-bar" class="account-bar" hidden>
+        <div>
+          <strong id="account-name"></strong
+          ><span id="account-email" class="muted"></span>
+        </div>
+        <button id="logout-btn" class="text-btn" type="button">로그아웃</button>
+      </section>
+      <div id="setup-banner" class="notice warning" role="status" hidden>
+        <strong>개인정보 보호 설정이 먼저 필요해요</strong>
+        <p>
+          Firestore 보안 규칙 적용 전에는 기록을 읽거나 저장하지 않습니다. 아래
+          계정·설정의 UID와 설정 안내를 확인해 주세요.
+        </p>
+        <a
+          href="./docs/FIREBASE_SETUP.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Firebase 설정 안내 열기</a
+        >
+      </div>
+      <div id="sync-error" class="notice error" role="alert" hidden></div>
+      <section id="private-app" hidden>
+        <nav class="app-tabs" aria-label="주요 메뉴">
+          <button
+            id="tab-tasks"
+            class="app-tab active"
+            type="button"
+            aria-current="page"
+            data-tab="tasks"
+          >
+            할 일
+          </button>
+          <button
+            id="tab-health"
+            class="app-tab"
+            type="button"
+            data-tab="health"
+          >
+            건강 기록
+          </button>
+        </nav>
+        <section id="tasks-panel" aria-labelledby="tab-tasks">
+          <div class="dashboard">
+            <div class="section-heading">
+              <h2>전체 할 일 현황</h2>
+              <span id="task-sync-status" class="muted" role="status"></span>
+            </div>
+            <p id="cheer-msg" class="cheer-msg">
+              오늘의 작은 시작을 기록해 보세요.
+            </p>
+            <div class="overall-progress-info">
+              <span id="overall-text">0/0 완료</span
+              ><span id="overall-percent">0%</span>
+            </div>
+            <div class="progress-track">
+              <div id="overall-bar" class="progress-bar"></div>
+            </div>
+          </div>
+          <div class="search-sort-row">
+            <label class="grow"
+              ><span class="sr-only">할 일 검색</span
+              ><input
+                id="search-input"
+                type="search"
+                placeholder="할 일 검색"
+                maxlength="1000"
+            /></label>
+            <label
+              ><span class="sr-only">정렬</span
+              ><select id="sort-select">
+                <option value="date-desc">최신순</option>
+                <option value="date-asc">오래된순</option>
+                <option value="category">카테고리별</option>
+                <option value="status">미완료 우선</option>
+              </select></label
+            >
+            <button
+              id="view-toggle"
+              type="button"
+              class="icon-btn"
+              aria-label="캘린더 보기"
+            >
+              📅
+            </button>
+          </div>
+          <div class="controls-row">
+            <div class="filters" id="filter-container" aria-label="할 일 분류">
+              <button
+                type="button"
+                class="filter-btn active"
+                data-filter="all"
+                aria-pressed="true"
+              >
+                전체
+              </button>
+              <button
+                type="button"
+                class="filter-btn"
+                data-filter="work"
+                aria-pressed="false"
+              >
+                BOM
+              </button>
+              <button
+                type="button"
+                class="filter-btn"
+                data-filter="personal"
+                aria-pressed="false"
+              >
+                변경
+              </button>
+              <button
+                type="button"
+                class="filter-btn"
+                data-filter="study"
+                aria-pressed="false"
+              >
+                LATER
+              </button>
+            </div>
+            <button
+              id="delete-completed-btn"
+              class="text-btn danger"
+              type="button"
+            >
+              완료 항목 삭제
+            </button>
+          </div>
+          <form id="task-form" class="task-input-grid">
+            <label class="task-text-field"
+              ><span class="sr-only">할 일 내용</span
+              ><input
+                id="task-input"
+                type="text"
+                placeholder="할 일을 입력하세요 (Alt + N)"
+                maxlength="1000"
+                required
+            /></label>
+            <label
+              ><span class="sr-only">할 일 분류</span
+              ><select id="category-select">
+                <option value="work">BOM</option>
+                <option value="personal">변경</option>
+                <option value="study">LATER</option>
+              </select></label
+            >
+            <label
+              ><span class="sr-only">마감일</span
+              ><input
+                type="date"
+                id="due-date-input"
+                min="2000-01-01"
+                max="2100-12-31"
+                title="마감일"
+            /></label>
+            <button type="submit" class="primary-btn">추가</button>
+          </form>
+          <ul id="task-list" class="task-list"></ul>
+          <p id="empty-state" class="empty-state" hidden>
+            첫 할 일을 적어 보세요.
+          </p>
+          <section id="calendar-view" hidden aria-label="할 일 달력">
+            <div class="calendar-header">
+              <button
+                id="prev-month"
+                class="icon-btn"
+                type="button"
+                aria-label="이전 달"
+              >
+                ←
+              </button>
+              <h3 id="calendar-title"></h3>
+              <button
+                id="next-month"
+                class="icon-btn"
+                type="button"
+                aria-label="다음 달"
+              >
+                →
+              </button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+          </section>
+        </section>
+        <section id="health-panel" aria-labelledby="tab-health" hidden>
+          <div class="health-topline">
+            <div>
+              <span class="eyebrow">SMALL STEPS, EVERY DAY</span>
+              <h2>오늘의 나를 기록해요</h2>
+            </div>
+            <div class="date-nav">
+              <button
+                id="health-prev"
+                type="button"
+                class="icon-btn"
+                aria-label="이전 날짜"
+              >
+                ←
+              </button>
+              <label
+                ><span class="sr-only">건강 기록 날짜</span
+                ><input
+                  id="health-date"
+                  type="date"
+                  min="2000-01-01"
+                  max="2100-12-31"
+              /></label>
+              <button
+                id="health-next"
+                type="button"
+                class="icon-btn"
+                aria-label="다음 날짜"
+              >
+                →
+              </button>
+              <button id="health-today" type="button" class="text-btn">
+                오늘
+              </button>
+            </div>
+          </div>
+          <p id="health-date-label" class="muted"></p>
+          <p id="health-sync-status" class="muted" role="status"></p>
+          <div class="health-stats" aria-label="선택한 날짜의 요약">
+            <div class="stat-card">
+              <span>기록한 열량</span><strong id="day-kcal">—</strong
+              ><small id="day-meal-count">식사를 기록해 주세요</small>
+            </div>
+            <div class="stat-card">
+              <span>기록한 단백질</span><strong id="day-protein">—</strong
+              ><small id="day-protein-note">빈 항목은 0으로 세지 않아요</small>
+            </div>
+            <div class="stat-card">
+              <span>완료한 운동</span><strong id="day-workout">—</strong
+              ><small id="day-workout-count">가벼운 움직임도 기록해요</small>
+            </div>
+            <div class="stat-card">
+              <span>오늘 체중</span><strong id="day-weight">—</strong
+              ><small>같은 조건에서 측정해 주세요</small>
+            </div>
+          </div>
+          <section class="health-section" aria-labelledby="meal-title">
+            <div class="section-heading">
+              <h3 id="meal-title">식사</h3>
+              <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
+            </div>
+            <form id="meal-form">
+              <div class="form-grid two-col">
+                <label
+                  >식사 구분<select id="meal-type">
+                    <option value="breakfast">아침</option>
+                    <option value="lunch">점심</option>
+                    <option value="dinner">저녁</option>
+                    <option value="snack">간식</option>
+                  </select></label
+                >
+                <label
+                  >음식 찾기<input
+                    type="search"
+                    id="food-search"
+                    placeholder="예: 밥, 달걀, 두부"
+                    maxlength="100"
+                /></label>
+              </div>
+              <label class="field"
+                >음식 선택<select id="food-select" required>
+                  <option value="">음식을 선택해 주세요</option>
+                </select></label
+              >
+              <p id="food-reference" class="help-text">
+                기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
+                등록해 주세요.
+              </p>
+              <div class="meal-amount-row">
+                <label
+                  >먹은 양
+                  <div class="unit-input">
+                    <input
+                      id="meal-amount"
+                      type="number"
+                      inputmode="decimal"
+                      min="0.1"
+                      max="5000"
+                      step="0.1"
+                      value="100"
+                      required
+                    /><span id="meal-unit">g</span>
+                  </div></label
+                >
+                <output id="meal-preview" aria-live="polite"
+                  >음식을 선택하면 계산됩니다.</output
+                >
+                <button
+                  id="meal-submit"
+                  class="primary-btn health-btn"
+                  type="submit"
+                >
+                  식사 기록
+                </button>
+                <button id="meal-cancel" class="text-btn" type="button" hidden>
+                  수정 취소
+                </button>
+              </div>
+            </form>
+            <details id="custom-food-details" class="custom-food">
+              <summary>찾는 음식이 없나요? 내 음식 등록</summary>
+              <p class="help-text">
+                포장지 영양표나 확인한 자료를 입력해 두면 다음부터 양만 적으면
+                됩니다. 영양성분을 모르는 칸은 비워 두세요.
+              </p>
+              <form id="food-form">
+                <label class="field"
+                  >음식명<input
+                    id="custom-food-name"
+                    type="text"
+                    maxlength="100"
+                    placeholder="예: 내가 먹는 그릭요거트"
+                    required
+                /></label>
+                <div class="form-grid three-col">
+                  <label
+                    >영양표 기준량<input
+                      id="custom-base-amount"
+                      type="number"
+                      inputmode="decimal"
+                      min="0.1"
+                      max="5000"
+                      step="0.1"
+                      value="100"
+                      required
+                  /></label>
+                  <label
+                    >기준 단위<select id="custom-base-unit">
+                      <option>g</option>
+                      <option>ml</option>
+                      <option>개</option>
+                    </select></label
+                  >
+                  <label
+                    >열량 (kcal)<input
+                      id="custom-kcal"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="10000"
+                      step="0.1"
+                      required
+                  /></label>
+                  <label
+                    >단백질 (g)<input
+                      id="custom-protein"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="2000"
+                      step="0.1"
+                      placeholder="선택"
+                  /></label>
+                  <label
+                    >탄수화물 (g)<input
+                      id="custom-carbs"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="2000"
+                      step="0.1"
+                      placeholder="선택"
+                  /></label>
+                  <label
+                    >지방 (g)<input
+                      id="custom-fat"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="2000"
+                      step="0.1"
+                      placeholder="선택"
+                  /></label>
+                </div>
+                <label class="field"
+                  >출처·제품 메모<input
+                    id="custom-source"
+                    type="text"
+                    maxlength="240"
+                    placeholder="예: 제품 포장지 1개(80g) 기준"
+                /></label>
+                <button class="secondary-btn" type="submit">
+                  내 음식에 저장
+                </button>
+              </form>
+              <ul id="custom-food-list" class="compact-list"></ul>
+              <p class="help-text">
+                삭제한 음식도 이미 저장한 식사 기록에는 그대로 남습니다.
+              </p>
+            </details>
+            <div id="meal-list" class="meal-list"></div>
+          </section>
+          <div class="health-columns">
+            <section class="health-section" aria-labelledby="workout-title">
+              <div class="section-heading">
+                <h3 id="workout-title">운동</h3>
+                <span class="section-kicker">오늘의 움직임</span>
+              </div>
+              <div class="routine-card">
+                <div>
+                  <strong id="plan-title"></strong>
+                  <p id="plan-detail" class="help-text"></p>
+                </div>
+                <label id="plan-check-wrap" class="plan-check"
+                  ><input type="checkbox" id="plan-check" /><span
+                    >완료</span
+                  ></label
+                >
+              </div>
+              <p class="help-text">
+                기본 일정: 수요일 인요가 · 금요일 골반/어깨 테라피. 다른
+                운동이나 실제 시간은 아래에서 기록·수정하세요.
+              </p>
+              <form id="workout-form">
+                <div class="form-grid two-col">
+                  <label
+                    >운동 종류<select id="workout-kind">
+                      <option value="walk">걷기</option>
+                      <option value="yoga">요가</option>
+                      <option value="strength">근력</option>
+                      <option value="other">기타</option>
+                    </select></label
+                  ><label
+                    >시간 (분)<input
+                      id="workout-minutes"
+                      type="number"
+                      inputmode="numeric"
+                      min="1"
+                      max="720"
+                      step="1"
+                      value="30"
+                      required
+                  /></label>
+                </div>
+                <label class="field"
+                  >운동명<input
+                    id="workout-label"
+                    type="text"
+                    maxlength="100"
+                    placeholder="예: 점심 먹고 산책"
+                    required
+                /></label>
+                <div class="button-row">
+                  <button
+                    id="workout-submit"
+                    class="secondary-btn"
+                    type="submit"
+                  >
+                    운동 기록</button
+                  ><button
+                    id="workout-cancel"
+                    class="text-btn"
+                    type="button"
+                    hidden
+                  >
+                    수정 취소
+                  </button>
+                </div>
+              </form>
+              <ul id="workout-list" class="compact-list"></ul>
+              <p class="help-text">
+                운동 열량은 섭취 열량에서 자동으로 빼지 않아요.
+              </p>
+            </section>
+            <section class="health-section" aria-labelledby="weight-title">
+              <div class="section-heading">
+                <h3 id="weight-title">체중</h3>
+                <span class="section-kicker">하루 숫자보다 흐름</span>
+              </div>
+              <form id="weight-form">
+                <label class="field"
+                  >체중 (kg)<input
+                    id="weight-kg"
+                    type="number"
+                    inputmode="decimal"
+                    min="20"
+                    max="400"
+                    step="0.1"
+                    placeholder="아침 공복 체중"
+                    required
+                /></label>
+                <label class="field"
+                  >메모 (선택)<input
+                    id="weight-note"
+                    type="text"
+                    maxlength="200"
+                    placeholder="예: 생리 전, 붓기, 측정 시간"
+                /></label>
+                <div class="button-row">
+                  <button
+                    class="secondary-btn"
+                    id="weight-submit"
+                    type="submit"
+                  >
+                    체중 기록</button
+                  ><button
+                    id="weight-delete"
+                    class="text-btn danger"
+                    type="button"
+                    hidden
+                  >
+                    이 날짜 기록 삭제
+                  </button>
+                </div>
+              </form>
+              <p class="help-text">
+                하루 한 번 저장합니다. 같은 날짜에 다시 저장하면 수정돼요. 목표
+                열량이나 감량 목표를 자동으로 정하지 않습니다.
+              </p>
+            </section>
+          </div>
+          <section
+            class="health-section weekly-section"
+            aria-labelledby="weekly-title"
+          >
+            <div class="section-heading">
+              <h3 id="weekly-title">최근 7일</h3>
+              <span id="weekly-range" class="section-kicker"></span>
+            </div>
+            <div class="weekly-numbers">
+              <p>
+                <span>기록한 날의 평균 열량</span
+                ><strong id="weekly-kcal">—</strong
+                ><small id="weekly-meal-days"></small>
+              </p>
+              <p>
+                <span>운동</span><strong id="weekly-workout">—</strong
+                ><small id="weekly-workout-count"></small>
+              </p>
+              <p>
+                <span>평균 체중</span><strong id="weekly-weight">—</strong
+                ><small id="weekly-weight-days"></small>
+              </p>
+            </div>
+            <div class="chart-columns">
+              <figure>
+                <figcaption>식사 기록 · kcal</figcaption>
+                <div
+                  id="calorie-chart"
+                  class="calorie-chart"
+                  aria-label="7일간 기록한 섭취 열량"
+                ></div>
+              </figure>
+              <figure>
+                <figcaption>체중 흐름 · kg</figcaption>
+                <div id="weight-chart" class="weight-chart"></div>
+              </figure>
+            </div>
+            <p class="help-text">
+              미기록일은 평균에서 제외합니다. 일부 식사만 적은 날은 하루
+              총섭취량이 아니에요.
+            </p>
+            <details class="weekly-table-wrap">
+              <summary>날짜별 수치 보기</summary>
+              <table class="weekly-table">
+                <caption class="sr-only">
+                  7일간 식사와 운동, 체중 기록
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">날짜</th>
+                    <th scope="col">열량</th>
+                    <th scope="col">단백질</th>
+                    <th scope="col">운동</th>
+                    <th scope="col">체중</th>
+                  </tr>
+                </thead>
+                <tbody id="weekly-table-body"></tbody>
+              </table>
+            </details>
+          </section>
+        </section>
+      </section>
+      <details id="account-settings" class="account-settings" hidden>
+        <summary>계정·설정 / 기존 할 일 가져오기</summary>
+        <p class="help-text">나의 Firebase UID (설정 시에만 필요)</p>
+        <div class="uid-row">
+          <code id="account-uid"></code
+          ><button id="copy-uid" class="text-btn" type="button">복사</button>
+        </div>
+        <div id="legacy-section" hidden>
+          <p class="help-text">
+            이전 공용 할 일은 지정한 소유자만 가져올 수 있습니다. 원본은
+            삭제하지 않으며, 다시 실행해도 기존에 가져온 항목을 덮어쓰지
+            않습니다.
+          </p>
+          <button id="legacy-load" class="secondary-btn" type="button">
+            기존 할 일 확인
+          </button>
+          <p id="legacy-status" class="help-text" role="status"></p>
+          <div id="legacy-actions" class="button-row" hidden>
+            <button id="legacy-backup" class="secondary-btn" type="button">
+              원본 백업 다운로드</button
+            ><button
+              id="legacy-import"
+              class="primary-btn"
+              type="button"
+              disabled
+            >
+              백업 후 내 계정으로 복사
+            </button>
+          </div>
+        </div>
+        <p class="help-text">
+          <a
+            href="./docs/FIREBASE_SETUP.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Firebase 설정 안내</a
+          >
+          ·
+          <a
+            href="./docs/FOOD_DATA.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >식품 자료 출처와 한계</a
+          >
+        </p>
+      </details>
+      <section class="news-section" aria-label="뉴스">
+        <div>
+          <h2>🇰🇷 한국 주요 뉴스</h2>
+          <ul id="kr-news-list" class="news-list">
+            <li>뉴스를 불러오는 중입니다.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>🌍 BBC News</h2>
+          <ul id="bbc-news-list" class="news-list">
+            <li>뉴스를 불러오는 중입니다.</li>
+          </ul>
+        </div>
+      </section>
+      <footer class="page-footer">작은 기록을 오래, 꾸준히.</footer>
+    </main>
+    <div id="snackbar" role="status" aria-live="polite" hidden></div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
