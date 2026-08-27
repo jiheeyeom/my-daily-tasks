@@ -127,6 +127,98 @@ export function createApp({
   const selectedFood = () =>
     availableFoods().find((food) => food.id === $("food-select").value);
 
+  // Pinned foods are a per-device convenience, not synced health data, so they
+  // stay in localStorage. Storage can throw or be empty; that is not an error.
+  const favoritesKey = () => `favorites_${state.user?.uid ?? ""}`;
+  function favorites() {
+    if (!state.user) return [];
+    try {
+      const raw = JSON.parse(preference(favoritesKey()) || "[]");
+      return Array.isArray(raw)
+        ? raw.filter((id) => typeof id === "string").slice(0, 20)
+        : [];
+    } catch {
+      return [];
+    }
+  }
+  function toggleFavorite(id) {
+    if (!state.user || !id) return;
+    const current = favorites();
+    const next = current.includes(id)
+      ? current.filter((item) => item !== id)
+      : [id, ...current].slice(0, 20);
+    preference(favoritesKey(), JSON.stringify(next));
+    renderQuickAdd();
+    renderFavoriteButton();
+  }
+  function renderFavoriteButton() {
+    const target = $("food-favorite"),
+      food = selectedFood(),
+      pinned = !!food && favorites().includes(food.id);
+    target.disabled = !food;
+    target.setAttribute("aria-pressed", String(pinned));
+    setText(target.id, pinned ? "★ 고정됨" : "☆ 고정");
+  }
+
+  // Quick picks fill the form only. Writing a meal stays an explicit submit so
+  // a stray tap cannot create a record.
+  function quickPick(food, amount, mealType) {
+    state.temporaryFood = catalog.some((item) => item.id === food.id)
+      ? null
+      : { ...food, id: "saved-meal" };
+    $("food-search").value = "";
+    if (mealType) $("meal-type").value = mealType;
+    renderFoods(state.temporaryFood ? "saved-meal" : food.id);
+    $("meal-amount").value = amount ?? food.baseAmount;
+    previewMeal();
+    renderFavoriteButton();
+    $("meal-amount").focus();
+  }
+
+  function renderQuickAdd() {
+    const list = $("quick-add-list");
+    list.replaceChildren();
+    if (!state.user) {
+      $("quick-add").hidden = true;
+      return;
+    }
+    const foods = availableFoods(),
+      picks = [],
+      seen = new Set();
+    const add = (food, amount, mealType, pinned) => {
+      const key = food.id || food.name;
+      if (seen.has(key) || picks.length >= 10) return;
+      seen.add(key);
+      picks.push({ food, amount, mealType, pinned });
+    };
+    for (const id of favorites()) {
+      const food = foods.find((item) => item.id === id);
+      if (food) add(food, food.baseAmount, null, true);
+    }
+    const recent = [...(state.data.meals || [])].sort(
+      (a, b) => b.createdAt - a.createdAt,
+    );
+    for (const meal of recent) {
+      if (!meal.food?.name) continue;
+      // Resolve the stored snapshot back to the real food so pinning it keeps a
+      // stable id. A food that has since been deleted falls back to the snapshot.
+      const food =
+        foods.find((item) => item.name === meal.food.name) ?? meal.food;
+      add(food, meal.amount, meal.mealType, false);
+    }
+    for (const pick of picks) {
+      const label = `${pick.pinned ? "★ " : ""}${pick.food.name} · ${pick.amount}${pick.food.baseUnit}`;
+      const chip = button(
+        label,
+        () => quickPick(pick.food, pick.amount, pick.mealType),
+        `chip${pick.pinned ? " chip-pinned" : ""}`,
+      );
+      chip.title = `${pick.food.name} ${pick.amount}${pick.food.baseUnit} 입력하기`;
+      list.append(chip);
+    }
+    $("quick-add").hidden = picks.length === 0;
+  }
+
   function toast(message, error = false) {
     win.clearTimeout(timer);
     const target = $("snackbar");
@@ -144,9 +236,9 @@ export function createApp({
   function canUse(kind) {
     return Boolean(
       state.user &&
-        config.securityRulesConfigured &&
-        state.sync[kind]?.server &&
-        !state.sync[kind]?.error,
+      config.securityRulesConfigured &&
+      state.sync[kind]?.server &&
+      !state.sync[kind]?.error,
     );
   }
 
@@ -698,10 +790,12 @@ export function createApp({
         "기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접 등록해 주세요.";
       setText("meal-preview", "음식을 선택하면 계산됩니다.");
       setText("meal-unit", "g");
+      renderFavoriteButton();
       return;
     }
     setText("meal-unit", food.baseUnit);
     $("meal-amount").max = food.baseUnit === "개" ? "100" : "5000";
+    renderFavoriteButton();
     reference.append(
       doc.createTextNode(
         `${food.baseAmount}${food.baseUnit}당 ${food.kcal}kcal · `,
@@ -930,6 +1024,7 @@ export function createApp({
     );
     setText("day-weight", weight ? `${fmt(weight.kg)} kg` : "—");
     renderMeals(meals);
+    renderQuickAdd();
     renderWorkouts(workouts);
     renderWeekly();
     controls();
@@ -1251,8 +1346,10 @@ export function createApp({
     const food = selectedFood();
     if (food) $("meal-amount").value = food.baseAmount;
     previewMeal();
+    renderFavoriteButton();
   });
   on($("meal-amount"), "input", previewMeal);
+  on($("food-favorite"), "click", () => toggleFavorite(selectedFood()?.id));
   on($("meal-cancel"), "click", resetMeal);
   on($("meal-form"), "submit", (event) => {
     event.preventDefault();

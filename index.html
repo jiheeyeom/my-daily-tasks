@@ -299,6 +299,14 @@
               <h3 id="meal-title">식사</h3>
               <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
             </div>
+            <section id="quick-add" class="quick-add" hidden>
+              <h4 class="quick-add-title">빠른 추가</h4>
+              <div id="quick-add-list" class="chip-row"></div>
+              <p class="help-text">
+                누르면 아래 입력칸이 채워집니다. ★는 고정한 음식이고, 나머지는
+                최근에 기록한 음식이에요. 기록 버튼은 직접 눌러 주세요.
+              </p>
+            </section>
             <form id="meal-form">
               <div class="form-grid two-col">
                 <label
@@ -317,11 +325,22 @@
                     maxlength="100"
                 /></label>
               </div>
-              <label class="field"
-                >음식 선택<select id="food-select" required>
-                  <option value="">음식을 선택해 주세요</option>
-                </select></label
-              >
+              <div class="field food-pick-row">
+                <label class="food-pick-label"
+                  >음식 선택<select id="food-select" required>
+                    <option value="">음식을 선택해 주세요</option>
+                  </select></label
+                >
+                <button
+                  type="button"
+                  id="food-favorite"
+                  class="text-btn favorite-btn"
+                  aria-pressed="false"
+                  disabled
+                >
+                  ☆ 고정
+                </button>
+              </div>
               <p id="food-reference" class="help-text">
                 기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
                 등록해 주세요.

@@ -23,6 +23,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 - [x] `legacyOwnerUid` = `xVhMdeOb3Uh0yVovUmnooRb8mSn2` (firestore.rules 와 동일)
 - [x] GitHub Pages 배포 (main 브랜치 / (root)) — 푸시하면 자동 재빌드
 - [ ] 기존 `my_tasks` 레거시 마이그레이션 실행 (백업 후 진행)
+- [ ] 식약처 식품영양성분 DB(한식·국내 가공식품) 도입 — CSV 직접 다운로드 필요(스크립트 불가)
 - [ ] 다른 계정으로 내 데이터 접근 차단 확인 (콘솔 Rules Playground, 계정 2개 필요)
 
 규칙 게시 검증: Firestore REST API로 비로그인 읽기를 시도해 `my_tasks`,
@@ -90,6 +91,9 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **커피만 `개`(1잔) 단위, 나머지는 100g 단위**: 커피는 g으로 재기 번거로워 그란데(473ml≈480g)를
   1잔으로 등록. 잔 무게는 FDC 분량표(`foodMeasures`)의 `1 medium` 값이며 임의 환산이 아님.
   톨=0.75잔, 벤티=1.25잔. 1잔 영양값은 100g 값에 잔 무게를 곱해 코드에서 계산함(하드코딩 아님).
+- **빠른 추가/고정**: 칩은 입력칸을 채우기만 하고 저장은 명시적 제출로만. 고정 목록은
+  `preference()` 통해 localStorage 저장(계정 동기화 아님) — Firestore 로 옮기려면 규칙 재게시 필요.
+  최근 음식은 저장된 스냅샷을 이름으로 실제 음식에 다시 연결해야 고정 ID가 안정적임.
 - **식품 추가 규칙**: 값은 반드시 FDC에서 확인 후 추가하고 임의 추정치를 넣지 않음.
   `foods.js` 항목을 늘리면 `tests/domain.test.js` 의 개수 단언(현재 41)도 함께 수정.
   USDA API는 `DEMO_KEY` 로 시간당 10회 제한 — 검색 결과 JSON을 파일로 받아 재사용할 것.

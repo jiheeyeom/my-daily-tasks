@@ -1113,3 +1113,75 @@ small {
     scroll-behavior: auto !important;
   }
 }
+
+.quick-add {
+  margin-bottom: 1rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-alt);
+}
+
+.quick-add-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.quick-add .help-text {
+  margin: 0.6rem 0 0;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  cursor: pointer;
+  text-align: left;
+}
+
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.chip-pinned {
+  border-color: var(--accent);
+}
+
+.food-pick-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.food-pick-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.favorite-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding-bottom: 0.55rem;
+}
+
+.favorite-btn[aria-pressed="true"] {
+  color: var(--accent);
+}
+
+.favorite-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -204,6 +204,37 @@ test("a per-serving catalog food switches the meal unit away from grams", async 
   assert.equal(saved.data.amount, 0.75);
 });
 
+test("quick add fills the form from recent meals and pinned foods without writing", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  assert.equal(f.$("quick-add").hidden, true);
+
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "210");
+  f.value("meal-type", "lunch", "change");
+  await f.submit("meal-form");
+  const writes = f.store.writes.length;
+
+  const chips = [...f.$("quick-add-list").children];
+  assert.equal(f.$("quick-add").hidden, false);
+  assert.equal(chips.length, 1);
+  assert.match(chips[0].textContent, /210g/);
+
+  f.value("food-select", "", "change");
+  chips[0].click();
+  assert.equal(f.$("meal-amount").value, "210");
+  assert.equal(f.$("meal-type").value, "lunch");
+  assert.match(f.$("meal-preview").textContent, /273 kcal/);
+  assert.equal(f.store.writes.length, writes);
+
+  f.$("food-favorite").click();
+  assert.equal(f.$("food-favorite").getAttribute("aria-pressed"), "true");
+  const pinned = [...f.$("quick-add-list").children];
+  assert.equal(pinned.length, 1);
+  assert.match(pinned[0].textContent, /^★/);
+  assert.equal(f.store.writes.length, writes);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
