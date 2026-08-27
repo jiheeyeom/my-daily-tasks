@@ -186,6 +186,24 @@ test("meal selection/quantity creates a nutrition snapshot and updates day/week 
   assert.equal(f.$("meal-cancel").hidden, true);
 });
 
+test("a per-serving catalog food switches the meal unit away from grams", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  const latte = FOOD_CATALOG.find((food) => food.id === "usda-2710386");
+  assert.equal(latte.baseUnit, "개");
+  f.value("food-select", latte.id, "change");
+  assert.equal(f.$("meal-unit").textContent, "개");
+  assert.equal(f.$("meal-amount").value, "1");
+  assert.equal(f.$("meal-amount").max, "100");
+  assert.match(f.$("meal-preview").textContent, /206.4 kcal/);
+  f.value("meal-amount", "0.75");
+  assert.match(f.$("meal-preview").textContent, /154.8 kcal/);
+  await f.submit("meal-form");
+  const saved = f.store.writes.at(-1);
+  assert.equal(saved.data.unit, "개");
+  assert.equal(saved.data.amount, 0.75);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

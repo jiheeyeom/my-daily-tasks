@@ -322,13 +322,11 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
       assert.equal(Number.isFinite(item[key]), true);
       assert.equal(item[key] >= 0, true);
     }
-    assert.match(
-      item.sourceUrl,
-      /^https:\/\/fdc.nal.usda.gov\/food-details\/[0-9]+\/nutrients$/,
-    );
+    assert.equal(safeUrl(item.sourceUrl), item.sourceUrl);
+    assert.equal(item.source.length > 0, true);
     assert.equal(calculateNutrition(item, item.baseAmount).kcal, item.kcal);
   }
-  assert.equal(FOOD_CATALOG.length, 41);
+  assert.equal(FOOD_CATALOG.length, 42);
 });
 test("unsafe links are not rendered", () => {
   assert.equal(safeUrl("javascript:alert(1)"), "");

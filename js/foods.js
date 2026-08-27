@@ -264,6 +264,25 @@ const entry = (fdcId, dataset, fields) =>
     sourceUrl: `https://fdc.nal.usda.gov/food-details/${fdcId}/nutrients`,
   });
 
+// Branded products are not in USDA. Values come from the maker's own published
+// label, so each one carries its own source and link rather than an FDC id.
+const brandServings = [
+  {
+    id: "fitline-powercocktail",
+    name: "FitLine 파워칵테일 · 1포 15g",
+    kcal: 45,
+    protein: 0.16,
+    carbs: 8,
+    fat: 0.2,
+    keywords: "핏라인 fitline 파워칵테일 비타민 보충제 영양제",
+    baseAmount: 1,
+    baseUnit: "개",
+    source: "PM-International 제품 라벨 (1포 15g, 물 180ml)",
+    sourceUrl:
+      "https://www.pmebusiness.com/files/sg/product_usage/FL.PowerCocktailBox.LMIV.3717.DEII.P14_INTERNET.pdf",
+  },
+];
+
 // Per 100 g of edible food, not per portion or 100 ml.
 const perHundredGrams =
   (dataset) =>
@@ -301,4 +320,5 @@ export const FOOD_CATALOG = [
   ...references.map(perHundredGrams("USDA SR Legacy")),
   ...snackReferences.map(perHundredGrams("USDA SR Legacy")),
   ...coffeeServings.map(perServing("USDA FNDDS 2024-10-31")),
+  ...brandServings.map(Object.freeze),
 ];

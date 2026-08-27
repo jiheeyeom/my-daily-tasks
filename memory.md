@@ -45,7 +45,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 │   ├── app.js          # UI / 이벤트 핸들러 / 상태 관리
 │   ├── domain.js       # 순수 계산 (영양, 날짜, 할 일, 집계)
 │   ├── firebase-store.js  # Auth + Firestore 접근
-│   ├── foods.js        # USDA 참고 식품 41종 (기본 17 + 과자 15 + 커피 9)
+│   ├── foods.js        # 참고 식품 42종 (USDA 기본 17 + 과자 15 + 커피 9 + 브랜드 1)
 │   ├── migration.js    # 기존 my_tasks → users/{uid}/tasks 복사
 │   ├── news.js         # RSS 뉴스 + 오늘의 문구
 │   └── theme.js        # 다크모드 즉시 적용 (렌더 전)
