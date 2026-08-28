@@ -294,6 +294,79 @@
               ><small>같은 조건에서 측정해 주세요</small>
             </div>
           </div>
+          <section class="health-section" aria-labelledby="balance-title">
+            <div class="section-heading">
+              <h3 id="balance-title">기초대사량 대비 오늘</h3>
+              <span class="section-kicker">계산일 뿐, 목표가 아니에요</span>
+            </div>
+            <details id="body-profile-details" class="body-profile">
+              <summary>내 기준 입력 (성별·출생연도·키)</summary>
+              <form id="body-profile-form" class="form-grid two-col">
+                <label
+                  >성별<select id="profile-sex">
+                    <option value="">선택 안 함</option>
+                    <option value="female">여성</option>
+                    <option value="male">남성</option>
+                  </select></label
+                >
+                <label
+                  >출생연도<input
+                    type="number"
+                    id="profile-birth-year"
+                    inputmode="numeric"
+                    min="1900"
+                    max="2100"
+                    step="1"
+                    placeholder="예: 1991"
+                /></label>
+                <label
+                  >키 (cm)<input
+                    type="number"
+                    id="profile-height"
+                    inputmode="decimal"
+                    min="100"
+                    max="250"
+                    step="0.1"
+                    placeholder="예: 164.8"
+                /></label>
+                <button type="submit" class="primary-btn health-btn">
+                  저장
+                </button>
+              </form>
+              <p class="help-text">
+                이 기준은 <strong>이 브라우저에만</strong> 저장됩니다. 체중은
+                가장 최근 체중 기록을 쓰고, 키는 비워 두면 최근 건강검진 값을
+                씁니다.
+              </p>
+            </details>
+            <div id="balance-empty" class="empty-state">
+              내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
+            </div>
+            <div id="balance-result" hidden>
+              <div class="health-stats" aria-label="기초대사량 대비 오늘">
+                <div class="stat-card">
+                  <span>기초대사량 추정</span><strong id="balance-bmr">—</strong
+                  ><small id="balance-basis"></small>
+                </div>
+                <div class="stat-card">
+                  <span>오늘 기록한 섭취</span
+                  ><strong id="balance-intake">—</strong
+                  ><small id="balance-intake-note"></small>
+                </div>
+                <div class="stat-card">
+                  <span>차이</span><strong id="balance-diff">—</strong
+                  ><small id="balance-diff-note"></small>
+                </div>
+              </div>
+              <p id="balance-drift" class="balance-drift"></p>
+            </div>
+            <p class="help-text">
+              기초대사량은 <strong>가만히 있을 때 쓰는 열량</strong>이라 활동량이
+              빠져 있습니다. 하루 총소모열량이 아니고, 권장 섭취량이나 감량
+              목표도 아닙니다. 체중 예상은 7,700kcal을 1kg으로 잡은 어림값이라
+              실제와 다를 수 있어요.
+            </p>
+          </section>
           <section class="health-section" aria-labelledby="meal-title">
             <div class="section-heading">
               <h3 id="meal-title">식사</h3>

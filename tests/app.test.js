@@ -401,6 +401,70 @@ test("the checkup chart plots year.month points and breaks on missing results", 
   assert.match(f.$("checkup-chart").textContent, /107/);
 });
 
+test("the balance card waits for a profile, a weight and a meal", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  assert.equal(f.$("balance-result").hidden, true);
+  assert.match(f.$("balance-empty").textContent, /내 기준/);
+
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-height", "164.8");
+  await f.submit("body-profile-form");
+  // Height and birth year alone are not enough: weight comes from the log.
+  assert.equal(f.$("balance-result").hidden, true);
+
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  assert.equal(f.$("balance-result").hidden, true);
+  assert.match(f.$("balance-empty").textContent, /먹은 것을 기록하면/);
+
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+
+  assert.equal(f.$("balance-result").hidden, false);
+  assert.equal(f.$("balance-bmr").textContent, "1,228 kcal");
+  assert.equal(f.$("balance-intake").textContent, "1,300 kcal");
+  assert.equal(f.$("balance-diff").textContent, "+72 kcal");
+  assert.match(f.$("balance-diff-note").textContent, /초과/);
+  assert.match(f.$("balance-drift").textContent, /7일에 \+0.07kg/);
+  assert.match(f.$("balance-drift").textContent, /30일에 \+0.28kg/);
+  // It must never read as a target or a recommendation.
+  assert.match(f.$("balance-drift").textContent, /어림 계산/);
+});
+
+test("the balance card falls back to the checkup height and shows a shortfall", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  await f.submit("body-profile-form");
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  f.store.seed(USER.uid, "checkups", [
+    {
+      id: "general_2025-12-23",
+      date: "2025-12-23",
+      kind: "general",
+      label: "일반건강검진 2025",
+      measurements: { height_cm: 164.8, weight_kg: 53 },
+      note: "",
+    },
+  ]);
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "500");
+  await f.submit("meal-form");
+
+  assert.equal(f.$("balance-bmr").textContent, "1,228 kcal");
+  assert.match(f.$("balance-basis").textContent, /검진 키/);
+  assert.equal(f.$("balance-diff").textContent, "−578 kcal");
+  assert.match(f.$("balance-diff-note").textContent, /미달/);
+  assert.match(f.$("balance-drift").textContent, /30일에 −2.25kg/);
+});
+
 test("a file that is not a checkup export is rejected without writing", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

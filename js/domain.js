@@ -266,6 +266,49 @@ export function makeCheckup(input, now = Date.now()) {
   };
 }
 
+// Roughly 7,700 kcal is often quoted as one kilogram of body fat. It is a rule
+// of thumb, not a law: real change also involves water, glycogen and the body
+// adapting, so any projection from it is an order of magnitude, not a forecast.
+export const KCAL_PER_KG = 7700;
+
+export const BODY_PROFILE_SEXES = { female: "여성", male: "남성" };
+
+// Mifflin-St Jeor. This is resting metabolic rate only. It is NOT total daily
+// energy expenditure: it excludes all activity, so a deficit against it is
+// deeper than it looks. It is not a recommended intake or a weight-loss target.
+export function basalMetabolicRate(profile, on = new Date()) {
+  if (!profile) return null;
+  const { sex, birthYear, heightCm, weightKg } = profile;
+  if (!Object.hasOwn(BODY_PROFILE_SEXES, sex ?? "")) return null;
+  const age = on.getFullYear() - Number(birthYear);
+  if (!Number.isFinite(age) || age < 10 || age > 120) return null;
+  if (!Number.isFinite(heightCm) || heightCm < 100 || heightCm > 250)
+    return null;
+  if (!Number.isFinite(weightKg) || weightKg < 20 || weightKg > 400)
+    return null;
+  const base = 10 * weightKg + 6.25 * heightCm - 5 * age;
+  return round(base + (sex === "male" ? 5 : -161), 0);
+}
+
+// Positive means more was logged than the resting estimate, negative means less.
+export function energyBalance(intakeKcal, bmr) {
+  if (bmr === null || !Number.isFinite(intakeKcal)) return null;
+  const difference = round(intakeKcal - bmr, 0);
+  return {
+    bmr,
+    intakeKcal: round(intakeKcal, 0),
+    difference,
+    over: difference > 0,
+  };
+}
+
+// What the same daily gap would add up to, if it held and nothing else changed.
+export function weightDriftKg(dailyDifferenceKcal, days = 30) {
+  if (!Number.isFinite(dailyDifferenceKcal) || !Number.isFinite(days))
+    return null;
+  return round((dailyDifferenceKcal * days) / KCAL_PER_KG, 2);
+}
+
 export function nutritionTotals(meals) {
   const values = { kcal: 0, protein: 0, carbs: 0, fat: 0 };
   const missing = { kcal: 0, protein: 0, carbs: 0, fat: 0 };

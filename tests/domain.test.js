@@ -18,6 +18,9 @@ import {
   normalizeLegacyTask,
   filterTasks,
   safeUrl,
+  basalMetabolicRate,
+  energyBalance,
+  weightDriftKg,
 } from "../js/domain.js";
 import { FOOD_CATALOG } from "../js/foods.js";
 import { copyLegacyTasks } from "../js/migration.js";
@@ -343,4 +346,51 @@ test("unsafe links are not rendered", () => {
   assert.equal(safeUrl("javascript:alert(1)"), "");
   assert.equal(safeUrl("data:text/html,example"), "");
   assert.equal(safeUrl("https://example.com"), "https://example.com/");
+});
+
+test("basal metabolic rate needs every input and is resting energy only", () => {
+  const on = new Date(2026, 7, 28);
+  const profile = {
+    sex: "female",
+    birthYear: 1991,
+    heightCm: 164.8,
+    weightKg: 53.4,
+  };
+  // Mifflin-St Jeor: 10*53.4 + 6.25*164.8 - 5*35 - 161
+  assert.equal(basalMetabolicRate(profile, on), 1228);
+  assert.equal(basalMetabolicRate({ ...profile, sex: "male" }, on), 1394);
+
+  // Anything missing or out of range yields null rather than a made-up number.
+  for (const missing of [
+    { sex: "" },
+    { sex: "other" },
+    { birthYear: null },
+    { birthYear: 1800 },
+    { heightCm: null },
+    { heightCm: 40 },
+    { weightKg: null },
+    { weightKg: 5 },
+  ])
+    assert.equal(basalMetabolicRate({ ...profile, ...missing }, on), null);
+  assert.equal(basalMetabolicRate(null, on), null);
+});
+
+test("energy balance is signed arithmetic and drift is a linear rule of thumb", () => {
+  assert.equal(energyBalance(1800, null), null);
+  assert.equal(energyBalance(Number.NaN, 1228), null);
+
+  const over = energyBalance(1800, 1228);
+  assert.equal(over.difference, 572);
+  assert.equal(over.over, true);
+  const under = energyBalance(1000, 1228);
+  assert.equal(under.difference, -228);
+  assert.equal(under.over, false);
+  // Eating exactly the estimate is neither over nor under.
+  assert.equal(energyBalance(1228, 1228).difference, 0);
+  assert.equal(energyBalance(1228, 1228).over, false);
+
+  assert.equal(weightDriftKg(572, 30), 2.23);
+  assert.equal(weightDriftKg(-228, 30), -0.89);
+  assert.equal(weightDriftKg(0, 30), 0);
+  assert.equal(weightDriftKg(Number.NaN, 30), null);
 });

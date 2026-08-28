@@ -59,6 +59,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 ├── docs/
 │   ├── FIREBASE_SETUP.md  # Firebase 설정 절차 (필독)
 │   ├── HEALTH_CHECKUPS.md # 건강검진 가져오기 · 개인정보 취급
+│   ├── ENERGY_BALANCE.md  # 기초대사량 대비 계산과 한계
 │   └── FOOD_DATA.md       # 식품 자료 출처 및 계산 방식
 ├── scripts/
 │   ├── import_food_db.py  # 식약처 xlsx → js/foods-kr.js (수동 실행)
@@ -105,6 +106,11 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **식약처 원본 워크북은 커밋 금지**: `docs/FOOD DATABASE/` 는 gitignore. 가공식품DB 가 109MB 라
   GitHub 100MB 파일 상한을 넘김. 생성물 `js/foods-kr.js` 만 커밋하고
   `python3 scripts/import_food_db.py` 로 재생성.
+- **checkups 와 weights 는 분리**: 검진 체중은 체중 기록/7일 평균에 안 들어감. 기초대사량 카드에서
+  키만, 그것도 직접 입력이 없을 때만 검진 값을 빌려 씀.
+- **기초대사량 카드**: Mifflin-St Jeor. TDEE 가 아니라 안정시 열량이라 활동량 누락 — UI 와 문서에
+  반드시 명시. 7700kcal=1kg 은 어림 규칙. 목표 열량 기능은 만들지 않음(검진 파일도 금지 명시).
+  성별·출생연도·키는 localStorage(`bodyProfile_<uid>`), 체중은 항상 weights 최신값.
 - **건강검진 그래프**: 일반검진 2회 이상인 지표만 연도.월 꺾은선으로. 결과 없는 회차는 선을 끊고
   보간하지 않음. 세로축은 기록값 범위이며 정상 범위가 아님.
 - **브랜드 제품 값 출처**: 호식이두마리치킨은 제조사가 열량 미공개 → 제3자 앱 값을 쓰되

@@ -16,6 +16,10 @@ import {
   makeWeight,
   makeCheckup,
   checkupId,
+  basalMetabolicRate,
+  energyBalance,
+  weightDriftKg,
+  KCAL_PER_KG,
   CHECKUP_METRICS,
   CHECKUP_KINDS,
   nutritionTotals,
@@ -543,6 +547,7 @@ export function createApp({
     renderTasks();
     renderHealth();
     renderCheckups();
+    fillBodyProfile();
     fillWeight();
     $("checkup-file").value = "";
     setText("checkup-import-status", "아직 불러온 파일이 없어요.");
@@ -927,6 +932,7 @@ export function createApp({
 
   function renderCheckups() {
     renderCheckupTrend();
+    renderBalance();
     const target = $("checkup-list");
     target.replaceChildren();
     const rows = [...(state.data.checkups || [])].sort((a, b) =>
@@ -1007,6 +1013,107 @@ export function createApp({
       card.append(actions);
       target.append(card);
     }
+  }
+
+  // Sex, birth year and height are a display preference for one arithmetic
+  // card, so they stay on the device rather than adding a synced collection.
+  const profileKey = () => `bodyProfile_${state.user?.uid ?? ""}`;
+  function bodyProfile() {
+    if (!state.user) return null;
+    try {
+      const raw = JSON.parse(preference(profileKey()) || "null");
+      return raw && typeof raw === "object" ? raw : null;
+    } catch {
+      return null;
+    }
+  }
+  function fillBodyProfile() {
+    const saved = bodyProfile() || {};
+    $("profile-sex").value = saved.sex || "";
+    $("profile-birth-year").value = saved.birthYear ?? "";
+    $("profile-height").value = saved.heightCm ?? "";
+  }
+
+  const latestOf = (rows, pick) =>
+    [...(rows || [])]
+      .filter((row) => pick(row) !== null && pick(row) !== undefined)
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .map(pick)[0] ?? null;
+
+  function balanceInputs() {
+    const saved = bodyProfile() || {};
+    // Height falls back to the most recent checkup; weight always comes from
+    // the weight log, which is the number the person actually measured.
+    const checkupHeight = latestOf(
+      (state.data.checkups || []).filter((item) => item.kind === "general"),
+      (item) => item.measurements?.height_cm ?? null,
+    );
+    const heightCm = Number(saved.heightCm) || checkupHeight;
+    const weightKg = latestOf(state.data.weights, (item) => item.kg ?? null);
+    return {
+      sex: saved.sex,
+      birthYear: saved.birthYear,
+      heightCm,
+      weightKg,
+      heightFromCheckup: !Number(saved.heightCm) && checkupHeight !== null,
+    };
+  }
+
+  function renderBalance() {
+    const inputs = balanceInputs(),
+      bmr = basalMetabolicRate(inputs, now());
+    const meals = (state.data.meals || []).filter(
+      (item) => item.date === state.date,
+    );
+    const totals = nutritionTotals(meals);
+    const balance = meals.length
+      ? energyBalance(totals.values.kcal, bmr)
+      : null;
+    $("balance-result").hidden = !balance;
+    $("balance-empty").hidden = Boolean(balance);
+    if (!balance) {
+      setText(
+        "balance-empty",
+        bmr === null
+          ? "내 기준(성별·출생연도·키)을 입력하고 체중을 한 번 기록하면 계산해 드릴게요."
+          : "오늘 먹은 것을 기록하면 기초대사량과 비교해 드릴게요.",
+      );
+      return;
+    }
+    setText("balance-bmr", `${fmt(balance.bmr, 0)} kcal`);
+    setText(
+      "balance-basis",
+      `${fmt(inputs.weightKg)}kg · ${fmt(inputs.heightCm)}cm${
+        inputs.heightFromCheckup ? " (검진 키)" : ""
+      }`,
+    );
+    setText(
+      "balance-intake",
+      `${fmt(balance.intakeKcal, 0)} kcal${totals.missing.kcal ? "*" : ""}`,
+    );
+    setText(
+      "balance-intake-note",
+      totals.missing.kcal
+        ? `${totals.missing.kcal}개 음식은 열량을 세지 못했어요`
+        : `${meals.length}개 음식 기록`,
+    );
+    const gap = Math.abs(balance.difference);
+    setText("balance-diff", `${balance.over ? "+" : "−"}${fmt(gap, 0)} kcal`);
+    setText(
+      "balance-diff-note",
+      balance.over ? "기초대사량 초과" : "기초대사량 미달",
+    );
+
+    // Intl renders a plain hyphen, so signs are written by hand to match the
+    // "+"/"−" shown on the difference card.
+    const signed = (value) =>
+      `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value), 2)}kg`;
+    const week = weightDriftKg(balance.difference, 7),
+      month = weightDriftKg(balance.difference, 30);
+    setText(
+      "balance-drift",
+      `오늘 같은 수지가 이어진다면 대략 7일에 ${signed(week)}, 30일에 ${signed(month)} 쪽입니다. ${KCAL_PER_KG.toLocaleString("ko-KR")}kcal을 1kg으로 잡은 어림 계산이고, 활동량이 빠져 있어 실제 변화는 이보다 작게 나오는 경우가 많아요.`,
+    );
   }
 
   // A checkup is a point in time, so the chart plots one point per checkup and
@@ -1403,6 +1510,7 @@ export function createApp({
     );
     setText("day-weight", weight ? `${fmt(weight.kg)} kg` : "—");
     renderMeals(meals);
+    renderBalance();
     renderQuickAdd();
     renderWorkouts(workouts);
     renderWeekly();
@@ -1730,6 +1838,25 @@ export function createApp({
   on($("meal-amount"), "input", previewMeal);
   on($("food-favorite"), "click", () => toggleFavorite(selectedFood()?.id));
   on($("load-processed"), "click", () => loadProcessedFoods());
+  on($("body-profile-form"), "submit", (event) => {
+    event.preventDefault();
+    const height = Number($("profile-height").value);
+    if ($("profile-height").value && (height < 100 || height > 250)) {
+      toast("키는 100~250cm 사이로 입력해 주세요.", true);
+      return;
+    }
+    preference(
+      profileKey(),
+      JSON.stringify({
+        sex: $("profile-sex").value,
+        birthYear: Number($("profile-birth-year").value) || null,
+        heightCm: height || null,
+      }),
+    );
+    $("body-profile-details").open = false;
+    renderBalance();
+    toast("내 기준을 저장했어요.");
+  });
   on($("checkup-metric"), "change", () =>
     drawCheckupChart($("checkup-metric").value),
   );
