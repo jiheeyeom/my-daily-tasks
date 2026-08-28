@@ -292,6 +292,102 @@ export function makeBodyProfile(input, now = Date.now()) {
   };
 }
 
+// MET values transcribed from the 2011 Compendium of Physical Activities
+// (Ainsworth et al.), with the activity code so each one can be checked.
+// https://pacompendium.com/
+export const ACTIVITIES = [
+  {
+    key: "walk",
+    label: "걷기",
+    detail: "4.5~5km/h 보통 속도",
+    met: 3.5,
+    code: "17190",
+  },
+  {
+    key: "brisk",
+    label: "빠르게 걷기",
+    detail: "5.6km/h",
+    met: 4.3,
+    code: "17200",
+  },
+  { key: "yoga", label: "하타 요가", detail: "", met: 2.5, code: "02150" },
+  {
+    key: "calisthenics",
+    label: "맨몸운동",
+    detail: "보통 강도",
+    met: 3.8,
+    code: "02022",
+  },
+  {
+    key: "strength",
+    label: "근력운동",
+    detail: "높은 강도",
+    met: 6,
+    code: "02050",
+  },
+  { key: "jog", label: "조깅", detail: "", met: 7, code: "12020" },
+  { key: "bike", label: "자전거", detail: "19~22km/h", met: 8, code: "01030" },
+];
+
+// kcal/min = MET x 3.5 x kg / 200, the usual companion formula to the
+// compendium. It is an average for a body size, not a personal measurement.
+export function activityMinutes(kcal, met, weightKg) {
+  if (![kcal, met, weightKg].every(Number.isFinite)) return null;
+  if (kcal <= 0 || met <= 0 || weightKg <= 0) return null;
+  return Math.round(kcal / ((met * 3.5 * weightKg) / 200));
+}
+
+export function exerciseOptions(kcal, weightKg, limit = 3) {
+  return ACTIVITIES.map((activity) => ({
+    ...activity,
+    minutes: activityMinutes(kcal, activity.met, weightKg),
+  }))
+    .filter((option) => option.minutes !== null && option.minutes <= 240)
+    .sort((a, b) => a.minutes - b.minutes)
+    .slice(0, limit);
+}
+
+// How much of a food would cover a shortfall. Portions are rounded to
+// something a person can actually serve, so the kcal is recomputed from the
+// rounded amount rather than reported as the exact target.
+export function portionFor(kcal, food) {
+  if (!Number.isFinite(kcal) || kcal <= 0) return null;
+  if (!food || !Number.isFinite(food.kcal) || food.kcal <= 0) return null;
+  const perBase = food.kcal / food.baseAmount;
+  const raw = kcal / perBase;
+  const amount =
+    food.baseUnit === "개"
+      ? Math.round(raw * 2) / 2
+      : Math.round(raw / 10) * 10;
+  if (amount <= 0) return null;
+  return {
+    food,
+    amount,
+    unit: food.baseUnit,
+    kcal: round(amount * perBase, 0),
+  };
+}
+
+// A suggestion is only useful if the portion is one a person would actually
+// serve. 450 g of banana technically fills the gap but nobody eats that.
+const servable = (portion) =>
+  portion.unit === "개"
+    ? portion.amount >= 0.5 && portion.amount <= 3
+    : portion.amount >= 30 && portion.amount <= 400;
+
+export function foodSuggestions(kcal, foods, limit = 3) {
+  const seen = new Set();
+  return (foods || [])
+    .filter((food) => {
+      if (!food?.name || seen.has(food.name)) return false;
+      seen.add(food.name);
+      return true;
+    })
+    .map((food) => portionFor(kcal, food))
+    .filter((portion) => portion && servable(portion))
+    .slice(0, limit);
+}
+
 // Roughly 7,700 kcal is often quoted as one kilogram of body fat. It is a rule
 // of thumb, not a law: real change also involves water, glycogen and the body
 // adapting, so any projection from it is an order of magnitude, not a forecast.

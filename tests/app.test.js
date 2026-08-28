@@ -542,6 +542,68 @@ test("a calorie goal shows progress and marks going over without scolding", asyn
   assert.equal(f.$("balance-goal-bar").style.width, "100%");
 });
 
+test("suggestions follow the goal: eat to fill a shortfall, move for an excess", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-height", "164.8");
+  f.value("profile-target", "1800");
+  await f.submit("body-profile-form");
+  await tick();
+
+  // 1,300 kcal logged against an 1,800 goal: 500 short, so food is offered.
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.equal(f.$("balance-advice").hidden, false);
+  assert.match(f.$("balance-advice-title").textContent, /500 kcal을 채운다면/);
+  assert.equal(f.$("balance-advice-list").children.length > 0, true);
+  assert.match(
+    f.$("balance-advice-note").textContent,
+    /권장 섭취량도 아니에요/,
+  );
+
+  // Now well past the goal: the same block switches to movement.
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.match(
+    f.$("balance-advice-title").textContent,
+    /800 kcal만큼 움직인다면/,
+  );
+  const first = f.$("balance-advice-list").children[0].textContent;
+  assert.match(first, /분/);
+  // Every activity states the compendium code it came from.
+  assert.match(first, /코드 [0-9]{5}/);
+  assert.match(
+    f.$("balance-advice-note").textContent,
+    /섭취에서 빼지는 않아요/,
+  );
+});
+
+test("landing near the goal suggests nothing at all", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-height", "164.8");
+  f.value("profile-target", "1300");
+  await f.submit("body-profile-form");
+  await tick();
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.equal(f.$("balance-goal").hidden, false);
+  assert.equal(f.$("balance-advice").hidden, true);
+});
+
 test("no goal set means no goal bar", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

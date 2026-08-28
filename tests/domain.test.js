@@ -21,6 +21,10 @@ import {
   basalMetabolicRate,
   energyBalance,
   weightDriftKg,
+  activityMinutes,
+  exerciseOptions,
+  portionFor,
+  foodSuggestions,
 } from "../js/domain.js";
 import { FOOD_CATALOG } from "../js/foods.js";
 import { copyLegacyTasks } from "../js/migration.js";
@@ -393,4 +397,62 @@ test("energy balance is signed arithmetic and drift is a linear rule of thumb", 
   assert.equal(weightDriftKg(-228, 30), -0.89);
   assert.equal(weightDriftKg(0, 30), 0);
   assert.equal(weightDriftKg(Number.NaN, 30), null);
+});
+
+test("activity minutes use the MET formula and refuse impossible inputs", () => {
+  // 300 kcal at MET 8 for 53.4 kg: 300 / (8*3.5*53.4/200) = 40.1 min
+  assert.equal(activityMinutes(300, 8, 53.4), 40);
+  assert.equal(activityMinutes(300, 2.5, 53.4), 128);
+  for (const bad of [
+    [0, 8, 53.4],
+    [-10, 8, 53.4],
+    [300, 0, 53.4],
+    [300, 8, 0],
+    [Number.NaN, 8, 53.4],
+    [300, 8, null],
+  ])
+    assert.equal(activityMinutes(...bad), null);
+});
+
+test("exercise options are sorted, capped in length and never absurdly long", () => {
+  const options = exerciseOptions(300, 53.4);
+  assert.equal(options.length, 3);
+  assert.deepEqual(
+    options.map((option) => option.minutes),
+    [...options.map((option) => option.minutes)].sort((a, b) => a - b),
+  );
+  // Every option carries the compendium code so the number can be checked.
+  assert.ok(options.every((option) => /^[0-9]{5}$/.test(option.code)));
+  // A gap no realistic single session covers yields nothing rather than
+  // suggesting hours of exercise.
+  assert.deepEqual(exerciseOptions(5000, 53.4), []);
+});
+
+test("portions round to servable amounts and report the rounded calories", () => {
+  const rice = { name: "밥", kcal: 130, baseAmount: 100, baseUnit: "g" };
+  const bowl = { name: "비빔밥", kcal: 639, baseAmount: 1, baseUnit: "개" };
+  assert.deepEqual(portionFor(400, rice), {
+    food: rice,
+    amount: 310,
+    unit: "g",
+    kcal: 403,
+  });
+  // Servings round to a half, not to three decimal places.
+  assert.equal(portionFor(900, bowl).amount, 1.5);
+  assert.equal(portionFor(0, rice), null);
+  assert.equal(portionFor(400, { ...rice, kcal: 0 }), null);
+});
+
+test("food suggestions skip portions nobody would actually serve", () => {
+  const banana = { name: "바나나", kcal: 89, baseAmount: 100, baseUnit: "g" };
+  const rice = { name: "밥", kcal: 130, baseAmount: 100, baseUnit: "g" };
+  // 400 kcal of banana is 450g; that is filtered out, rice at 310g stays.
+  const picks = foodSuggestions(400, [banana, rice]);
+  assert.deepEqual(
+    picks.map((pick) => pick.food.name),
+    ["밥"],
+  );
+  // Duplicates by name are collapsed.
+  assert.equal(foodSuggestions(400, [rice, { ...rice }]).length, 1);
+  assert.deepEqual(foodSuggestions(400, []), []);
 });

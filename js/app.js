@@ -21,6 +21,8 @@ import {
   basalMetabolicRate,
   energyBalance,
   weightDriftKg,
+  foodSuggestions,
+  exerciseOptions,
   KCAL_PER_KG,
   CHECKUP_METRICS,
   CHECKUP_KINDS,
@@ -1106,6 +1108,14 @@ export function createApp({
     );
 
     renderGoal(totals.values.kcal, totals.missing.kcal);
+    // Suggestions follow whichever line the person is actually tracking.
+    const target = bodyProfile()?.targetKcal ?? null;
+    renderAdvice(
+      target === null
+        ? balance.difference
+        : round(totals.values.kcal - target, 0),
+      inputs.weightKg,
+    );
 
     // Intl renders a plain hyphen, so signs are written by hand to match the
     // "+"/"−" shown on the difference card.
@@ -1116,6 +1126,101 @@ export function createApp({
     setText(
       "balance-drift",
       `오늘 같은 수지가 이어진다면 대략 7일에 ${signed(week)}, 30일에 ${signed(month)} 쪽입니다. ${KCAL_PER_KG.toLocaleString("ko-KR")}kcal을 1kg으로 잡은 어림 계산이고, 활동량이 빠져 있어 실제 변화는 이보다 작게 나오는 경우가 많아요.`,
+    );
+  }
+
+  // Foods the person already eats come first: their own recent meals, then a
+  // few staples, so a suggestion is something they actually keep around.
+  const STAPLE_NAMES = [
+    "흰쌀밥 · 단립종, 조리 후",
+    "삶은 달걀 · 껍데기 제외",
+    "바나나 · 껍질 제외, 생것",
+    "그릭요거트 · 플레인 전지",
+    "우유 · 전지 3.25%, 무강화 (g 기준)",
+    "닭가슴살 · 껍질 없이 구운 것",
+    "아몬드 · 생것",
+    "고구마 · 껍질 없이 삶은 것",
+  ];
+
+  function suggestionPool() {
+    const foods = availableFoods();
+    const recent = [...(state.data.meals || [])]
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .map((meal) => foods.find((food) => food.name === meal.food?.name))
+      .filter(Boolean);
+    const staples = STAPLE_NAMES.map((name) =>
+      catalog.find((food) => food.name === name),
+    ).filter(Boolean);
+    return [...recent, ...staples];
+  }
+
+  function renderAdvice(gapKcal, weightKg) {
+    const wrap = $("balance-advice"),
+      list = $("balance-advice-list");
+    list.replaceChildren();
+    // Landing within about 50 kcal is close enough that suggesting anything
+    // would be noise.
+    if (Math.abs(gapKcal) < 50) {
+      wrap.hidden = true;
+      return;
+    }
+    wrap.hidden = false;
+    if (gapKcal > 0) {
+      const options = exerciseOptions(gapKcal, weightKg);
+      setText("balance-advice-title", `${fmt(gapKcal, 0)} kcal만큼 움직인다면`);
+      if (!options.length) {
+        list.append(
+          el("li", "", "이 정도 열량은 한 번의 운동으로 맞추기 어려워요."),
+        );
+      }
+      for (const option of options) {
+        const item = el("li");
+        item.append(
+          el("strong", "", `${option.label} ${fmt(option.minutes, 0)}분`),
+          el(
+            "small",
+            "",
+            `${option.detail ? `${option.detail} · ` : ""}MET ${option.met} · 코드 ${option.code}`,
+          ),
+        );
+        list.append(item);
+      }
+      setText(
+        "balance-advice-note",
+        "체중과 MET로 계산한 어림값이라 실제 소모와 다릅니다. 운동으로 쓴 열량을 섭취에서 빼지는 않아요.",
+      );
+      return;
+    }
+    const shortfall = Math.abs(gapKcal);
+    const picks = foodSuggestions(shortfall, suggestionPool());
+    setText("balance-advice-title", `${fmt(shortfall, 0)} kcal을 채운다면`);
+    if (!picks.length) {
+      list.append(el("li", "", "한 번에 먹기 적당한 항목을 찾지 못했어요."));
+    }
+    for (const pick of picks) {
+      const item = el("li"),
+        protein = pick.food.protein;
+      item.append(
+        el(
+          "strong",
+          "",
+          `${pick.food.name} ${fmt(pick.amount, 1)}${pick.unit}`,
+        ),
+        el(
+          "small",
+          "",
+          `약 ${fmt(pick.kcal, 0)}kcal${
+            protein === null || protein === undefined
+              ? ""
+              : ` · 단백질 ${fmt((protein / pick.food.baseAmount) * pick.amount)}g`
+          }`,
+        ),
+      );
+      list.append(item);
+    }
+    setText(
+      "balance-advice-note",
+      "최근 먹은 음식과 기본 식품에서 고른 계산 예시입니다. 꼭 채워야 하는 양이 아니고, 권장 섭취량도 아니에요.",
     );
   }
 
