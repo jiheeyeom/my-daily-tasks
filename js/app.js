@@ -10,6 +10,10 @@ import {
   safeUrl,
   foodSnapshot,
   calculateNutrition,
+  containersFor,
+  containerAmount,
+  describeContainer,
+  containerEquivalent,
   makeMeal,
   makeTask,
   makeWorkout,
@@ -897,6 +901,56 @@ export function createApp({
     controls();
   }
 
+  // Volume and weight stay in step: choosing a container fills the amount box,
+  // and typing an amount reports the container it comes to.
+  function renderContainers(food) {
+    const row = $("container-row"),
+      select = $("container-select"),
+      options = containersFor(food);
+    row.hidden = options.length === 0;
+    if (!options.length) {
+      select.replaceChildren();
+      return;
+    }
+    const previous = select.value;
+    select.replaceChildren();
+    for (const [index, container] of options.entries()) {
+      const option = el("option", "", container.label);
+      option.value = String(index);
+      select.append(option);
+    }
+    select.value = options[Number(previous)] ? previous : "0";
+  }
+
+  const selectedContainer = () =>
+    containersFor(selectedFood())[Number($("container-select").value)] || null;
+
+  function applyContainer() {
+    const food = selectedFood(),
+      container = selectedContainer();
+    if (!food || !container) return;
+    const amount = containerAmount(container, $("container-count").value);
+    if (amount === null) return;
+    $("meal-amount").value = amount;
+    previewMeal();
+  }
+
+  function renderContainerHint(food) {
+    if ($("container-row").hidden) return;
+    const container = selectedContainer(),
+      count = $("container-count").value;
+    const equivalent = containerEquivalent(food, $("meal-amount").value);
+    const forward = container
+      ? `${count}${container.label.replace(/\s?[0-9.]+ml$/, "")} = ${describeContainer(container, count)} (${fmt(containerAmount(container, count) ?? 0, 1)}${food.baseUnit})`
+      : "";
+    setText(
+      "container-hint",
+      equivalent
+        ? `${forward}${forward ? " · " : ""}지금 입력한 양은 약 ${equivalent.text}`
+        : forward,
+    );
+  }
+
   function previewMeal() {
     const food = selectedFood(),
       reference = $("food-reference");
@@ -906,11 +960,14 @@ export function createApp({
         "기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접 등록해 주세요.";
       setText("meal-preview", "음식을 선택하면 계산됩니다.");
       setText("meal-unit", "g");
+      $("container-row").hidden = true;
       renderFavoriteButton();
       return;
     }
     setText("meal-unit", food.baseUnit);
     $("meal-amount").max = food.baseUnit === "개" ? "100" : "5000";
+    renderContainers(food);
+    renderContainerHint(food);
     renderFavoriteButton();
     reference.append(
       doc.createTextNode(
@@ -1999,6 +2056,8 @@ export function createApp({
     renderFavoriteButton();
   });
   on($("meal-amount"), "input", previewMeal);
+  on($("container-count"), "input", applyContainer);
+  on($("container-select"), "change", applyContainer);
   on($("food-favorite"), "click", () => toggleFavorite(selectedFood()?.id));
   on($("load-processed"), "click", () => loadProcessedFoods());
   on($("body-profile-form"), "submit", (event) => {

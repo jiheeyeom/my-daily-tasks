@@ -52,64 +52,122 @@ const references = [
 // of SR Legacy. Beer and wine sit within a couple of percent of water's density,
 // so entering the millilitres you drank as grams is close enough; spirits are
 // lighter, so 100 ml of 40% spirit weighs about 94 g.
+// Container weights come from the same FDC entries' portion tables: USDA lists
+// beer at 1 fl oz = 30 g and a 12 fl oz can at 360 g, wine at 1 glass = 180 g
+// and a half bottle at 375 g. Sizes USDA does not list are scaled with its own
+// 30 g per fl oz figure rather than a density picked out of the air.
+const beerContainers = [
+  { label: "캔 355ml", ml: 355, amount: 360 },
+  { label: "캔 500ml", ml: 500, amount: 507 },
+  { label: "병 500ml", ml: 500, amount: 507 },
+  { label: "병 640ml", ml: 640, amount: 649 },
+  { label: "잔 200ml", ml: 200, amount: 203 },
+];
+const wineContainers = [
+  { label: "잔 150ml", ml: 150, amount: 150 },
+  { label: "잔 180ml", ml: 180, amount: 180 },
+  { label: "반 병 375ml", ml: 375, amount: 375 },
+  { label: "병 750ml", ml: 750, amount: 750 },
+];
+const spiritContainers = [
+  { label: "샷 30ml", ml: 30, amount: 30 },
+  { label: "잔 45ml", ml: 45, amount: 46 },
+  { label: "소주잔 50ml", ml: 50, amount: 51 },
+  { label: "병 360ml", ml: 360, amount: 365 },
+  { label: "병 700ml", ml: 700, amount: 710 },
+];
+
 const alcoholReferences = [
-  [168746, "맥주 · 일반 (g 기준)", 43, 0.46, 3.55, 0, "술 주류 맥주 라거 beer"],
+  [
+    168746,
+    "맥주 · 일반",
+    43,
+    0.46,
+    3.55,
+    0,
+    "술 주류 맥주 라거 beer",
+    beerContainers,
+  ],
   [
     168749,
-    "맥주 · 라이트 (g 기준)",
+    "맥주 · 라이트",
     29,
     0.24,
     1.64,
     0,
-    "술 주류 맥주 라이트 저칼로리",
+    "술 주류 맥주 라이트",
+    beerContainers,
   ],
   [
     173190,
-    "레드와인 · 테이블 (g 기준)",
+    "레드와인 · 테이블",
     85,
     0.07,
     2.61,
     0,
     "술 주류 와인 적포도주 레드",
+    wineContainers,
   ],
   [
     174837,
-    "화이트와인 · 테이블 (g 기준)",
+    "화이트와인 · 테이블",
     82,
     0.07,
     2.6,
     0,
     "술 주류 와인 백포도주 화이트",
+    wineContainers,
   ],
   [
     173185,
-    "와인 · 테이블 평균 (g 기준)",
+    "와인 · 테이블 평균",
     83,
     0.07,
     2.72,
     0,
     "술 주류 와인 포도주",
+    wineContainers,
   ],
-  [167723, "청주·사케 (g 기준)", 134, 0.5, 5, 0, "술 주류 청주 사케 정종"],
+  [
+    167723,
+    "청주·사케",
+    134,
+    0.5,
+    5,
+    0,
+    "술 주류 청주 사케 정종",
+    wineContainers,
+  ],
   [
     174818,
-    "보드카 40도 (g 기준)",
+    "보드카 40도",
     231,
     0,
     0,
     0,
     "술 주류 보드카 증류주 소주 대용",
+    spiritContainers,
   ],
   [
     174819,
-    "위스키 43도 (g 기준)",
+    "위스키 43도",
     250,
     0,
     0.1,
     0,
     "술 주류 위스키 증류주 하이볼",
+    spiritContainers,
   ],
-  [174817, "럼 40도 (g 기준)", 231, 0, 0, 0, "술 주류 럼 증류주 칵테일"],
+  [
+    174817,
+    "럼 40도",
+    231,
+    0,
+    0,
+    0,
+    "술 주류 럼 증류주 칵테일",
+    spiritContainers,
+  ],
 ];
 
 // USDA FoodData Central, SR Legacy (April 2018). Snacks and sweets, per 100 g.
@@ -371,7 +429,7 @@ const brandServings = [
 // Per 100 g of edible food, not per portion or 100 ml.
 const perHundredGrams =
   (dataset) =>
-  ([fdcId, name, kcal, protein, carbs, fat, keywords]) =>
+  ([fdcId, name, kcal, protein, carbs, fat, keywords, containers]) =>
     entry(fdcId, dataset, {
       name,
       kcal,
@@ -381,6 +439,7 @@ const perHundredGrams =
       keywords,
       baseAmount: 100,
       baseUnit: "g",
+      ...(containers ? { containers } : {}),
     });
 
 // One serving, scaled from the published per-100 g values by that serving's gram weight.

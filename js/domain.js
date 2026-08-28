@@ -144,6 +144,63 @@ export function calculateNutrition(food, amount, unit = food.baseUnit) {
   return result;
 }
 
+// Drinks are counted in cans, glasses and bottles, but stored in the unit the
+// nutrition is published in. A container therefore carries both: the volume a
+// person recognises and the amount in the food's own base unit.
+export const ML_CONTAINERS = [
+  { label: "잔 200ml", ml: 200, amount: 200 },
+  { label: "캔 355ml", ml: 355, amount: 355 },
+  { label: "캔 500ml", ml: 500, amount: 500 },
+  { label: "병 360ml", ml: 360, amount: 360 },
+  { label: "병 500ml", ml: 500, amount: 500 },
+  { label: "병 750ml", ml: 750, amount: 750 },
+];
+
+export function containersFor(food) {
+  if (food?.containers?.length) return food.containers;
+  // A millilitre-based food needs no conversion at all, so the standard sizes
+  // apply directly. Anything measured by weight needs a published container
+  // weight, which only the curated drinks have.
+  return food?.baseUnit === "ml" ? ML_CONTAINERS : [];
+}
+
+export function containerAmount(container, count) {
+  const quantity = Number(count);
+  if (!container || !Number.isFinite(quantity) || quantity <= 0) return null;
+  return round(container.amount * quantity, 1);
+}
+
+export function describeContainer(container, count) {
+  const quantity = Number(count);
+  if (!container || !Number.isFinite(quantity) || quantity <= 0) return "";
+  return `${round(container.ml * quantity, 0)}ml`;
+}
+
+// Reverse view: what a typed amount comes to in containers, so the two inputs
+// always agree. Only reported when it lands close to a recognisable count.
+export function containerEquivalent(food, amount) {
+  const containers = containersFor(food);
+  const quantity = Number(amount);
+  if (!containers.length || !Number.isFinite(quantity) || quantity <= 0)
+    return null;
+  let best = null;
+  for (const container of containers) {
+    const count = round(quantity / container.amount, 2);
+    if (count < 0.25 || count > 20) continue;
+    const rounded = Math.round(count * 4) / 4;
+    const drift = Math.abs(count - rounded) / count;
+    if (drift > 0.05) continue;
+    if (!best || Math.abs(rounded - 1) < Math.abs(best.count - 1))
+      best = { container, count: rounded };
+  }
+  if (!best) return null;
+  return {
+    ...best,
+    ml: round(best.container.ml * best.count, 0),
+    text: `${best.count}${best.container.label.replace(/\s?[0-9.]+ml$/, "")} · ${round(best.container.ml * best.count, 0)}ml`,
+  };
+}
+
 export function makeMeal(input, now = Date.now()) {
   if (!isDateKey(input.date)) throw new Error("날짜를 확인해 주세요.");
   if (!Object.hasOwn(MEAL_TYPES, input.mealType))

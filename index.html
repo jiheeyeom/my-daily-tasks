@@ -458,6 +458,23 @@
                 기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
                 등록해 주세요.
               </p>
+              <div id="container-row" class="container-row" hidden>
+                <label
+                  >잔·캔·병으로 입력<input
+                    type="number"
+                    id="container-count"
+                    inputmode="decimal"
+                    min="0.1"
+                    max="50"
+                    step="0.5"
+                    value="1"
+                /></label>
+                <label
+                  ><span class="sr-only">용기 종류</span
+                  ><select id="container-select"></select
+                ></label>
+                <p id="container-hint" class="help-text" aria-live="polite"></p>
+              </div>
               <div class="meal-amount-row">
                 <label
                   >먹은 양

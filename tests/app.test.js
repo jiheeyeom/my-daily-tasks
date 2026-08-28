@@ -725,6 +725,47 @@ test("a failed processed-food download leaves the button usable", async (t) => {
   assert.match(f.$("processed-status").textContent, /불러오지 못했어요/);
 });
 
+test("half a bottle of wine fills the amount and shows the millilitres", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  // A solid food offers no containers at all.
+  f.value("food-select", "usda-168932", "change");
+  assert.equal(f.$("container-row").hidden, true);
+
+  f.value("food-select", "usda-173190", "change");
+  assert.equal(f.$("container-row").hidden, false);
+  const labels = [...f.$("container-select").options].map((o) => o.textContent);
+  assert.deepEqual(labels, ["잔 150ml", "잔 180ml", "반 병 375ml", "병 750ml"]);
+
+  // Pick the bottle, then half of it.
+  f.value("container-select", "3", "change");
+  f.value("container-count", "0.5");
+  assert.equal(f.$("meal-amount").value, "375");
+  assert.match(f.$("container-hint").textContent, /375ml/);
+  assert.match(f.$("meal-preview").textContent, /318.8 kcal/);
+
+  await f.submit("meal-form");
+  const saved = f.store.writes.at(-1);
+  // What is stored stays the published unit; the container is only an input aid.
+  assert.equal(saved.data.unit, "g");
+  assert.equal(saved.data.amount, 375);
+});
+
+test("typing an amount reports the container it works out to", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.value("food-select", "usda-168746", "change");
+  f.value("meal-amount", "720");
+  assert.match(f.$("container-hint").textContent, /2캔/);
+  assert.match(f.$("container-hint").textContent, /710ml/);
+  // An amount matching no container leaves the reverse reading out.
+  f.value("meal-amount", "123");
+  assert.equal(
+    /지금 입력한 양은/.test(f.$("container-hint").textContent),
+    false,
+  );
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

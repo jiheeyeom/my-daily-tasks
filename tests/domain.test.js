@@ -25,6 +25,10 @@ import {
   exerciseOptions,
   portionFor,
   foodSuggestions,
+  containersFor,
+  containerAmount,
+  describeContainer,
+  containerEquivalent,
 } from "../js/domain.js";
 import { FOOD_CATALOG } from "../js/foods.js";
 import { copyLegacyTasks } from "../js/migration.js";
@@ -469,8 +473,9 @@ test("alcohol is in the catalog and findable by the words people search", () => 
   const beer = FOOD_CATALOG.find((food) => food.id === "usda-168746");
   assert.equal(beer.kcal, 43);
   assert.equal(beer.baseAmount, 100);
-  // Named "(g 기준)" so nobody assumes the number is per 100 ml.
-  assert.match(beer.name, /g 기준/);
+  // Beer carries its can and bottle sizes so it can be logged by container.
+  assert.equal(beer.containers.length > 0, true);
+  assert.ok(beer.containers.every((c) => c.ml > 0 && c.amount > 0));
 
   // 식약처 rows carry their classification in keywords, so a dish is findable
   // by a category word its own name never contains.
@@ -481,4 +486,46 @@ test("alcohol is in the catalog and findable by the words people search", () => 
       (food.keywords || "").includes("밥류"),
   );
   assert.equal(byCategory.length > 0, true);
+});
+
+test("containers convert between volume and the food's own unit", () => {
+  const beer = FOOD_CATALOG.find((food) => food.id === "usda-168746");
+  const can = beer.containers.find((c) => c.label === "캔 355ml");
+  // USDA lists a 12 fl oz can of beer at 360 g, so a can is 360 g, not 355.
+  assert.equal(can.amount, 360);
+  assert.equal(containerAmount(can, 1), 360);
+  assert.equal(containerAmount(can, 2), 720);
+  assert.equal(describeContainer(can, 2), "710ml");
+
+  const bottle = FOOD_CATALOG.find(
+    (food) => food.id === "usda-173190",
+  ).containers.find((c) => c.label === "병 750ml");
+  // Half a bottle is the case the whole feature exists for.
+  assert.equal(containerAmount(bottle, 0.5), 375);
+  assert.equal(describeContainer(bottle, 0.5), "375ml");
+
+  for (const bad of [0, -1, "", null, Number.NaN])
+    assert.equal(containerAmount(can, bad), null);
+  assert.equal(containerAmount(null, 1), null);
+});
+
+test("a millilitre food gets the standard containers, a solid gets none", () => {
+  assert.equal(containersFor({ baseUnit: "ml" }).length > 0, true);
+  // No published container weight means no guessing from a density.
+  assert.deepEqual(containersFor({ baseUnit: "g" }), []);
+  assert.deepEqual(containersFor({ baseUnit: "개" }), []);
+  assert.deepEqual(containersFor(null), []);
+});
+
+test("a typed amount reports the container it comes to, or nothing", () => {
+  const beer = FOOD_CATALOG.find((food) => food.id === "usda-168746");
+  const wine = FOOD_CATALOG.find((food) => food.id === "usda-173190");
+  assert.equal(containerEquivalent(beer, 720).count, 2);
+  assert.match(containerEquivalent(beer, 720).text, /710ml/);
+  assert.equal(containerEquivalent(wine, 375).ml, 375);
+  // An amount that is not near any container count says nothing rather than
+  // rounding it into a tidy-looking lie.
+  assert.equal(containerEquivalent(beer, 123), null);
+  assert.equal(containerEquivalent({ baseUnit: "개" }, 1), null);
+  assert.equal(containerEquivalent(beer, 0), null);
 });
