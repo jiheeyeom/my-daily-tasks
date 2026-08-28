@@ -676,7 +676,77 @@ test("search puts name matches ahead of category-keyword matches", async (t) => 
     listed.slice(0, cass).every((text) => text.includes("맥주")),
     true,
   );
-  assert.match(listed[0], /맥주/);
+  // The plain drink beats the supplement that merely shares the word.
+  assert.match(listed[0], /맥주 · 일반/);
+  assert.equal(
+    listed.findIndex((text) => text.includes("맥주효모")) >
+      listed.findIndex((text) => text.includes("맥주 · 라이트")),
+    true,
+  );
+});
+
+test("plain wine outranks wine vinegar, and pinned or repeated foods lead", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.dom.window.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      prefix: "mfdsp",
+      source: "식약처 가공식품DB",
+      sourceUrl: "https://various.foodsafetykorea.go.kr/nutrient/",
+      rows: [
+        // Starts with the search term but is a condiment, not a drink.
+        ["와인비니거 골든샷", 574, 0, 100, 0, 100, "g", "조미식품"],
+        ["화이트 와인 식초", 0, 0, 0, 0, 100, "ml", "조미식품"],
+      ],
+    }),
+  });
+  f.$("load-processed").click();
+  await tick();
+
+  const names = () =>
+    [...f.$("food-select").querySelectorAll("option")]
+      .filter((option) => option.value)
+      .map((option) => option.textContent);
+
+  f.value("food-search", "와인");
+  const listed = names();
+  assert.match(listed[0], /와인 · 테이블 평균/);
+  assert.match(listed[1], /레드와인/);
+  assert.match(listed[2], /화이트와인/);
+  assert.equal(
+    listed.findIndex((text) => text.includes("와인비니거")) > 2,
+    true,
+  );
+
+  // Pinning a food puts it first and marks it.
+  f.value("food-select", "usda-174837", "change");
+  f.$("food-favorite").click();
+  f.value("food-search", "와인");
+  assert.match(names()[0], /^★ 화이트와인/);
+});
+
+test("a food logged repeatedly rises in the search list", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.value("food-search", "와인");
+  const before = [...f.$("food-select").querySelectorAll("option")]
+    .filter((option) => option.value)
+    .map((option) => option.value);
+  assert.notEqual(before[0], "usda-173190");
+
+  for (let i = 0; i < 2; i++) {
+    f.value("food-search", "레드와인");
+    f.value("food-select", "usda-173190", "change");
+    f.value("meal-amount", "150");
+    await f.submit("meal-form");
+  }
+  f.value("food-search", "와인");
+  const options = [...f.$("food-select").querySelectorAll("option")].filter(
+    (option) => option.value,
+  );
+  assert.equal(options[0].value, "usda-173190");
+  assert.match(options[0].textContent, /최근 2회/);
 });
 
 test("processed foods load only when asked and then join the catalog", async (t) => {

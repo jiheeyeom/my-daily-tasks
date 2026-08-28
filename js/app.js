@@ -792,12 +792,40 @@ export function createApp({
   // The catalog holds thousands of foods, so the dropdown renders a capped
   // slice. Without a cap the browser would build every option on each keystroke.
   const FOOD_OPTION_LIMIT = 200;
-  const rankFood = (food, search) => {
+  // Ranking, most significant first. Starting with the search term is a weak
+  // signal — "와인비니거" starts with 와인 but "레드와인" is what was meant — so
+  // what the person actually uses, then how generic the name is, comes first.
+  const rankFood = (food, search, usage) => {
     const name = food.name.toLocaleLowerCase();
-    if (name.startsWith(search)) return 0;
-    if (name.includes(search)) return 1;
-    return 2;
+    return [
+      favorites().includes(food.id) ? 0 : 1,
+      -(usage.get(food.name) || 0),
+      // A match in the name beats one that only came from the category.
+      name.includes(search) ? 0 : 1,
+      // Then the curated lists, which hold the plain "레드와인" a search for
+      // 와인 is usually after, ahead of 250k branded products.
+      food.id.startsWith("custom:") ? 0 : food.id.startsWith("mfds") ? 2 : 1,
+      // Only within one of those groups is "starts with" a useful tiebreak;
+      // applied any earlier it would float 와인비니거 above 레드와인.
+      name.startsWith(search) ? 0 : 1,
+      food.name.length,
+    ];
   };
+
+  const compareRank = (a, b) => {
+    for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i];
+    return 0;
+  };
+
+  // How often each food shows up in the meals currently loaded.
+  function usageCounts() {
+    const counts = new Map();
+    for (const meal of state.data.meals || []) {
+      const name = meal.food?.name;
+      if (name) counts.set(name, (counts.get(name) || 0) + 1);
+    }
+    return counts;
+  }
   const FOOD_GROUPS = [
     [
       "내 음식",
@@ -813,7 +841,7 @@ export function createApp({
     const select = $("food-select"),
       previous = preferredId ?? select.value;
     const search = $("food-search").value.trim().toLocaleLowerCase();
-    const matches = availableFoods().filter(
+    let matches = availableFoods().filter(
       (food) =>
         `${food.name} ${food.keywords || ""}`
           .toLocaleLowerCase()
@@ -822,8 +850,15 @@ export function createApp({
     // Category words live in the keywords, so a search for 맥주 also matches
     // 맥주효모 supplements. Name matches come first, and among those the ones
     // that start with the term, so the obvious answer is not buried.
-    if (search)
-      matches.sort((a, b) => rankFood(a, search) - rankFood(b, search));
+    const usage = usageCounts();
+    if (search) {
+      const keyed = matches.map((food) => ({
+        food,
+        key: rankFood(food, search, usage),
+      }));
+      keyed.sort((a, b) => compareRank(a.key, b.key));
+      matches = keyed.map((item) => item.food);
+    }
     const foods = matches.slice(0, FOOD_OPTION_LIMIT);
     if (previous && !foods.some((food) => food.id === previous)) {
       const selected = matches.find((food) => food.id === previous);
@@ -838,25 +873,35 @@ export function createApp({
     );
     placeholder.value = "";
     select.replaceChildren(placeholder);
-    const grouped = new Map(FOOD_GROUPS.map(([name]) => [name, []]));
-    for (const food of foods) {
-      const [name] = FOOD_GROUPS.find(([, belongs]) => belongs(food));
-      grouped.get(name).push(food);
-    }
-    for (const [name, items] of grouped) {
-      if (!items.length) continue;
-      const group = el("optgroup");
-      group.label = name;
-      for (const food of items) {
-        const option = el(
-          "option",
-          "",
-          `${food.name} · ${food.baseAmount}${food.baseUnit}당 ${food.kcal}kcal`,
-        );
-        option.value = food.id;
-        group.append(option);
+    const option = (food) => {
+      const used = usage.get(food.name) || 0;
+      const node = el(
+        "option",
+        "",
+        `${favorites().includes(food.id) ? "★ " : ""}${food.name} · ${food.baseAmount}${food.baseUnit}당 ${food.kcal}kcal${
+          used >= 2 ? ` · 최근 ${used}회` : ""
+        }`,
+      );
+      node.value = food.id;
+      return node;
+    };
+    if (search) {
+      // While searching, the ranking is the whole point, so the list stays flat.
+      // Grouping here would push a better match below a whole category.
+      for (const food of foods) select.append(option(food));
+    } else {
+      const grouped = new Map(FOOD_GROUPS.map(([name]) => [name, []]));
+      for (const food of foods) {
+        const [name] = FOOD_GROUPS.find(([, belongs]) => belongs(food));
+        grouped.get(name).push(food);
       }
-      select.append(group);
+      for (const [name, items] of grouped) {
+        if (!items.length) continue;
+        const group = el("optgroup");
+        group.label = name;
+        for (const food of items) group.append(option(food));
+        select.append(group);
+      }
     }
     select.value = foods.some((food) => food.id === previous) ? previous : "";
     setText(
