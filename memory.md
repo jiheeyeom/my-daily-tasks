@@ -26,6 +26,7 @@ GitHub Pages + Firebase Firestore 기반 개인 정적 웹앱.
 - [x] 식약처 음식DB 11,086종 도입 (2025-04-08 워크북)
 - [x] 가공식품DB 255,785종 + 건강기능식품 3,346종 도입
 - [x] firestore.rules 재게시 완료 (checkups 컬렉션 포함, 2026-08-27)
+- [ ] **firestore.rules 또 재게시 필요** — profile 컬렉션 규칙 추가됨(2026-08-28)
 - [ ] 다른 계정으로 내 데이터 접근 차단 확인 (콘솔 Rules Playground, 계정 2개 필요)
 
 규칙 게시 검증: Firestore REST API로 비로그인 읽기를 시도해 `my_tasks`,
@@ -106,11 +107,13 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
 - **식약처 원본 워크북은 커밋 금지**: `docs/FOOD DATABASE/` 는 gitignore. 가공식품DB 가 109MB 라
   GitHub 100MB 파일 상한을 넘김. 생성물 `js/foods-kr.js` 만 커밋하고
   `python3 scripts/import_food_db.py` 로 재생성.
-- **checkups 와 weights 는 분리**: 검진 체중은 체중 기록/7일 평균에 안 들어감. 기초대사량 카드에서
-  키만, 그것도 직접 입력이 없을 때만 검진 값을 빌려 씀.
+- **검진 체중 → weights 자동 추가**: 검진 가져올 때 그 날짜 체중 기록도 생성(`saveIfAbsent`)해서
+  7일 평균·그래프에 반영. 직접 기록한 값은 절대 덮어쓰지 않음.
 - **기초대사량 카드**: Mifflin-St Jeor. TDEE 가 아니라 안정시 열량이라 활동량 누락 — UI 와 문서에
   반드시 명시. 7700kcal=1kg 은 어림 규칙. 목표 열량 기능은 만들지 않음(검진 파일도 금지 명시).
-  성별·출생연도·키는 localStorage(`bodyProfile_<uid>`), 체중은 항상 weights 최신값.
+  성별·출생연도·키·목표열량은 Firestore `users/{uid}/profile/body`(계정 동기화), 체중은 weights 최신값.
+- **목표 열량 기능 있음**: 사용자가 한계를 인지하고 동기부여용으로 요청함(2026-08-28). 경고·잔소리 없이
+  진행 막대와 남은/초과 kcal 만 표시. 앱이 목표치를 대신 정하지는 않음.
 - **건강검진 그래프**: 일반검진 2회 이상인 지표만 연도.월 꺾은선으로. 결과 없는 회차는 선을 끊고
   보간하지 않음. 세로축은 기록값 범위이며 정상 범위가 아님.
 - **브랜드 제품 값 출처**: 호식이두마리치킨은 제조사가 열량 미공개 → 제3자 앱 값을 쓰되

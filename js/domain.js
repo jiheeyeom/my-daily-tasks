@@ -266,12 +266,36 @@ export function makeCheckup(input, now = Date.now()) {
   };
 }
 
+export const BODY_PROFILE_SEXES = { female: "여성", male: "남성" };
+export const BODY_PROFILE_ID = "body";
+
+export function makeBodyProfile(input, now = Date.now()) {
+  if (!Object.hasOwn(BODY_PROFILE_SEXES, input.sex ?? ""))
+    throw new Error("성별을 선택해 주세요.");
+  const optional = (value, label, options) =>
+    value === "" || value === null || value === undefined
+      ? null
+      : numberValue(value, label, options);
+  return {
+    sex: input.sex,
+    birthYear: numberValue(input.birthYear, "출생연도", {
+      min: 1900,
+      max: 2100,
+    }),
+    heightCm: optional(input.heightCm, "키", { min: 100, max: 250 }),
+    targetKcal: optional(input.targetKcal, "목표 열량", {
+      min: 500,
+      max: 10000,
+    }),
+    createdAt: input.createdAt ?? now,
+    updatedAt: now,
+  };
+}
+
 // Roughly 7,700 kcal is often quoted as one kilogram of body fat. It is a rule
 // of thumb, not a law: real change also involves water, glycogen and the body
 // adapting, so any projection from it is an order of magnitude, not a forecast.
 export const KCAL_PER_KG = 7700;
-
-export const BODY_PROFILE_SEXES = { female: "여성", male: "남성" };
 
 // Mifflin-St Jeor. This is resting metabolic rate only. It is NOT total daily
 // energy expenditure: it excludes all activity, so a deficit against it is

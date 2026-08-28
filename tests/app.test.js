@@ -70,6 +70,11 @@ class FakeStore {
       .filter((item) => item.active && item.uid === uid && item.kind === kind)
       .forEach((item) => this.emit(item));
   }
+  async saveIfAbsent(uid, kind, id, data) {
+    if (this.list(uid, kind).some((row) => row.id === id)) return false;
+    await this.save(uid, kind, id, data);
+    return true;
+  }
   async save(uid, kind, id, data) {
     if (this.nextError) {
       const error = this.nextError;
@@ -159,12 +164,12 @@ test("no auth means no subscriptions or visible private data; setup guard also b
 test("login loads only UID-scoped paths and default yoga is Wednesday", (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
-  // tasks, foods, checkups plus the three date-scoped health collections.
-  assert.equal(f.store.listeners.length, 6);
+  // tasks, foods, checkups, profile plus the three date-scoped health collections.
+  assert.equal(f.store.listeners.length, 7);
   assert.ok(f.store.listeners.every((item) => item.uid === "alice"));
   assert.deepEqual(
     [...new Set(f.store.listeners.map((item) => item.kind))].sort(),
-    ["checkups", "foods", "meals", "tasks", "weights", "workouts"],
+    ["checkups", "foods", "meals", "profile", "tasks", "weights", "workouts"],
   );
   assert.equal(f.$("private-app").hidden, false);
   assert.equal(f.$("day-kcal").textContent, "—");
@@ -314,6 +319,13 @@ test("checkup import stores transcribed values, keeps blanks null and does not d
 
   const saved = f.store.writes.filter((item) => item.kind === "checkups");
   assert.equal(saved.length, 2);
+  // The checkup weight also joins the weight log so it reaches the day view,
+  // the 7-day average and the chart.
+  const weights = f.store.writes.filter((item) => item.kind === "weights");
+  assert.equal(weights.length, 1);
+  assert.equal(weights[0].id, "2023-12-27");
+  assert.equal(weights[0].data.kg, 49);
+  assert.match(weights[0].data.note, /건강검진/);
   // The id comes from kind and date so a second import updates in place.
   assert.deepEqual(saved.map((item) => item.id).sort(), [
     "general_2023-12-27",
@@ -463,6 +475,92 @@ test("the balance card falls back to the checkup height and shows a shortfall", 
   assert.equal(f.$("balance-diff").textContent, "−578 kcal");
   assert.match(f.$("balance-diff-note").textContent, /미달/);
   assert.match(f.$("balance-drift").textContent, /30일에 −2.25kg/);
+});
+
+test("a hand-recorded weight is not overwritten by a checkup import", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "weights", [
+    { id: "2023-12-27", date: "2023-12-27", kg: 50.2, note: "아침 측정" },
+  ]);
+  await f.app.importCheckups({
+    text: async () =>
+      JSON.stringify({
+        dataset_type: "personal_health_checkups",
+        general_checkups: [
+          {
+            exam_date: "2023-12-27",
+            measurements: { height_cm: 165, weight_kg: 49 },
+          },
+        ],
+      }),
+  });
+  await tick();
+  assert.equal(
+    f.store.writes.filter((item) => item.kind === "weights").length,
+    0,
+  );
+  assert.equal(f.store.list(USER.uid, "weights")[0].kg, 50.2);
+  assert.match(f.$("checkup-import-status").textContent, /검진 기록 1건/);
+});
+
+test("a calorie goal shows progress and marks going over without scolding", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-height", "164.8");
+  f.value("profile-target", "1800");
+  await f.submit("body-profile-form");
+  await tick();
+
+  const saved = f.store.writes.find((item) => item.kind === "profile");
+  assert.equal(saved.id, "body");
+  assert.equal(saved.data.targetKcal, 1800);
+  assert.equal(saved.data.heightCm, 164.8);
+
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.equal(f.$("balance-goal").hidden, false);
+  assert.match(f.$("balance-goal-left").textContent, /500 kcal 남음/);
+  assert.equal(f.$("balance-goal-bar").dataset.over, "false");
+  assert.match(
+    f.$("balance-goal-note").textContent,
+    /1,300 \/ 1,800 kcal \(72%\)/,
+  );
+
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.match(f.$("balance-goal-left").textContent, /800 kcal 초과/);
+  assert.equal(f.$("balance-goal-bar").dataset.over, "true");
+  // The bar is capped so an overshoot cannot overflow its track.
+  assert.equal(f.$("balance-goal-bar").style.width, "100%");
+});
+
+test("no goal set means no goal bar", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "weights", [
+    { id: "2026-08-26", date: "2026-08-26", kg: 53.4, note: "" },
+  ]);
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-height", "164.8");
+  await f.submit("body-profile-form");
+  await tick();
+  assert.equal(
+    f.store.writes.find((i) => i.kind === "profile").data.targetKcal,
+    null,
+  );
+  f.value("food-select", "usda-168932", "change");
+  f.value("meal-amount", "1000");
+  await f.submit("meal-form");
+  assert.equal(f.$("balance-goal").hidden, true);
 });
 
 test("a file that is not a checkup export is rejected without writing", async (t) => {

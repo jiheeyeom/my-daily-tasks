@@ -29,6 +29,7 @@ const ALLOWED = new Set([
   "workouts",
   "weights",
   "checkups",
+  "profile",
 ]);
 
 export function createFirebaseStore(config) {
@@ -104,6 +105,16 @@ export function createFirebaseStore(config) {
           batch.delete(documentRef(uid, kind, id));
         await batch.commit();
       }
+    },
+    // Used for weights taken from a checkup: a value the person typed in
+    // themselves for that date must win over an imported one.
+    async saveIfAbsent(uid, kind, id, data) {
+      const ref = documentRef(uid, kind, id);
+      return runTransaction(db, async (transaction) => {
+        if ((await transaction.get(ref)).exists()) return false;
+        transaction.set(ref, data);
+        return true;
+      });
     },
     async readLegacy(uid) {
       privateCollection(uid, "tasks");

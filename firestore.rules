@@ -91,6 +91,17 @@ service cloud.firestore {
         && optionalNum(m.get('visual_acuity_left_decimal', null), 3)
         && optionalNum(m.get('visual_acuity_right_decimal', null), 3);
     }
+    function optionalNumIn(value, min, max) {
+      return value == null || num(value, min, max);
+    }
+    function validProfile(d, id) {
+      return id == 'body'
+        && d.keys().hasAll(['sex', 'birthYear', 'heightCm', 'targetKcal', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['sex', 'birthYear', 'heightCm', 'targetKcal', 'createdAt', 'updatedAt'])
+        && d.sex in ['female', 'male'] && num(d.birthYear, 1900, 2100)
+        && optionalNumIn(d.heightCm, 100, 250)
+        && optionalNumIn(d.targetKcal, 500, 10000) && times(d);
+    }
     function validCheckup(d, id) {
       return d.keys().hasAll(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
         && d.keys().hasOnly(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
@@ -124,6 +135,11 @@ service cloud.firestore {
       allow read, delete: if owner(uid);
       allow create: if owner(uid) && validWeight(request.resource.data, id);
       allow update: if owner(uid) && stableCreation() && validWeight(request.resource.data, id);
+    }
+    match /users/{uid}/profile/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validProfile(request.resource.data, id);
+      allow update: if owner(uid) && stableCreation() && validProfile(request.resource.data, id);
     }
     match /users/{uid}/checkups/{id} {
       allow read, delete: if owner(uid);

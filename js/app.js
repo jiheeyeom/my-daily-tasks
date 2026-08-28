@@ -16,6 +16,8 @@ import {
   makeWeight,
   makeCheckup,
   checkupId,
+  makeBodyProfile,
+  BODY_PROFILE_ID,
   basalMetabolicRate,
   energyBalance,
   weightDriftKg,
@@ -74,6 +76,7 @@ export function createApp({
     "workouts",
     "weights",
     "checkups",
+    "profile",
   ];
   const state = {
     user: null,
@@ -392,7 +395,7 @@ export function createApp({
     setText("task-sync-status", status(["tasks"]));
     setText(
       "health-sync-status",
-      status(["foods", "meals", "workouts", "weights", "checkups"]),
+      status(["foods", "meals", "workouts", "weights", "checkups", "profile"]),
     );
     const error = dataKeys.map((key) => state.sync[key]?.error).find(Boolean);
     $("sync-error").hidden = !error;
@@ -417,6 +420,7 @@ export function createApp({
       if (kind === "tasks") renderTasks();
       else if (kind === "foods") renderFoods();
       else if (kind === "checkups") renderCheckups();
+      else if (kind === "profile") renderBalance();
       else renderHealth();
       if (kind === "weights") fillWeight(true);
       showSync();
@@ -438,7 +442,10 @@ export function createApp({
             if (kind === "tasks") renderTasks();
             else if (kind === "foods") renderFoods();
             else if (kind === "checkups") renderCheckups();
-            else {
+            else if (kind === "profile") {
+              fillBodyProfile();
+              renderBalance();
+            } else {
               renderHealth();
               if (kind === "weights") fillWeight();
             }
@@ -556,6 +563,7 @@ export function createApp({
       watch("foods", null, subscriptions, state.epoch);
       // Checkups span years, so they are not bound to the 7-day health window.
       watch("checkups", null, subscriptions, state.epoch);
+      watch("profile", null, subscriptions, state.epoch);
       listenHealth();
     }
     showSync();
@@ -1015,23 +1023,16 @@ export function createApp({
     }
   }
 
-  // Sex, birth year and height are a display preference for one arithmetic
-  // card, so they stay on the device rather than adding a synced collection.
-  const profileKey = () => `bodyProfile_${state.user?.uid ?? ""}`;
-  function bodyProfile() {
-    if (!state.user) return null;
-    try {
-      const raw = JSON.parse(preference(profileKey()) || "null");
-      return raw && typeof raw === "object" ? raw : null;
-    } catch {
-      return null;
-    }
-  }
+  const bodyProfile = () =>
+    (state.data.profile || []).find((row) => row.id === BODY_PROFILE_ID) ||
+    null;
+
   function fillBodyProfile() {
     const saved = bodyProfile() || {};
     $("profile-sex").value = saved.sex || "";
     $("profile-birth-year").value = saved.birthYear ?? "";
     $("profile-height").value = saved.heightCm ?? "";
+    $("profile-target").value = saved.targetKcal ?? "";
   }
 
   const latestOf = (rows, pick) =>
@@ -1104,6 +1105,8 @@ export function createApp({
       balance.over ? "기초대사량 초과" : "기초대사량 미달",
     );
 
+    renderGoal(totals.values.kcal, totals.missing.kcal);
+
     // Intl renders a plain hyphen, so signs are written by hand to match the
     // "+"/"−" shown on the difference card.
     const signed = (value) =>
@@ -1113,6 +1116,33 @@ export function createApp({
     setText(
       "balance-drift",
       `오늘 같은 수지가 이어진다면 대략 7일에 ${signed(week)}, 30일에 ${signed(month)} 쪽입니다. ${KCAL_PER_KG.toLocaleString("ko-KR")}kcal을 1kg으로 잡은 어림 계산이고, 활동량이 빠져 있어 실제 변화는 이보다 작게 나오는 경우가 많아요.`,
+    );
+  }
+
+  function renderGoal(intakeKcal, missingKcal) {
+    const target = bodyProfile()?.targetKcal ?? null,
+      wrap = $("balance-goal");
+    wrap.hidden = target === null;
+    if (target === null) return;
+    const remaining = round(target - intakeKcal, 0),
+      percent = Math.min((intakeKcal / target) * 100, 100);
+    setText("balance-goal-label", `목표 ${fmt(target, 0)} kcal`);
+    setText(
+      "balance-goal-left",
+      remaining >= 0
+        ? `${fmt(remaining, 0)} kcal 남음`
+        : `${fmt(Math.abs(remaining), 0)} kcal 초과`,
+    );
+    const bar = $("balance-goal-bar");
+    bar.style.width = `${percent}%`;
+    bar.dataset.over = String(remaining < 0);
+    setText(
+      "balance-goal-note",
+      `${fmt(intakeKcal, 0)} / ${fmt(target, 0)} kcal (${fmt(percent, 0)}%)${
+        missingKcal
+          ? ` · 열량을 세지 못한 음식 ${missingKcal}개는 빠져 있어요`
+          : ""
+      }`,
     );
   }
 
@@ -1307,15 +1337,32 @@ export function createApp({
       "checkup-import",
       "checkups",
       async (uid) => {
-        for (const record of records)
+        let weights = 0;
+        for (const record of records) {
           // The id is derived from kind and date, so re-importing the same file
           // updates those records instead of duplicating them.
           await store.save(uid, "checkups", checkupId(record), record);
-        return records.length;
+          const kg = record.measurements?.weight_kg ?? null;
+          if (record.kind !== "general" || kg === null) continue;
+          // The checkup weight joins the weight log so it shows up in the day
+          // view, the 7-day average and the chart. saveIfAbsent keeps a weight
+          // typed in by hand for that date from being overwritten.
+          const added = await store.saveIfAbsent(
+            uid,
+            "weights",
+            record.date,
+            makeWeight({ date: record.date, kg, note: "건강검진 측정" }),
+          );
+          if (added) weights++;
+        }
+        return { count: records.length, weights };
       },
-      (count) => {
+      ({ count, weights }) => {
         $("checkup-file").value = "";
-        setText("checkup-import-status", `검진 기록 ${count}건을 저장했어요.`);
+        setText(
+          "checkup-import-status",
+          `검진 기록 ${count}건을 저장했어요.${weights ? ` 체중 ${weights}건은 체중 기록에도 추가했어요.` : ""}`,
+        );
         toast("건강검진 기록을 저장했어요.");
       },
     );
@@ -1840,22 +1887,36 @@ export function createApp({
   on($("load-processed"), "click", () => loadProcessedFoods());
   on($("body-profile-form"), "submit", (event) => {
     event.preventDefault();
-    const height = Number($("profile-height").value);
-    if ($("profile-height").value && (height < 100 || height > 250)) {
-      toast("키는 100~250cm 사이로 입력해 주세요.", true);
+    action(
+      "profile",
+      "profile",
+      (uid) =>
+        store.save(
+          uid,
+          "profile",
+          BODY_PROFILE_ID,
+          makeBodyProfile({
+            ...(bodyProfile() || {}),
+            sex: $("profile-sex").value,
+            birthYear: $("profile-birth-year").value,
+            heightCm: $("profile-height").value,
+            targetKcal: $("profile-target").value,
+          }),
+        ),
+      () => {
+        $("body-profile-details").open = false;
+        toast("내 기준을 저장했어요.");
+      },
+    );
+  });
+  on($("profile-use-bmr"), "click", () => {
+    const bmr = basalMetabolicRate(balanceInputs(), now());
+    if (bmr === null) {
+      toast("성별·출생연도·키와 체중 기록이 있어야 계산할 수 있어요.", true);
       return;
     }
-    preference(
-      profileKey(),
-      JSON.stringify({
-        sex: $("profile-sex").value,
-        birthYear: Number($("profile-birth-year").value) || null,
-        heightCm: height || null,
-      }),
-    );
-    $("body-profile-details").open = false;
-    renderBalance();
-    toast("내 기준을 저장했어요.");
+    $("profile-target").value = bmr;
+    toast("기초대사량을 목표 칸에 넣었어요. 저장을 눌러 주세요.");
   });
   on($("checkup-metric"), "change", () =>
     drawCheckupChart($("checkup-metric").value),

@@ -329,14 +329,29 @@
                     step="0.1"
                     placeholder="예: 164.8"
                 /></label>
-                <button type="submit" class="primary-btn health-btn">
-                  저장
-                </button>
+                <label
+                  >목표 열량 (kcal)<input
+                    type="number"
+                    id="profile-target"
+                    inputmode="numeric"
+                    min="500"
+                    max="10000"
+                    step="10"
+                    placeholder="비워두면 목표 없음"
+                /></label>
+                <div class="profile-actions">
+                  <button type="submit" class="primary-btn health-btn">
+                    저장
+                  </button>
+                  <button type="button" id="profile-use-bmr" class="text-btn">
+                    기초대사량 값 넣기
+                  </button>
+                </div>
               </form>
               <p class="help-text">
-                이 기준은 <strong>이 브라우저에만</strong> 저장됩니다. 체중은
-                가장 최근 체중 기록을 쓰고, 키는 비워 두면 최근 건강검진 값을
-                씁니다.
+                이 기준은 <strong>내 구글 계정</strong>에 저장되어 다른
+                기기에서도 같이 보입니다. 체중은 가장 최근 체중 기록을 쓰고,
+                키는 비워 두면 최근 건강검진 값을 씁니다.
               </p>
             </details>
             <div id="balance-empty" class="empty-state">
@@ -358,13 +373,23 @@
                   ><small id="balance-diff-note"></small>
                 </div>
               </div>
+              <div id="balance-goal" class="balance-goal" hidden>
+                <div class="goal-head">
+                  <span id="balance-goal-label"></span>
+                  <strong id="balance-goal-left"></strong>
+                </div>
+                <div class="goal-track">
+                  <div id="balance-goal-bar" class="goal-bar"></div>
+                </div>
+                <p id="balance-goal-note" class="help-text"></p>
+              </div>
               <p id="balance-drift" class="balance-drift"></p>
             </div>
             <p class="help-text">
-              기초대사량은 <strong>가만히 있을 때 쓰는 열량</strong>이라 활동량이
-              빠져 있습니다. 하루 총소모열량이 아니고, 권장 섭취량이나 감량
-              목표도 아닙니다. 체중 예상은 7,700kcal을 1kg으로 잡은 어림값이라
-              실제와 다를 수 있어요.
+              기초대사량은 <strong>가만히 있을 때 쓰는 열량</strong>이라
+              활동량이 빠져 있습니다. 하루 총소모열량이 아니고, 권장 섭취량이나
+              감량 목표도 아닙니다. 체중 예상은 7,700kcal을 1kg으로 잡은
+              어림값이라 실제와 다를 수 있어요.
             </p>
           </section>
           <section class="health-section" aria-labelledby="meal-title">
@@ -751,14 +776,18 @@
                   id="checkup-file"
                   accept="application/json,.json"
               /></label>
-              <p id="checkup-import-status" class="help-text" aria-live="polite">
+              <p
+                id="checkup-import-status"
+                class="help-text"
+                aria-live="polite"
+              >
                 아직 불러온 파일이 없어요.
               </p>
             </div>
             <div id="checkup-trend" class="checkup-trend" hidden>
               <label class="field"
-                >그래프로 볼 지표<select id="checkup-metric"></select></label
-              >
+                >그래프로 볼 지표<select id="checkup-metric"></select
+              ></label>
               <figure class="checkup-figure">
                 <figcaption id="checkup-chart-caption"></figcaption>
                 <div id="checkup-chart" class="checkup-chart"></div>
