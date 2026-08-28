@@ -644,6 +644,41 @@ test("a file that is not a checkup export is rejected without writing", async (t
   );
 });
 
+test("search puts name matches ahead of category-keyword matches", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.dom.window.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      prefix: "mfdsp",
+      source: "식약처 가공식품DB",
+      sourceUrl: "https://various.foodsafetykorea.go.kr/nutrient/",
+      rows: [
+        // Name has no 맥주 in it; only the category does.
+        ["카스 프레시", 49, 0.3, 3, 0, 100, "ml", "주류 맥주 발효주류"],
+        // A supplement whose name contains 맥주 but is not a drink.
+        ["맥주효모 비오틴", 333, 30, 40, 5, 100, "g", "건강기능식품"],
+      ],
+    }),
+  });
+  f.$("load-processed").click();
+  await tick();
+
+  f.value("food-search", "맥주");
+  const listed = [...f.$("food-select").querySelectorAll("option")]
+    .filter((option) => option.value)
+    .map((option) => option.textContent);
+  // The catalog already holds real 맥주 entries; the point is ordering.
+  const cass = listed.findIndex((text) => text.includes("카스 프레시"));
+  assert.equal(cass > -1, true);
+  // Everything before the keyword-only match names 맥주 outright.
+  assert.equal(
+    listed.slice(0, cass).every((text) => text.includes("맥주")),
+    true,
+  );
+  assert.match(listed[0], /맥주/);
+});
+
 test("processed foods load only when asked and then join the catalog", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

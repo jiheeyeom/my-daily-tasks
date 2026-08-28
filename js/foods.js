@@ -47,6 +47,71 @@ const references = [
   [173905, "오트밀 · 물로 조리 후, 무염", 71, 2.54, 12, 1.52, "귀리 오트"],
 ];
 
+// Alcohol is absent from the 식약처 database, which only covers foods that must
+// declare nutrition. These are the generic USDA figures, per 100 g like the rest
+// of SR Legacy. Beer and wine sit within a couple of percent of water's density,
+// so entering the millilitres you drank as grams is close enough; spirits are
+// lighter, so 100 ml of 40% spirit weighs about 94 g.
+const alcoholReferences = [
+  [168746, "맥주 · 일반 (g 기준)", 43, 0.46, 3.55, 0, "술 주류 맥주 라거 beer"],
+  [
+    168749,
+    "맥주 · 라이트 (g 기준)",
+    29,
+    0.24,
+    1.64,
+    0,
+    "술 주류 맥주 라이트 저칼로리",
+  ],
+  [
+    173190,
+    "레드와인 · 테이블 (g 기준)",
+    85,
+    0.07,
+    2.61,
+    0,
+    "술 주류 와인 적포도주 레드",
+  ],
+  [
+    174837,
+    "화이트와인 · 테이블 (g 기준)",
+    82,
+    0.07,
+    2.6,
+    0,
+    "술 주류 와인 백포도주 화이트",
+  ],
+  [
+    173185,
+    "와인 · 테이블 평균 (g 기준)",
+    83,
+    0.07,
+    2.72,
+    0,
+    "술 주류 와인 포도주",
+  ],
+  [167723, "청주·사케 (g 기준)", 134, 0.5, 5, 0, "술 주류 청주 사케 정종"],
+  [
+    174818,
+    "보드카 40도 (g 기준)",
+    231,
+    0,
+    0,
+    0,
+    "술 주류 보드카 증류주 소주 대용",
+  ],
+  [
+    174819,
+    "위스키 43도 (g 기준)",
+    250,
+    0,
+    0.1,
+    0,
+    "술 주류 위스키 증류주 하이볼",
+  ],
+  [174817, "럼 40도 (g 기준)", 231, 0, 0, 0, "술 주류 럼 증류주 칵테일"],
+];
+
 // USDA FoodData Central, SR Legacy (April 2018). Snacks and sweets, per 100 g.
 const snackReferences = [
   [
@@ -338,6 +403,7 @@ const perServing =
 
 export const FOOD_CATALOG = [
   ...references.map(perHundredGrams("USDA SR Legacy")),
+  ...alcoholReferences.map(perHundredGrams("USDA SR Legacy")),
   ...snackReferences.map(perHundredGrams("USDA SR Legacy")),
   ...coffeeServings.map(perServing("USDA FNDDS 2024-10-31")),
   ...brandServings.map(Object.freeze),

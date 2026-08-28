@@ -788,6 +788,12 @@ export function createApp({
   // The catalog holds thousands of foods, so the dropdown renders a capped
   // slice. Without a cap the browser would build every option on each keystroke.
   const FOOD_OPTION_LIMIT = 200;
+  const rankFood = (food, search) => {
+    const name = food.name.toLocaleLowerCase();
+    if (name.startsWith(search)) return 0;
+    if (name.includes(search)) return 1;
+    return 2;
+  };
   const FOOD_GROUPS = [
     [
       "내 음식",
@@ -809,6 +815,11 @@ export function createApp({
           .toLocaleLowerCase()
           .includes(search) || food.id === previous,
     );
+    // Category words live in the keywords, so a search for 맥주 also matches
+    // 맥주효모 supplements. Name matches come first, and among those the ones
+    // that start with the term, so the obvious answer is not buried.
+    if (search)
+      matches.sort((a, b) => rankFood(a, search) - rankFood(b, search));
     const foods = matches.slice(0, FOOD_OPTION_LIMIT);
     if (previous && !foods.some((food) => food.id === previous)) {
       const selected = matches.find((food) => food.id === previous);

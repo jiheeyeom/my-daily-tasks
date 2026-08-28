@@ -27,8 +27,12 @@ ROOT = Path(__file__).resolve().parent.parent
 DB = ROOT / "docs" / "FOOD DATABASE"
 
 # Column layouts differ between workbooks: 건강기능식품 has an extra 유형명 column.
-DISH_COLUMNS = {"name": 1, "group": 7, "basis": 16, "kcal": 17, "protein": 19, "fat": 20, "carbs": 22}
-SUPPLEMENT_COLUMNS = {"name": 1, "group": 7, "basis": 17, "kcal": 18, "protein": 20, "fat": 21, "carbs": 23}
+# 7/9/11/13 are 대분류명 / 대표식품명 / 중분류명 / 소분류명. All four go into the
+# search keywords: a product called "카스 프레시" is only findable as 맥주
+# through its category names.
+CATEGORY_COLUMNS = [7, 9, 11, 13]
+DISH_COLUMNS = {"name": 1, "basis": 16, "kcal": 17, "protein": 19, "fat": 20, "carbs": 22}
+SUPPLEMENT_COLUMNS = {"name": 1, "basis": 17, "kcal": 18, "protein": 20, "fat": 21, "carbs": 23}
 
 SOURCES = [
     {
@@ -90,6 +94,17 @@ def clean(text):
     return text.replace("\ufeff", "").lstrip("？\ufeff ").strip()
 
 
+def keywords(row):
+    seen, parts = set(), []
+    for index in CATEGORY_COLUMNS:
+        value = clean(str(row[index] or ""))
+        if not value or value in BLANK or value in seen:
+            continue
+        seen.add(value)
+        parts.append(value)
+    return " ".join(parts)
+
+
 def label(name):
     # Source names read "피자_슈퍼 디럭스": the underscore separates the dish
     # group from the specific product.
@@ -114,7 +129,7 @@ def convert(spec):
         seen.add(name)
 
         macros = [number(row[col[key]]) for key in ("protein", "carbs", "fat")]
-        group = str(row[col["group"]] or "").strip()
+        group = keywords(row)
         basis = AMOUNT.match(str(row[col["basis"]] or "").strip())
         serving = str(row[spec["serving"]] or "").strip()
 

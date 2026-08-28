@@ -342,7 +342,7 @@ test("built-in foods have explicit sources, numeric nutrition and a valid base p
   // present, since regenerating the workbook changes their count.
   assert.equal(
     FOOD_CATALOG.filter((item) => !item.id.startsWith("mfds")).length,
-    43,
+    52,
   );
   assert.equal(FOOD_CATALOG.length > 10000, true);
 });
@@ -455,4 +455,30 @@ test("food suggestions skip portions nobody would actually serve", () => {
   // Duplicates by name are collapsed.
   assert.equal(foodSuggestions(400, [rice, { ...rice }]).length, 1);
   assert.deepEqual(foodSuggestions(400, []), []);
+});
+
+test("alcohol is in the catalog and findable by the words people search", () => {
+  const search = (term) =>
+    FOOD_CATALOG.filter((food) =>
+      `${food.name} ${food.keywords || ""}`.includes(term),
+    );
+  // 식약처 excludes alcohol, so these come from USDA and must be present.
+  for (const term of ["맥주", "와인", "위스키", "청주"])
+    assert.equal(search(term).length > 0, true, term);
+
+  const beer = FOOD_CATALOG.find((food) => food.id === "usda-168746");
+  assert.equal(beer.kcal, 43);
+  assert.equal(beer.baseAmount, 100);
+  // Named "(g 기준)" so nobody assumes the number is per 100 ml.
+  assert.match(beer.name, /g 기준/);
+
+  // 식약처 rows carry their classification in keywords, so a dish is findable
+  // by a category word its own name never contains.
+  const byCategory = FOOD_CATALOG.filter(
+    (food) =>
+      food.id.startsWith("mfds-") &&
+      !food.name.includes("밥류") &&
+      (food.keywords || "").includes("밥류"),
+  );
+  assert.equal(byCategory.length > 0, true);
 });
