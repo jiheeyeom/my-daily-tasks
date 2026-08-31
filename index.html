@@ -15,6 +15,43 @@
   </head>
   <body>
     <a class="skip-link" href="#app-main">본문으로 건너뛰기</a>
+    <!-- Decorative only: fruit shapes drifting behind the page, cropped by the
+         viewport edges. Cards above stay opaque so text never sits on colour. -->
+    <div class="backdrop" aria-hidden="true">
+      <svg viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMin slice">
+        <g class="shape shape-lemon">
+          <path
+            d="M980 40c96-14 178 44 190 128 12 86-46 168-140 186-92 18-176-40-190-124-14-86 44-172 140-190z"
+          />
+          <path
+            class="leaf"
+            d="M905 150c-42 38-56 96-36 140 44 6 96-24 122-70 26-46 22-92-6-118-30 6-56 26-80 48z"
+          />
+        </g>
+        <g class="shape shape-pear">
+          <path
+            d="M255 470c74-40 150 4 168 78 16 68-20 128-16 186 4 66-42 118-108 120-64 2-112-46-112-112 0-58 28-110 32-166 4-52 12-84 36-106z"
+          />
+          <path class="stem" d="M300 452c6-40 26-70 56-88 6 34-14 70-42 96z" />
+        </g>
+        <g class="shape shape-cherry">
+          <circle cx="1030" cy="1010" r="86" />
+          <circle cx="1140" cy="1130" r="62" />
+          <path
+            class="stem"
+            d="M1030 924c40-70 92-112 150-128 4 18-2 34-16 48-52 30-92 74-118 128z"
+          />
+        </g>
+        <g class="shape shape-leaf">
+          <path
+            d="M90 1120c92-24 176 18 214 104-84 46-176 30-232-42-16-20-14-46 18-62z"
+          />
+        </g>
+        <g class="shape shape-orange">
+          <circle cx="700" cy="1490" r="120" />
+        </g>
+      </svg>
+    </div>
     <div class="ticker-wrap">
       <p id="daily-quote" class="quote-text">하루의 작은 기록이 쌓이는 곳.</p>
       <p id="daily-news" class="news-text">오늘의 뉴스를 불러오는 중입니다.</p>
@@ -294,7 +331,10 @@
               ><small>같은 조건에서 측정해 주세요</small>
             </div>
           </div>
-          <section class="health-section" aria-labelledby="balance-title">
+          <section
+            class="health-section tone-balance"
+            aria-labelledby="balance-title"
+          >
             <div class="section-heading">
               <h3 id="balance-title">기초대사량 대비 오늘</h3>
               <span class="section-kicker">계산일 뿐, 목표가 아니에요</span>
@@ -397,7 +437,10 @@
               어림값이라 실제와 다를 수 있어요.
             </p>
           </section>
-          <section class="health-section" aria-labelledby="meal-title">
+          <section
+            class="health-section tone-meal"
+            aria-labelledby="meal-title"
+          >
             <div class="section-heading">
               <h3 id="meal-title">식사</h3>
               <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
@@ -600,7 +643,10 @@
             <div id="meal-list" class="meal-list"></div>
           </section>
           <div class="health-columns">
-            <section class="health-section" aria-labelledby="workout-title">
+            <section
+              class="health-section tone-workout"
+              aria-labelledby="workout-title"
+            >
               <div class="section-heading">
                 <h3 id="workout-title">운동</h3>
                 <span class="section-kicker">오늘의 움직임</span>
@@ -671,7 +717,10 @@
                 운동 열량은 섭취 열량에서 자동으로 빼지 않아요.
               </p>
             </section>
-            <section class="health-section" aria-labelledby="weight-title">
+            <section
+              class="health-section tone-weight"
+              aria-labelledby="weight-title"
+            >
               <div class="section-heading">
                 <h3 id="weight-title">체중</h3>
                 <span class="section-kicker">하루 숫자보다 흐름</span>
@@ -719,7 +768,7 @@
             </section>
           </div>
           <section
-            class="health-section weekly-section"
+            class="health-section weekly-section tone-checkup"
             aria-labelledby="weekly-title"
           >
             <div class="section-heading">
@@ -779,7 +828,7 @@
             </details>
           </section>
           <section
-            class="health-section checkup-section"
+            class="health-section checkup-section tone-checkup"
             aria-labelledby="checkup-title"
           >
             <div class="section-heading">

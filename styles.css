@@ -1,33 +1,54 @@
 :root {
   color-scheme: light;
-  --bg: #f4f7f6;
-  --surface: #fff;
-  --surface-alt: #edf3f0;
-  --ink: #22352d;
-  --muted: #64776d;
-  --border: #d7e2db;
-  --accent: #347552;
-  --accent-hover: #285b3f;
-  --accent-soft: #e2f1e7;
-  --blue: #3c70a4;
-  --danger: #a73340;
-  --shadow: 0 4px 24px #233c2b08;
-  --radius: 16px;
+  /* Palette taken from a flat-illustration poster: a warm off-white ground,
+     ink-black type, and complementary colours that meet only as shapes. */
+  --bg: #f2f0ea;
+  --surface: #fffdf8;
+  --surface-alt: #eae6da;
+  --ink: #1a1a1a;
+  --muted: #4d4a43;
+  --border: #ddd7c8;
+  --accent: #1f4e9c;
+  --accent-hover: #17407f;
+  --accent-soft: #dce7f7;
+  --blue: #1f4e9c;
+  --danger: #d9482a;
+  --warning: #e8622c;
+  /* Section hues. Used on shapes, rules and marks, never behind body text. */
+  --hue-meal: #e2a03f;
+  --hue-workout: #7fb03a;
+  --hue-weight: #e0559a;
+  --hue-checkup: #1f4e9c;
+  --hue-balance: #e8622c;
+  --shadow: 0 6px 22px #7a6a4212;
+  --radius: 18px;
+  --grain: 0.5;
+  --grain-blend: multiply;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #141c18;
-  --surface: #1e2922;
-  --surface-alt: #27372d;
-  --ink: #e8f1e9;
-  --muted: #a2b7a9;
-  --border: #3c4e40;
-  --accent: #9dd5ad;
-  --accent-hover: #b6e7c4;
-  --accent-soft: #2b4332;
-  --blue: #9bc8f2;
-  --danger: #ffabb4;
+  /* Same hues, pulled down in saturation and lightness so the contrast play
+     survives on a dark ground without glaring. */
+  --bg: #17181c;
+  --surface: #202127;
+  --surface-alt: #2a2c33;
+  --ink: #efede6;
+  --muted: #a6a399;
+  --border: #3a3c44;
+  --accent: #8fb4ee;
+  --accent-hover: #aecbf7;
+  --accent-soft: #22304a;
+  --blue: #8fb4ee;
+  --danger: #f09480;
+  --warning: #f0a074;
+  --hue-meal: #d9a94e;
+  --hue-workout: #93c25a;
+  --hue-weight: #e07aab;
+  --hue-checkup: #8fb4ee;
+  --hue-balance: #ef8b62;
   --shadow: none;
+  --grain: 0.22;
+  --grain-blend: overlay;
 }
 * {
   box-sizing: border-box;
@@ -1350,7 +1371,7 @@ small {
 }
 
 .goal-bar[data-over="true"] {
-  background: var(--warning, #c96a2b);
+  background: var(--warning);
 }
 
 .balance-goal .help-text {
@@ -1409,4 +1430,180 @@ small {
 .container-row .help-text {
   grid-column: 1 / -1;
   margin: 0;
+}
+
+/* Decorative backdrop: shapes sit behind everything and never take clicks. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.backdrop svg {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* 0.26 / 0.20 is the strongest the shapes can be while every text colour,
+   including the muted grey, still clears WCAG AA against whichever shape it
+   happens to sit on. Raising these fails the secondary text first. */
+.backdrop .shape {
+  opacity: 0.26;
+}
+
+:root[data-theme="dark"] .backdrop .shape {
+  opacity: 0.2;
+}
+
+.shape-lemon path {
+  fill: var(--hue-meal);
+}
+
+.shape-lemon .leaf {
+  fill: var(--hue-checkup);
+}
+
+.shape-pear path {
+  fill: var(--hue-weight);
+}
+
+.shape-pear .stem,
+.shape-cherry .stem {
+  fill: var(--hue-checkup);
+}
+
+.shape-cherry circle {
+  fill: var(--hue-balance);
+}
+
+.shape-leaf path {
+  fill: var(--hue-workout);
+}
+
+.shape-orange circle {
+  fill: var(--hue-meal);
+}
+
+/* The poster's other signature is print grain. feTurbulence keeps it in CSS,
+   with no file to load, and it sits under the content rather than over text. */
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: var(--grain);
+  mix-blend-mode: var(--grain-blend);
+}
+
+.ticker-wrap,
+main,
+.snackbar {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop svg {
+    transition: opacity 0.3s ease;
+  }
+}
+
+/* One hue per section. It marks the heading and the top rule only, so the
+   colours meet as shapes rather than as backgrounds behind text. */
+.health-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.health-section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: var(--tone, var(--accent));
+}
+
+.health-section .section-heading h3,
+.health-section .section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.health-section .section-heading h3::before,
+.health-section .section-heading h2::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border-radius: 50% 50% 50% 4px;
+  background: var(--tone, var(--accent));
+  flex: none;
+}
+
+.tone-meal {
+  --tone: var(--hue-meal);
+}
+
+.tone-workout {
+  --tone: var(--hue-workout);
+}
+
+.tone-weight {
+  --tone: var(--hue-weight);
+}
+
+.tone-checkup {
+  --tone: var(--hue-checkup);
+}
+
+.tone-balance {
+  --tone: var(--hue-balance);
+}
+
+/* The login screen carries no data, so it is where the poster look can run at
+   full strength without anything to read through it. */
+.auth-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  border-radius: 62% 38% 47% 53% / 55% 45% 55% 45%;
+  background: var(--hue-meal);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.auth-card::before {
+  content: "";
+  position: absolute;
+  right: 90px;
+  bottom: 60px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50% 50% 50% 8px;
+  background: var(--hue-weight);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.auth-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .auth-card::before,
+  .auth-card::after {
+    display: none;
+  }
 }
