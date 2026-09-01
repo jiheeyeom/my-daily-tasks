@@ -76,12 +76,15 @@ body {
   background: var(--bg);
   color: var(--ink);
   font:
-    15px/1.6 -apple-system,
+    15px/1.65 "Pretendard Variable",
+    Pretendard,
+    -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     "Apple SD Gothic Neo",
-    "Malgun Gothic",
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 h1,
 h2,
@@ -91,14 +94,19 @@ figure {
   margin: 0;
 }
 h1 {
-  font-size: 25px;
-  letter-spacing: -0.6px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
 }
 h2 {
-  font-size: 21px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 h3 {
-  font-size: 19px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
 }
 button,
 input,
@@ -1539,17 +1547,8 @@ main {
   border-radius: var(--radius);
 }
 
-.health-section::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--tone, var(--accent)),
-    var(--tone-2, var(--accent-hover))
-  );
-  opacity: 0.9;
+.health-section {
+  padding: 26px;
 }
 
 .health-section .section-heading h3,
@@ -1562,8 +1561,8 @@ main {
 .health-section .section-heading h3::before,
 .health-section .section-heading h2::before {
   content: "";
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: linear-gradient(
     140deg,
@@ -1662,24 +1661,45 @@ main {
   margin: 4px 0 16px;
 }
 
-.health-art {
-  width: 168px;
-  height: auto;
-  flex: none;
-  /* Sits beside the heading rather than centred, so the date controls keep
-     their place on the right. */
-  margin-right: auto;
+/* Numbers are the substance of this app, so they get the room and the
+   alignment. Tabular figures stop values jittering as they update. */
+.stat-card strong,
+.weekly-numbers strong,
+#balance-bmr,
+#balance-intake,
+#balance-diff {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
 }
 
-.empty-art {
-  display: block;
-  width: 190px;
-  height: auto;
-  margin: 6px auto 14px;
+.stat-card {
+  padding: 19px 20px;
 }
 
-@media (max-width: 720px) {
-  .health-art {
-    display: none;
-  }
+.stat-card > span {
+  letter-spacing: 0.2px;
+}
+
+.eyebrow {
+  letter-spacing: 1.4px;
+}
+
+/* One hairline instead of a border plus a shadow: the surfaces separate by
+   tone rather than by outline. */
+.health-section,
+.stat-card,
+.checkup-card,
+.quick-add,
+.balance-advice,
+.body-profile,
+.container-row,
+.checkup-trend {
+  border-color: color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.advice-list li,
+.chip {
+  font-variant-numeric: tabular-nums;
 }

@@ -314,6 +314,12 @@ export function createApp({
     );
   }
 
+  const hiddenWithin = (node, root) => {
+    for (let step = node; step && step !== root; step = step.parentElement)
+      if (step.hidden) return true;
+    return false;
+  };
+
   function controls() {
     const groups = {
       task: ["task-form", "tasks"],
@@ -324,8 +330,13 @@ export function createApp({
     };
     for (const [key, [id, kind]] of Object.entries(groups)) {
       const disabled = busy.has(key) || !canUse(kind);
-      for (const input of $(id).querySelectorAll("input,select,button"))
-        input.disabled = disabled;
+      const form = $(id);
+      for (const input of form.querySelectorAll("input,select,button"))
+        // Controls inside a hidden row stay disabled, so they cannot block
+        // submit through validation while being impossible to see or fix.
+        // Only rows within the form count: the whole panel is hidden whenever
+        // the other tab is open, which must not disable everything.
+        input.disabled = disabled || hiddenWithin(input, form);
     }
     for (const [id, kind, key] of [
       ["task-list", "tasks", "task"],
@@ -969,6 +980,11 @@ export function createApp({
       select = $("container-select"),
       options = containersFor(food);
     row.hidden = options.length === 0;
+    // A hidden control still takes part in form validation. If it is ever
+    // invalid the browser blocks submit and cannot focus it to say why, so the
+    // whole form dies silently. Disabling it takes it out of validation.
+    for (const input of row.querySelectorAll("input,select"))
+      input.disabled = row.hidden;
     if (!options.length) {
       select.replaceChildren();
       return;

@@ -852,6 +852,54 @@ test("a refused save always says why instead of doing nothing", async (t) => {
   assert.match(f.$("snackbar").textContent, /새로고침|권한|동기화/);
 });
 
+test("every number input's default value satisfies its own min and step", () => {
+  // A value that misses the step sequence makes the control invalid. If it is
+  // also hidden, the browser blocks submit and cannot focus it to explain, so
+  // the form dies with no visible cause. jsdom does not run constraint
+  // validation, so the attributes are checked directly.
+  const dom = new JSDOM(html);
+  const inputs = [
+    ...dom.window.document.querySelectorAll('input[type="number"]'),
+  ];
+  assert.equal(inputs.length > 0, true);
+  for (const input of inputs) {
+    const value = input.getAttribute("value");
+    const stepAttr = input.getAttribute("step");
+    if (value === null || stepAttr === "any") continue;
+    const min = Number(input.getAttribute("min") ?? 0);
+    const step = Number(stepAttr ?? 1);
+    const steps = (Number(value) - min) / step;
+    assert.ok(
+      Math.abs(steps - Math.round(steps)) < 1e-9,
+      `#${input.id}: value ${value} is not reachable from min ${min} by step ${step}`,
+    );
+    const max = input.getAttribute("max");
+    assert.ok(Number(value) >= min, `#${input.id}: value below min`);
+    if (max !== null)
+      assert.ok(Number(value) <= Number(max), `#${input.id}: value above max`);
+  }
+  dom.window.close();
+});
+
+test("controls inside a hidden row are disabled, but a hidden panel is not", (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  // No container sizes for a solid food, so that row is hidden and its inputs
+  // must not take part in validation.
+  f.value("food-select", "usda-168932", "change");
+  assert.equal(f.$("container-row").hidden, true);
+  assert.equal(f.$("container-count").disabled, true);
+  assert.equal(f.$("container-select").disabled, true);
+  // The rest of the form stays usable.
+  assert.equal(f.$("meal-amount").disabled, false);
+  assert.equal(f.$("meal-submit").disabled, false);
+
+  // A drink shows the row and re-enables it.
+  f.value("food-select", "usda-173190", "change");
+  assert.equal(f.$("container-row").hidden, false);
+  assert.equal(f.$("container-count").disabled, false);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

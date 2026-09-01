@@ -111,6 +111,10 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   ml 기준 음식은 ML_CONTAINERS 자동 적용(변환 불필요). g 기준은 USDA 분량표에 무게가 있는
   술 9종만. 밀도를 임의로 만들지 않는 것이 원칙 — USDA 의 1 fl oz = 30g 만 사용.
   저장 값은 항상 원래 단위이고 용기는 입력 보조일 뿐. 역방향 표시는 오차 5% 이내일 때만.
+- **jsdom 은 HTML 제약검증을 안 함**: number input 의 value 가 min/step 시퀀스에 안 맞으면
+  브라우저가 제출을 막는데, 그 입력이 hidden 이면 포커스도 못 줘서 **버튼이 조용히 죽음**.
+  실제로 container-count(min .1 step .5 value 1) 때문에 식사 기록 버튼이 안 눌렸음(2026-09-01).
+  숨긴 행의 입력은 반드시 disabled 로 둘 것 — 단 hidden 검사는 폼 내부까지만(탭 패널이 hidden 이라 전체가 죽음).
 - **일러스트는 unDraw**: cdn.undraw.co/illustration/<name>_<hash>.svg 에서 받아 인라인.
   라이선스: 상업/개인 무료, 출처표기 불필요. 단 재배포 팩 제작·AI 학습 사용은 금지.
   삽입 시 `id` 속성 제거(페이지 ID 공간 오염 방지), width/height 제거(CSS 로 크기 지정),
