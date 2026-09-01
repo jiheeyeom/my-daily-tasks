@@ -1662,17 +1662,8 @@ main {
   margin: 4px 0 16px;
 }
 
-/* The gradient definitions live in a zero-size SVG so every glyph can point at
-   them without repeating the stops. */
-.art-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
 .health-art {
-  width: 190px;
+  width: 168px;
   height: auto;
   flex: none;
   /* Sits beside the heading rather than centred, so the date controls keep
@@ -1682,9 +1673,9 @@ main {
 
 .empty-art {
   display: block;
-  width: 140px;
+  width: 190px;
   height: auto;
-  margin: 4px auto 10px;
+  margin: 6px auto 14px;
 }
 
 @media (max-width: 720px) {
