@@ -34,6 +34,10 @@
      directly on the ground still clears WCAG AA. Getting here meant darkening
      the ground text rather than dimming the orbs into invisibility. */
   --orb: 0.42;
+  /* Figure colours, kept as tokens so the art follows the theme. */
+  --skin: #f0b48c;
+  --skin-2: #f7cdad;
+  --hair: #3b2d3a;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -64,6 +68,9 @@
   --radius: 22px;
   --accent-on-ground: #cfcfff;
   --orb: 0.38;
+  --skin: #d99b74;
+  --skin-2: #e8b795;
+  --hair: #2a2030;
 }
 * {
   box-sizing: border-box;
@@ -1521,12 +1528,9 @@ small {
 }
 
 .ticker-wrap,
-main,
-.snackbar {
+main {
   position: relative;
   z-index: 1;
-}
-
 }
 
 /* One hue per section, drawn as a gradient so it reads as light rather than a
@@ -1595,7 +1599,6 @@ main,
   --tone: var(--hue-balance);
   --tone-2: var(--hue-balance-2);
 }
-
 
 /* The login screen carries no data, so the gradient can come forward here. */
 .auth-card {
