@@ -22,6 +22,37 @@
     <a class="skip-link" href="#app-main">본문으로 건너뛰기</a>
     <!-- Decorative only: soft gradient orbs behind the page, blurred so the
          colour reads as light rather than as a shape with an edge. -->
+    <!-- Line icons reused by the section headings. Geometry only: a heart, a
+         lock, a wave, a plate, a ring and a spark. -->
+    <svg class="icon-defs" aria-hidden="true" focusable="false">
+      <symbol id="iconHeart" viewBox="0 0 24 24">
+        <path
+          d="M12 20s-7-4.35-7-9a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 4.65-7 9-7 9z"
+        />
+      </symbol>
+      <symbol id="iconLock" viewBox="0 0 24 24">
+        <rect x="5" y="10" width="14" height="10" rx="3" />
+        <path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10" />
+      </symbol>
+      <symbol id="iconWave" viewBox="0 0 24 24">
+        <path d="M2 9q2.5-3 5 0t5 0 5 0 5 0" />
+        <path d="M2 15q2.5-3 5 0t5 0 5 0 5 0" />
+      </symbol>
+      <symbol id="iconPlate" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" />
+        <circle cx="12" cy="12" r="4" />
+      </symbol>
+      <symbol id="iconRings" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5.5" />
+        <circle cx="12" cy="12" r="2" />
+      </symbol>
+      <symbol id="iconSpark" viewBox="0 0 24 24">
+        <path
+          d="M12 3c.9 4.6 3.5 7.2 8.1 8.1-4.6.9-7.2 3.5-8.1 8.1-.9-4.6-3.5-7.2-8.1-8.1C8.5 10.2 11.1 7.6 12 3z"
+        />
+      </symbol>
+    </svg>
     <div class="backdrop" aria-hidden="true">
       <span class="orb orb-1"></span>
       <span class="orb orb-2"></span>
@@ -312,7 +343,11 @@
             aria-labelledby="balance-title"
           >
             <div class="section-heading">
-              <h3 id="balance-title">기초대사량 대비 오늘</h3>
+              <h3 id="balance-title">
+                <svg class="section-icon" aria-hidden="true">
+                  <use href="#iconSpark" /></svg
+                >기초대사량 대비 오늘
+              </h3>
               <span class="section-kicker">계산일 뿐, 목표가 아니에요</span>
             </div>
             <details id="body-profile-details" class="body-profile">
@@ -440,7 +475,11 @@
             aria-labelledby="meal-title"
           >
             <div class="section-heading">
-              <h3 id="meal-title">식사</h3>
+              <h3 id="meal-title">
+                <svg class="section-icon" aria-hidden="true">
+                  <use href="#iconPlate" /></svg
+                >식사
+              </h3>
               <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
             </div>
             <section id="quick-add" class="quick-add" hidden>
@@ -646,7 +685,11 @@
               aria-labelledby="workout-title"
             >
               <div class="section-heading">
-                <h3 id="workout-title">운동</h3>
+                <h3 id="workout-title">
+                  <svg class="section-icon" aria-hidden="true">
+                    <use href="#iconHeart" /></svg
+                  >운동
+                </h3>
                 <span class="section-kicker">오늘의 움직임</span>
               </div>
               <div class="routine-card">
@@ -720,7 +763,11 @@
               aria-labelledby="weight-title"
             >
               <div class="section-heading">
-                <h3 id="weight-title">체중</h3>
+                <h3 id="weight-title">
+                  <svg class="section-icon" aria-hidden="true">
+                    <use href="#iconWave" /></svg
+                  >체중
+                </h3>
                 <span class="section-kicker">하루 숫자보다 흐름</span>
               </div>
               <form id="weight-form">
@@ -770,7 +817,11 @@
             aria-labelledby="weekly-title"
           >
             <div class="section-heading">
-              <h3 id="weekly-title">최근 7일</h3>
+              <h3 id="weekly-title">
+                <svg class="section-icon" aria-hidden="true">
+                  <use href="#iconRings" /></svg
+                >최근 7일
+              </h3>
               <span id="weekly-range" class="section-kicker"></span>
             </div>
             <div class="weekly-numbers">
@@ -830,10 +881,17 @@
             aria-labelledby="checkup-title"
           >
             <div class="section-heading">
-              <h3 id="checkup-title">건강검진 수치</h3>
+              <h3 id="checkup-title">
+                <svg class="section-icon" aria-hidden="true">
+                  <use href="#iconLock" /></svg
+                >건강검진 수치
+              </h3>
               <span class="section-kicker">검진표에 적힌 그대로</span>
             </div>
-            <p class="help-text">
+            <p class="help-text privacy-note">
+              <svg class="note-icon" aria-hidden="true">
+                <use href="#iconLock" />
+              </svg>
               검진 결과 JSON 파일을 고르면 <strong>브라우저 안에서만</strong>
               읽어 내 계정의 개인 공간에 저장합니다. 파일은 어디로도 전송되지
               않고, 공개 저장소나 이 사이트 파일에는 절대 포함되지 않습니다.
