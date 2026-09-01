@@ -1371,14 +1371,6 @@ small {
   gap: 0.75rem;
 }
 
-.balance-goal {
-  margin-top: 0.9rem;
-}
-
-.balance-goal .help-text {
-  margin-top: 0.35rem;
-}
-
 .balance-advice {
   margin-top: 0.9rem;
   padding: 0.75rem 0.9rem;

@@ -608,6 +608,29 @@ test("landing near the goal suggests nothing at all", async (t) => {
   assert.equal(f.$("balance-advice").hidden, true);
 });
 
+test("the goal ring shows on its own, before any meal or profile exists", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  // Only a goal: no weight, no birth year, nothing logged today.
+  f.value("profile-sex", "female", "change");
+  f.value("profile-birth-year", "1991");
+  f.value("profile-target", "1800");
+  await f.submit("body-profile-form");
+  await tick();
+
+  // The resting-energy comparison still cannot be made...
+  assert.equal(f.$("balance-result").hidden, true);
+  // ...but the ring is about the goal, so it is shown anyway, sitting at zero.
+  assert.equal(f.$("balance-goal").hidden, false);
+  assert.match(f.$("balance-goal-left").textContent, /1,800 kcal 남음/);
+  const circumference = 2 * Math.PI * 52;
+  assert.ok(
+    Math.abs(
+      Number(f.$("balance-goal-bar").style.strokeDashoffset) - circumference,
+    ) < 1,
+  );
+});
+
 test("no goal set means no goal bar", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

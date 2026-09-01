@@ -373,51 +373,52 @@
             <div id="balance-empty" class="empty-state">
               내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
             </div>
-            <div id="balance-result" hidden>
-              <div class="health-stats" aria-label="기초대사량 대비 오늘">
-                <div class="stat-card">
-                  <span>기초대사량 추정</span><strong id="balance-bmr">—</strong
-                  ><small id="balance-basis"></small>
-                </div>
-                <div class="stat-card">
-                  <span>오늘 기록한 섭취</span
-                  ><strong id="balance-intake">—</strong
-                  ><small id="balance-intake-note"></small>
-                </div>
-                <div class="stat-card">
-                  <span>차이</span><strong id="balance-diff">—</strong
-                  ><small id="balance-diff-note"></small>
-                </div>
+            <div id="balance-goal" class="balance-goal" hidden>
+              <!-- The ring is the app's one piece of decoration: it is drawn
+                   from the numbers, so it cannot go stale or look generic. -->
+              <svg class="goal-ring" viewBox="0 0 130 130" aria-hidden="true">
+                <defs>
+                  <linearGradient id="goalArc" x1="0" y1="0" x2="1" y2="1">
+                    <stop
+                      offset="0"
+                      stop-color="var(--tone-2, var(--accent))"
+                    />
+                    <stop
+                      offset="1"
+                      stop-color="var(--tone, var(--accent-hover))"
+                    />
+                  </linearGradient>
+                </defs>
+                <circle class="goal-track" cx="65" cy="65" r="52" />
+                <circle
+                  id="balance-goal-bar"
+                  class="goal-bar"
+                  cx="65"
+                  cy="65"
+                  r="52"
+                />
+              </svg>
+              <div class="goal-copy">
+                <span id="balance-goal-label"></span>
+                <strong id="balance-goal-left"></strong>
+                <p id="balance-goal-note" class="help-text"></p>
               </div>
-              <div id="balance-goal" class="balance-goal" hidden>
-                <!-- The ring is the app's one piece of decoration: it is drawn
-                     from the numbers, so it cannot go stale or look generic. -->
-                <svg class="goal-ring" viewBox="0 0 130 130" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="goalArc" x1="0" y1="0" x2="1" y2="1">
-                      <stop
-                        offset="0"
-                        stop-color="var(--tone-2, var(--accent))"
-                      />
-                      <stop
-                        offset="1"
-                        stop-color="var(--tone, var(--accent-hover))"
-                      />
-                    </linearGradient>
-                  </defs>
-                  <circle class="goal-track" cx="65" cy="65" r="52" />
-                  <circle
-                    id="balance-goal-bar"
-                    class="goal-bar"
-                    cx="65"
-                    cy="65"
-                    r="52"
-                  />
-                </svg>
-                <div class="goal-copy">
-                  <span id="balance-goal-label"></span>
-                  <strong id="balance-goal-left"></strong>
-                  <p id="balance-goal-note" class="help-text"></p>
+              <div id="balance-result" hidden>
+                <div class="health-stats" aria-label="기초대사량 대비 오늘">
+                  <div class="stat-card">
+                    <span>기초대사량 추정</span
+                    ><strong id="balance-bmr">—</strong
+                    ><small id="balance-basis"></small>
+                  </div>
+                  <div class="stat-card">
+                    <span>오늘 기록한 섭취</span
+                    ><strong id="balance-intake">—</strong
+                    ><small id="balance-intake-note"></small>
+                  </div>
+                  <div class="stat-card">
+                    <span>차이</span><strong id="balance-diff">—</strong
+                    ><small id="balance-diff-note"></small>
+                  </div>
                 </div>
               </div>
               <div id="balance-advice" class="balance-advice" hidden>

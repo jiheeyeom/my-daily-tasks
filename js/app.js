@@ -1217,6 +1217,9 @@ export function createApp({
     const balance = meals.length
       ? energyBalance(totals.values.kcal, bmr)
       : null;
+    // The goal stands on its own: it needs neither the resting estimate nor a
+    // logged meal, so it renders before the comparison can bail out.
+    renderGoal(totals.values.kcal, totals.missing.kcal);
     $("balance-result").hidden = !balance;
     $("balance-empty").hidden = Boolean(balance);
     if (!balance) {
@@ -1252,7 +1255,6 @@ export function createApp({
       balance.over ? "기초대사량 초과" : "기초대사량 미달",
     );
 
-    renderGoal(totals.values.kcal, totals.missing.kcal);
     // Suggestions follow whichever line the person is actually tracking.
     const target = bodyProfile()?.targetKcal ?? null;
     renderAdvice(
