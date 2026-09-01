@@ -6,7 +6,7 @@
   --surface: #ffffff;
   --surface-alt: #eef0fb;
   --ink: #1b1c2e;
-  --muted: #4f5379;
+  --muted: #3e4166;
   --border: #e3e5f4;
   --accent: #4f4fcf;
   --accent-hover: #3f3fb8;
@@ -29,10 +29,11 @@
   --radius: 22px;
   /* Text that sits on the page ground, not on a card, needs a darker ink than
      --accent to stay legible where an orb passes behind it. */
-  --accent-on-ground: #3a3a9e;
-  /* 0.26 / 0.24 is the strongest the orbs can be while every colour that sits
-     directly on the ground still clears WCAG AA. */
-  --orb: 0.26;
+  --accent-on-ground: #2c2c7a;
+  /* 0.42 / 0.38 is the strongest the orbs can be while every colour that sits
+     directly on the ground still clears WCAG AA. Getting here meant darkening
+     the ground text rather than dimming the orbs into invisibility. */
+  --orb: 0.42;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -41,7 +42,7 @@
   --surface: #1e1f3d;
   --surface-alt: #262848;
   --ink: #eceafc;
-  --muted: #a8a8cc;
+  --muted: #c4c4e0;
   --border: #33355c;
   --accent: #a9a9fb;
   --accent-hover: #c3c3ff;
@@ -61,8 +62,8 @@
   --hue-balance-2: #eda294;
   --shadow: 0 10px 30px #00000040;
   --radius: 22px;
-  --accent-on-ground: #b6b6ff;
-  --orb: 0.24;
+  --accent-on-ground: #cfcfff;
+  --orb: 0.38;
 }
 * {
   box-sizing: border-box;
@@ -561,6 +562,7 @@ small {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 18px;
   margin-bottom: 10px;
 }
@@ -1460,15 +1462,15 @@ small {
   position: absolute;
   display: block;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(72px);
   opacity: var(--orb);
 }
 
 .orb-1 {
   top: -14vh;
   right: -8vw;
-  width: 52vw;
-  height: 52vw;
+  width: 60vw;
+  height: 60vw;
   background: radial-gradient(
     circle at 30% 30%,
     var(--hue-checkup-2),
@@ -1479,8 +1481,8 @@ small {
 .orb-2 {
   top: 24vh;
   left: -18vw;
-  width: 46vw;
-  height: 46vw;
+  width: 54vw;
+  height: 54vw;
   background: radial-gradient(
     circle at 60% 40%,
     var(--hue-weight-2),
@@ -1491,8 +1493,8 @@ small {
 .orb-3 {
   bottom: -20vh;
   right: 4vw;
-  width: 44vw;
-  height: 44vw;
+  width: 52vw;
+  height: 52vw;
   background: radial-gradient(
     circle at 40% 60%,
     var(--hue-meal-2),
@@ -1503,8 +1505,8 @@ small {
 .orb-4 {
   bottom: 8vh;
   left: 6vw;
-  width: 34vw;
-  height: 34vw;
+  width: 42vw;
+  height: 42vw;
   background: radial-gradient(
     circle at 50% 50%,
     var(--hue-workout-2),
@@ -1514,7 +1516,7 @@ small {
 
 @media (max-width: 720px) {
   .orb {
-    filter: blur(64px);
+    filter: blur(52px);
   }
 }
 
@@ -1657,4 +1659,35 @@ main,
   max-width: 60%;
   height: auto;
   margin: 4px 0 16px;
+}
+
+/* The gradient definitions live in a zero-size SVG so every glyph can point at
+   them without repeating the stops. */
+.art-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.health-art {
+  width: 190px;
+  height: auto;
+  flex: none;
+  /* Sits beside the heading rather than centred, so the date controls keep
+     their place on the right. */
+  margin-right: auto;
+}
+
+.empty-art {
+  display: block;
+  width: 140px;
+  height: auto;
+  margin: 4px auto 10px;
+}
+
+@media (max-width: 720px) {
+  .health-art {
+    display: none;
+  }
 }

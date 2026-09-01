@@ -17,6 +17,30 @@
     <a class="skip-link" href="#app-main">본문으로 건너뛰기</a>
     <!-- Decorative only: soft gradient orbs behind the page, blurred so the
          colour reads as light rather than as a shape with an edge. -->
+    <svg class="art-defs" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="gMeal" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--hue-meal-2)" />
+          <stop offset="1" stop-color="var(--hue-meal)" />
+        </linearGradient>
+        <linearGradient id="gWorkout" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--hue-workout-2)" />
+          <stop offset="1" stop-color="var(--hue-workout)" />
+        </linearGradient>
+        <linearGradient id="gWeight" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--hue-weight-2)" />
+          <stop offset="1" stop-color="var(--hue-weight)" />
+        </linearGradient>
+        <linearGradient id="gCheckup" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--hue-checkup-2)" />
+          <stop offset="1" stop-color="var(--hue-checkup)" />
+        </linearGradient>
+        <linearGradient id="gBalance" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--hue-balance-2)" />
+          <stop offset="1" stop-color="var(--hue-balance)" />
+        </linearGradient>
+      </defs>
+    </svg>
     <div class="backdrop" aria-hidden="true">
       <span class="orb orb-1"></span>
       <span class="orb orb-2"></span>
@@ -304,6 +328,32 @@
               <span class="eyebrow">SMALL STEPS, EVERY DAY</span>
               <h2>오늘의 나를 기록해요</h2>
             </div>
+            <svg class="health-art" viewBox="0 0 200 120" aria-hidden="true">
+              <ellipse
+                cx="100"
+                cy="104"
+                rx="76"
+                ry="9"
+                fill="url(#gCheckup)"
+                opacity=".22"
+              />
+              <path
+                d="M38 100c-13 0-23-12-23-27S25 46 38 46s23 12 23 27-10 27-23 27z"
+                fill="url(#gWorkout)"
+              />
+              <ellipse cx="38" cy="73" rx="8" ry="10" fill="url(#gMeal)" />
+              <path
+                d="M96 100c26-3 45-23 47-48-25 5-44 23-47 48z"
+                fill="url(#gMeal)"
+              />
+              <circle cx="150" cy="72" r="19" fill="url(#gWeight)" />
+              <path
+                d="M150 53c4-9 11-15 20-17-1 8-8 15-17 18z"
+                fill="url(#gWorkout)"
+              />
+              <circle cx="74" cy="88" r="11" fill="url(#gBalance)" />
+              <circle cx="121" cy="90" r="8" fill="url(#gCheckup)" />
+            </svg>
             <div class="date-nav">
               <button
                 id="health-prev"
@@ -417,6 +467,26 @@
                 키는 비워 두면 최근 건강검진 값을 씁니다.
               </p>
             </details>
+            <svg class="empty-art" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse
+                cx="60"
+                cy="70"
+                rx="44"
+                ry="6"
+                fill="url(#gBalance)"
+                opacity=".2"
+              />
+              <path
+                d="M32 66c-11 0-19-10-19-23s8-23 19-23 19 10 19 23-8 23-19 23z"
+                fill="url(#gWorkout)"
+              />
+              <ellipse cx="32" cy="43" rx="6" ry="8" fill="url(#gMeal)" />
+              <path
+                d="M74 66c20-2 35-18 36-37-19 4-33 18-36 37z"
+                fill="url(#gMeal)"
+              />
+              <circle cx="95" cy="52" r="12" fill="url(#gWeight)" />
+            </svg>
             <div id="balance-empty" class="empty-state">
               내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
             </div>
