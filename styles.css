@@ -248,17 +248,22 @@ small {
 .primary-btn,
 .text-btn {
   min-height: 42px;
-  border-radius: 9px;
+  border-radius: 12px;
   padding: 9px 15px;
   font-weight: 600;
   white-space: nowrap;
 }
 .primary-btn {
   color: #fff;
-  background: #347552;
+  background: var(--accent);
 }
 .primary-btn:hover {
-  background: #285b3f;
+  background: var(--accent-hover);
+}
+.primary-btn:disabled {
+  /* A disabled primary button must not read as an enabled one. */
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 .secondary-btn,
 .icon-btn {
@@ -944,7 +949,7 @@ small {
   width: max-content;
 }
 #snackbar[data-error="true"] {
-  background: #9a3040;
+  background: var(--danger);
   color: #fff;
 }
 .skip-link {

@@ -356,12 +356,28 @@ export function createApp({
   }
 
   async function action(key, kind, work, success) {
-    if (busy.has(key)) return;
-    if (kind && !canUse(kind)) {
-      toast("서버 동기화를 마친 뒤 다시 시도해 주세요.", true);
+    // Every refusal says why. A button that silently does nothing is
+    // indistinguishable from a broken one.
+    if (busy.has(key)) {
+      toast(
+        "앞선 저장이 아직 끝나지 않았어요. 잠시 후 다시 눌러 주세요.",
+        true,
+      );
       return;
     }
-    if (!state.user) return;
+    if (kind && !canUse(kind)) {
+      toast(
+        state.sync[kind]?.error
+          ? `${friendlyError(state.sync[kind].error)} 새로고침한 뒤 다시 시도해 주세요.`
+          : "서버 동기화를 마친 뒤 다시 시도해 주세요.",
+        true,
+      );
+      return;
+    }
+    if (!state.user) {
+      toast("로그인한 뒤 저장할 수 있어요.", true);
+      return;
+    }
     if (win.navigator.onLine === false) {
       toast(
         "인터넷 연결 후 저장해 주세요. 오프라인 저장은 지원하지 않습니다.",

@@ -836,6 +836,22 @@ test("typing an amount reports the container it works out to", async (t) => {
   );
 });
 
+test("a refused save always says why instead of doing nothing", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.listeners
+    .find((item) => item.kind === "meals")
+    .onError({ code: "permission-denied" });
+
+  // The form is disabled, but a submit can still reach the handler; it must
+  // explain itself rather than silently discarding the entry.
+  await f.submit("meal-form");
+  assert.equal(f.store.writes.length, 0);
+  assert.equal(f.$("snackbar").hidden, false);
+  assert.equal(f.$("snackbar").dataset.error, "true");
+  assert.match(f.$("snackbar").textContent, /새로고침|권한|동기화/);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
