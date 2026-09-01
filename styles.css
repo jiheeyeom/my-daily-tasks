@@ -1,54 +1,68 @@
 :root {
   color-scheme: light;
-  /* Palette taken from a flat-illustration poster: a warm off-white ground,
-     ink-black type, and complementary colours that meet only as shapes. */
-  --bg: #f2f0ea;
-  --surface: #fffdf8;
-  --surface-alt: #eae6da;
-  --ink: #1a1a1a;
-  --muted: #4d4a43;
-  --border: #ddd7c8;
-  --accent: #1f4e9c;
-  --accent-hover: #17407f;
-  --accent-soft: #dce7f7;
-  --blue: #1f4e9c;
-  --danger: #d9482a;
-  --warning: #e8622c;
-  /* Section hues. Used on shapes, rules and marks, never behind body text. */
-  --hue-meal: #e2a03f;
-  --hue-workout: #7fb03a;
-  --hue-weight: #e0559a;
-  --hue-checkup: #1f4e9c;
-  --hue-balance: #e8622c;
-  --shadow: 0 6px 22px #7a6a4212;
-  --radius: 18px;
-  --grain: 0.5;
-  --grain-blend: multiply;
+  /* Soft-gradient wellness palette: a lavender-tinted ground, indigo accents
+     and food-illustration hues that appear as gradients rather than flat fills. */
+  --bg: #f4f4fb;
+  --surface: #ffffff;
+  --surface-alt: #eef0fb;
+  --ink: #1b1c2e;
+  --muted: #4f5379;
+  --border: #e3e5f4;
+  --accent: #4f4fcf;
+  --accent-hover: #3f3fb8;
+  --accent-soft: #e9e9fb;
+  --blue: #4f7fe0;
+  --danger: #d94a68;
+  --warning: #e07a4a;
+  /* Section hues, each with a lighter partner so it can be drawn as a gradient. */
+  --hue-meal: #f0a04b;
+  --hue-meal-2: #f7c66b;
+  --hue-workout: #3fae7c;
+  --hue-workout-2: #7ed3a3;
+  --hue-weight: #e2609a;
+  --hue-weight-2: #f39bc4;
+  --hue-checkup: #4f7fe0;
+  --hue-checkup-2: #8fb8f2;
+  --hue-balance: #e06a5a;
+  --hue-balance-2: #f2a08f;
+  --shadow: 0 10px 30px #3a3a7a12;
+  --radius: 22px;
+  /* Text that sits on the page ground, not on a card, needs a darker ink than
+     --accent to stay legible where an orb passes behind it. */
+  --accent-on-ground: #3a3a9e;
+  /* 0.26 / 0.24 is the strongest the orbs can be while every colour that sits
+     directly on the ground still clears WCAG AA. */
+  --orb: 0.26;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  /* Same hues, pulled down in saturation and lightness so the contrast play
-     survives on a dark ground without glaring. */
-  --bg: #17181c;
-  --surface: #202127;
-  --surface-alt: #2a2c33;
-  --ink: #efede6;
-  --muted: #a6a399;
-  --border: #3a3c44;
-  --accent: #8fb4ee;
-  --accent-hover: #aecbf7;
-  --accent-soft: #22304a;
-  --blue: #8fb4ee;
-  --danger: #f09480;
+  /* The reference's night side: deep indigo with the same hues glowing through. */
+  --bg: #14142b;
+  --surface: #1e1f3d;
+  --surface-alt: #262848;
+  --ink: #eceafc;
+  --muted: #a8a8cc;
+  --border: #33355c;
+  --accent: #a9a9fb;
+  --accent-hover: #c3c3ff;
+  --accent-soft: #262a52;
+  --blue: #8fb8f2;
+  --danger: #f2879c;
   --warning: #f0a074;
-  --hue-meal: #d9a94e;
-  --hue-workout: #93c25a;
-  --hue-weight: #e07aab;
-  --hue-checkup: #8fb4ee;
-  --hue-balance: #ef8b62;
-  --shadow: none;
-  --grain: 0.22;
-  --grain-blend: overlay;
+  --hue-meal: #d9974a;
+  --hue-meal-2: #e8bd72;
+  --hue-workout: #46a87c;
+  --hue-workout-2: #79c79c;
+  --hue-weight: #d4699c;
+  --hue-weight-2: #e79cc2;
+  --hue-checkup: #6f9ce8;
+  --hue-checkup-2: #a3c4f5;
+  --hue-balance: #d97a68;
+  --hue-balance-2: #eda294;
+  --shadow: 0 10px 30px #00000040;
+  --radius: 22px;
+  --accent-on-ground: #b6b6ff;
+  --orb: 0.24;
 }
 * {
   box-sizing: border-box;
@@ -175,7 +189,7 @@ small {
   font-size: 13px;
 }
 .quote-text {
-  color: var(--accent);
+  color: var(--accent-on-ground);
   font-weight: 600;
 }
 .news-text {
@@ -1432,7 +1446,8 @@ small {
   margin: 0;
 }
 
-/* Decorative backdrop: shapes sit behind everything and never take clicks. */
+/* Decorative backdrop. The orbs are blurred far past their own radius, so what
+   lands on the page is a wash of colour with no edge to read text against. */
 .backdrop {
   position: fixed;
   inset: 0;
@@ -1441,61 +1456,66 @@ small {
   overflow: hidden;
 }
 
-.backdrop svg {
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-}
-
-/* 0.26 / 0.20 is the strongest the shapes can be while every text colour,
-   including the muted grey, still clears WCAG AA against whichever shape it
-   happens to sit on. Raising these fails the secondary text first. */
-.backdrop .shape {
-  opacity: 0.26;
-}
-
-:root[data-theme="dark"] .backdrop .shape {
-  opacity: 0.2;
-}
-
-.shape-lemon path {
-  fill: var(--hue-meal);
-}
-
-.shape-lemon .leaf {
-  fill: var(--hue-checkup);
-}
-
-.shape-pear path {
-  fill: var(--hue-weight);
-}
-
-.shape-pear .stem,
-.shape-cherry .stem {
-  fill: var(--hue-checkup);
-}
-
-.shape-cherry circle {
-  fill: var(--hue-balance);
-}
-
-.shape-leaf path {
-  fill: var(--hue-workout);
-}
-
-.shape-orange circle {
-  fill: var(--hue-meal);
-}
-
-/* The poster's other signature is print grain. feTurbulence keeps it in CSS,
-   with no file to load, and it sits under the content rather than over text. */
-.backdrop::after {
-  content: "";
+.orb {
   position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.55'/></svg>");
-  opacity: var(--grain);
-  mix-blend-mode: var(--grain-blend);
+  display: block;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: var(--orb);
+}
+
+.orb-1 {
+  top: -14vh;
+  right: -8vw;
+  width: 52vw;
+  height: 52vw;
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--hue-checkup-2),
+    var(--accent)
+  );
+}
+
+.orb-2 {
+  top: 24vh;
+  left: -18vw;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(
+    circle at 60% 40%,
+    var(--hue-weight-2),
+    var(--hue-weight)
+  );
+}
+
+.orb-3 {
+  bottom: -20vh;
+  right: 4vw;
+  width: 44vw;
+  height: 44vw;
+  background: radial-gradient(
+    circle at 40% 60%,
+    var(--hue-meal-2),
+    var(--hue-meal)
+  );
+}
+
+.orb-4 {
+  bottom: 8vh;
+  left: 6vw;
+  width: 34vw;
+  height: 34vw;
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--hue-workout-2),
+    var(--hue-workout)
+  );
+}
+
+@media (max-width: 720px) {
+  .orb {
+    filter: blur(64px);
+  }
 }
 
 .ticker-wrap,
@@ -1505,25 +1525,27 @@ main,
   z-index: 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .backdrop svg {
-    transition: opacity 0.3s ease;
-  }
 }
 
-/* One hue per section. It marks the heading and the top rule only, so the
-   colours meet as shapes rather than as backgrounds behind text. */
+/* One hue per section, drawn as a gradient so it reads as light rather than a
+   flat band. Colour stays on marks and rules, never behind body text. */
 .health-section {
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .health-section::before {
   content: "";
   position: absolute;
   inset: 0 0 auto;
-  height: 5px;
-  background: var(--tone, var(--accent));
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--tone, var(--accent)),
+    var(--tone-2, var(--accent-hover))
+  );
+  opacity: 0.9;
 }
 
 .health-section .section-heading h3,
@@ -1536,35 +1558,44 @@ main,
 .health-section .section-heading h3::before,
 .health-section .section-heading h2::before {
   content: "";
-  width: 13px;
-  height: 13px;
-  border-radius: 50% 50% 50% 4px;
-  background: var(--tone, var(--accent));
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(
+    140deg,
+    var(--tone-2, var(--accent)),
+    var(--tone, var(--accent-hover))
+  );
   flex: none;
 }
 
 .tone-meal {
   --tone: var(--hue-meal);
+  --tone-2: var(--hue-meal-2);
 }
 
 .tone-workout {
   --tone: var(--hue-workout);
+  --tone-2: var(--hue-workout-2);
 }
 
 .tone-weight {
   --tone: var(--hue-weight);
+  --tone-2: var(--hue-weight-2);
 }
 
 .tone-checkup {
   --tone: var(--hue-checkup);
+  --tone-2: var(--hue-checkup-2);
 }
 
 .tone-balance {
   --tone: var(--hue-balance);
+  --tone-2: var(--hue-balance-2);
 }
 
-/* The login screen carries no data, so it is where the poster look can run at
-   full strength without anything to read through it. */
+
+/* The login screen carries no data, so the gradient can come forward here. */
 .auth-card {
   position: relative;
   overflow: hidden;
@@ -1573,26 +1604,18 @@ main,
 .auth-card::after {
   content: "";
   position: absolute;
-  right: -60px;
-  bottom: -80px;
-  width: 260px;
-  height: 260px;
-  border-radius: 62% 38% 47% 53% / 55% 45% 55% 45%;
-  background: var(--hue-meal);
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-.auth-card::before {
-  content: "";
-  position: absolute;
-  right: 90px;
-  bottom: 60px;
-  width: 150px;
-  height: 150px;
-  border-radius: 50% 50% 50% 8px;
-  background: var(--hue-weight);
-  opacity: 0.4;
+  right: -80px;
+  bottom: -120px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    var(--hue-weight-2),
+    var(--accent)
+  );
+  filter: blur(60px);
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -1602,8 +1625,36 @@ main,
 }
 
 @media (max-width: 640px) {
-  .auth-card::before,
   .auth-card::after {
-    display: none;
+    opacity: 0.4;
   }
+}
+
+/* Softer, rounder surfaces to match the reference's smooth-gradient feel. */
+.stat-card,
+.checkup-card,
+.quick-add,
+.balance-advice,
+.body-profile,
+.container-row,
+.checkup-trend {
+  border-radius: 16px;
+}
+
+.chip,
+.goal-track,
+.goal-bar {
+  border-radius: 999px;
+}
+
+.advice-list li {
+  border-radius: 12px;
+}
+
+.auth-art {
+  display: block;
+  width: 200px;
+  max-width: 60%;
+  height: auto;
+  margin: 4px 0 16px;
 }

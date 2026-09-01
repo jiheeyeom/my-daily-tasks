@@ -15,42 +15,13 @@
   </head>
   <body>
     <a class="skip-link" href="#app-main">본문으로 건너뛰기</a>
-    <!-- Decorative only: fruit shapes drifting behind the page, cropped by the
-         viewport edges. Cards above stay opaque so text never sits on colour. -->
+    <!-- Decorative only: soft gradient orbs behind the page, blurred so the
+         colour reads as light rather than as a shape with an edge. -->
     <div class="backdrop" aria-hidden="true">
-      <svg viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMin slice">
-        <g class="shape shape-lemon">
-          <path
-            d="M980 40c96-14 178 44 190 128 12 86-46 168-140 186-92 18-176-40-190-124-14-86 44-172 140-190z"
-          />
-          <path
-            class="leaf"
-            d="M905 150c-42 38-56 96-36 140 44 6 96-24 122-70 26-46 22-92-6-118-30 6-56 26-80 48z"
-          />
-        </g>
-        <g class="shape shape-pear">
-          <path
-            d="M255 470c74-40 150 4 168 78 16 68-20 128-16 186 4 66-42 118-108 120-64 2-112-46-112-112 0-58 28-110 32-166 4-52 12-84 36-106z"
-          />
-          <path class="stem" d="M300 452c6-40 26-70 56-88 6 34-14 70-42 96z" />
-        </g>
-        <g class="shape shape-cherry">
-          <circle cx="1030" cy="1010" r="86" />
-          <circle cx="1140" cy="1130" r="62" />
-          <path
-            class="stem"
-            d="M1030 924c40-70 92-112 150-128 4 18-2 34-16 48-52 30-92 74-118 128z"
-          />
-        </g>
-        <g class="shape shape-leaf">
-          <path
-            d="M90 1120c92-24 176 18 214 104-84 46-176 30-232-42-16-20-14-46 18-62z"
-          />
-        </g>
-        <g class="shape shape-orange">
-          <circle cx="700" cy="1490" r="120" />
-        </g>
-      </svg>
+      <span class="orb orb-1"></span>
+      <span class="orb orb-2"></span>
+      <span class="orb orb-3"></span>
+      <span class="orb orb-4"></span>
     </div>
     <div class="ticker-wrap">
       <p id="daily-quote" class="quote-text">하루의 작은 기록이 쌓이는 곳.</p>
@@ -79,6 +50,58 @@
           구글 계정으로 로그인하면 업무와 건강 기록을<br class="desktop-br" />
           내 기기 사이에서 안전하게 이어갈 수 있어요.
         </p>
+        <!-- Gradient-shaded food, drawn inline so it follows the theme and
+             costs no request. Decorative: the heading carries the meaning. -->
+        <svg class="auth-art" viewBox="0 0 240 150" aria-hidden="true">
+          <defs>
+            <linearGradient id="artBowl" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--hue-checkup-2)" />
+              <stop offset="1" stop-color="var(--hue-checkup)" />
+            </linearGradient>
+            <linearGradient id="artAvocado" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--hue-workout-2)" />
+              <stop offset="1" stop-color="var(--hue-workout)" />
+            </linearGradient>
+            <linearGradient id="artBanana" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--hue-meal-2)" />
+              <stop offset="1" stop-color="var(--hue-meal)" />
+            </linearGradient>
+            <linearGradient id="artBerry" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--hue-weight-2)" />
+              <stop offset="1" stop-color="var(--hue-weight)" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M52 96h136c0 30-30 46-68 46S52 126 52 96z"
+            fill="url(#artBowl)"
+          />
+          <ellipse
+            cx="120"
+            cy="96"
+            rx="68"
+            ry="12"
+            fill="var(--surface)"
+            opacity=".35"
+          />
+          <path
+            d="M96 92c-14 0-24-12-24-27s10-27 24-27 24 12 24 27-10 27-24 27z"
+            fill="url(#artAvocado)"
+          />
+          <ellipse
+            cx="96"
+            cy="66"
+            rx="9"
+            ry="11"
+            fill="var(--hue-meal)"
+            opacity=".85"
+          />
+          <path
+            d="M138 92c22-2 38-18 40-38-20 4-36 18-40 38z"
+            fill="url(#artBanana)"
+          />
+          <circle cx="160" cy="80" r="11" fill="url(#artBerry)" />
+          <circle cx="72" cy="82" r="8" fill="url(#artBerry)" opacity=".8" />
+        </svg>
         <button id="login-btn" class="primary-btn google-btn" type="button">
           Google로 로그인
         </button>
