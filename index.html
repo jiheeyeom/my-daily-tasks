@@ -39,10 +39,6 @@
           <stop offset="0" stop-color="var(--hue-balance-2)" />
           <stop offset="1" stop-color="var(--hue-balance)" />
         </linearGradient>
-        <linearGradient id="gSkin" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="var(--skin-2)" />
-          <stop offset="1" stop-color="var(--skin)" />
-        </linearGradient>
       </defs>
     </svg>
     <div class="backdrop" aria-hidden="true">
@@ -332,40 +328,31 @@
               <span class="eyebrow">SMALL STEPS, EVERY DAY</span>
               <h2>오늘의 나를 기록해요</h2>
             </div>
-            <!-- Seated forward stretch. Shapes only, no face: the figure sets
-                 a tone without pretending to depict anyone in particular. -->
-            <svg class="health-art" viewBox="0 0 210 120" aria-hidden="true">
+            <svg class="health-art" viewBox="0 0 200 120" aria-hidden="true">
               <ellipse
-                cx="108"
-                cy="110"
-                rx="86"
-                ry="7"
+                cx="100"
+                cy="104"
+                rx="76"
+                ry="9"
                 fill="url(#gCheckup)"
-                opacity=".2"
+                opacity=".22"
               />
-              <rect
-                x="60"
-                y="94"
-                width="104"
-                height="16"
-                rx="8"
+              <path
+                d="M38 100c-13 0-23-12-23-27S25 46 38 46s23 12 23 27-10 27-23 27z"
                 fill="url(#gWorkout)"
               />
-              <circle cx="168" cy="102" r="10" fill="url(#gSkin)" />
+              <ellipse cx="38" cy="73" rx="8" ry="10" fill="url(#gMeal)" />
               <path
-                d="M56 104c-8-6-11-16-8-26l14-40c3-9 12-14 21-11s14 12 11 21l-13 38c-3 10-16 24-25 18z"
-                fill="url(#gWeight)"
+                d="M96 100c26-3 45-23 47-48-25 5-44 23-47 48z"
+                fill="url(#gMeal)"
               />
+              <circle cx="150" cy="72" r="19" fill="url(#gWeight)" />
               <path
-                d="M84 60c14 4 26 14 34 28 4 7-1 15-9 15-5 0-9-3-11-7-5-9-12-15-21-18z"
-                fill="url(#gSkin)"
+                d="M150 53c4-9 11-15 20-17-1 8-8 15-17 18z"
+                fill="url(#gWorkout)"
               />
-              <circle cx="86" cy="36" r="17" fill="url(#gSkin)" />
-              <path
-                d="M69 34c0-11 8-19 18-19s18 8 18 18c0 4-2 7-4 7-3-8-10-12-19-11-6 1-10 4-13 9-1-1 0-3 0-4z"
-                fill="var(--hair)"
-              />
-              <circle cx="46" cy="98" r="12" fill="url(#gWeight)" />
+              <circle cx="74" cy="88" r="11" fill="url(#gBalance)" />
+              <circle cx="121" cy="90" r="8" fill="url(#gCheckup)" />
             </svg>
             <div class="date-nav">
               <button
@@ -480,51 +467,25 @@
                 키는 비워 두면 최근 건강검진 값을 씁니다.
               </p>
             </details>
-            <!-- Resting: knees up, mug in hand. -->
-            <svg class="empty-art" viewBox="0 0 140 96" aria-hidden="true">
+            <svg class="empty-art" viewBox="0 0 120 80" aria-hidden="true">
               <ellipse
-                cx="70"
-                cy="88"
-                rx="56"
+                cx="60"
+                cy="70"
+                rx="44"
                 ry="6"
                 fill="url(#gBalance)"
                 opacity=".2"
               />
               <path
-                d="M44 86c-10 0-18-8-18-18V56c0-10 8-18 18-18h10c10 0 18 8 18 18v12c0 10-8 18-18 18z"
-                fill="url(#gCheckup)"
-              />
-              <path
-                d="M72 86c-6 0-10-5-10-11l2-20c1-6 6-10 12-9s10 6 9 12l-3 20c-1 5-5 8-10 8z"
+                d="M32 66c-11 0-19-10-19-23s8-23 19-23 19 10 19 23-8 23-19 23z"
                 fill="url(#gWorkout)"
               />
-              <rect
-                x="72"
-                y="76"
-                width="40"
-                height="12"
-                rx="6"
-                fill="url(#gWorkout)"
-              />
-              <circle cx="116" cy="82" r="8" fill="url(#gSkin)" />
-              <circle cx="49" cy="28" r="14" fill="url(#gSkin)" />
+              <ellipse cx="32" cy="43" rx="6" ry="8" fill="url(#gMeal)" />
               <path
-                d="M35 27c0-9 6-16 15-16s15 7 15 15c0 3-1 6-3 6-2-7-8-10-15-9-5 1-9 3-11 7-1-1-1-2-1-3z"
-                fill="var(--hair)"
-              />
-              <path
-                d="M60 46c10 2 18 8 22 17 2 5-2 10-7 10-4 0-7-2-8-5-3-6-8-10-14-11z"
-                fill="url(#gSkin)"
-              />
-              <rect
-                x="86"
-                y="40"
-                width="16"
-                height="14"
-                rx="3"
+                d="M74 66c20-2 35-18 36-37-19 4-33 18-36 37z"
                 fill="url(#gMeal)"
               />
-              <path d="M102 44h4a4 4 0 0 1 0 8h-4z" fill="url(#gMeal)" />
+              <circle cx="95" cy="52" r="12" fill="url(#gWeight)" />
             </svg>
             <div id="balance-empty" class="empty-state">
               내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
