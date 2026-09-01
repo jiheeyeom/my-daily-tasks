@@ -528,6 +528,10 @@ test("a calorie goal shows progress and marks going over without scolding", asyn
   assert.equal(f.$("balance-goal").hidden, false);
   assert.match(f.$("balance-goal-left").textContent, /500 kcal 남음/);
   assert.equal(f.$("balance-goal-bar").dataset.over, "false");
+  // 72% of the ring drawn: the remaining 28% stays as dash offset.
+  const circumference = 2 * Math.PI * 52;
+  const offset = Number(f.$("balance-goal-bar").style.strokeDashoffset);
+  assert.ok(Math.abs(offset - circumference * 0.28) < 1.5, `offset ${offset}`);
   assert.match(
     f.$("balance-goal-note").textContent,
     /1,300 \/ 1,800 kcal \(72%\)/,
@@ -538,8 +542,8 @@ test("a calorie goal shows progress and marks going over without scolding", asyn
   await f.submit("meal-form");
   assert.match(f.$("balance-goal-left").textContent, /800 kcal 초과/);
   assert.equal(f.$("balance-goal-bar").dataset.over, "true");
-  // The bar is capped so an overshoot cannot overflow its track.
-  assert.equal(f.$("balance-goal-bar").style.width, "100%");
+  // The arc is capped at a full turn, so an overshoot cannot wind past it.
+  assert.equal(Number(f.$("balance-goal-bar").style.strokeDashoffset), 0);
 });
 
 test("suggestions follow the goal: eat to fill a shortfall, move for an excess", async (t) => {

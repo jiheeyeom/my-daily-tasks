@@ -1383,8 +1383,13 @@ export function createApp({
         ? `${fmt(remaining, 0)} kcal 남음`
         : `${fmt(Math.abs(remaining), 0)} kcal 초과`,
     );
+    // Circumference of the r=52 ring the markup draws.
+    const circumference = 2 * Math.PI * 52;
     const bar = $("balance-goal-bar");
-    bar.style.width = `${percent}%`;
+    bar.style.strokeDasharray = String(circumference);
+    bar.style.strokeDashoffset = String(
+      (circumference * (100 - percent)) / 100,
+    );
     bar.dataset.over = String(remaining < 0);
     setText(
       "balance-goal-note",
