@@ -115,7 +115,11 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   브라우저가 제출을 막는데, 그 입력이 hidden 이면 포커스도 못 줘서 **버튼이 조용히 죽음**.
   실제로 container-count(min .1 step .5 value 1) 때문에 식사 기록 버튼이 안 눌렸음(2026-09-01).
   숨긴 행의 입력은 반드시 disabled 로 둘 것 — 단 hidden 검사는 폼 내부까지만(탭 패널이 hidden 이라 전체가 죽음).
-- **일러스트는 unDraw**: cdn.undraw.co/illustration/<name>_<hash>.svg 에서 받아 인라인.
+- **일러스트는 생성 이미지 세트(2026-09-02)**: 유리 구체 안 실루엣 + 스파클, 레퍼런스(Calm)와 일치.
+  원본 `image icon/`(1024px PNG 24장, 15MB)은 gitignore. `scripts/import_illustrations.py` 로
+  WebP 변환한 `images/`(합계 143KB)만 커밋. icon-only 는 섹션 마크(26px), orb 는 큰 자리에만.
+  각 subject 마다 orb/icon-only 두 버전이 있어 배치를 바꿔 끼울 수 있음.
+- **(구) 일러스트는 unDraw**: cdn.undraw.co/illustration/<name>_<hash>.svg 에서 받아 인라인.
   라이선스: 상업/개인 무료, 출처표기 불필요. 단 재배포 팩 제작·AI 학습 사용은 금지.
   삽입 시 `id` 속성 제거(페이지 ID 공간 오염 방지), width/height 제거(CSS 로 크기 지정),
   `#6c63ff`→`var(--accent)`, `#f2f2f2`/`#e6e6e6`→`var(--surface-alt)`, `#3f3d56`/`#090814`→`var(--ink)`.

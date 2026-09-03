@@ -10,6 +10,7 @@ const output = resolve(root, "dist");
 await mkdir(output, { recursive: true });
 // Allowlist: no tests, credentials, local backups, dependencies or repository metadata.
 for (const name of [
+  "images",
   "index.html",
   "styles.css",
   ".nojekyll",

@@ -1535,26 +1535,60 @@ main {
   gap: 9px;
 }
 
-.icon-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
+/* Rendered illustrations replace the line icons. Fixed box so a slow image
+   cannot shift the heading as it arrives. */
 .section-icon {
-  width: 19px;
-  height: 19px;
+  width: 26px;
+  height: 26px;
   flex: none;
-  fill: none;
-  stroke: var(--tone, var(--accent));
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  object-fit: contain;
 }
 
-.section-icon use {
-  fill: none;
+.note-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 1px;
+  object-fit: contain;
+}
+
+/* The three larger pieces. Each sits on glass, so they need no background of
+   their own; the drop shadow ties them to the panel. */
+.hero-art,
+.auth-art,
+.empty-art {
+  object-fit: contain;
+  filter: drop-shadow(
+    0 10px 24px color-mix(in srgb, var(--accent) 30%, transparent)
+  );
+}
+
+.hero-art {
+  width: 132px;
+  height: 132px;
+  flex: none;
+  margin-right: auto;
+}
+
+.auth-art {
+  display: block;
+  width: 116px;
+  height: 116px;
+  margin: 2px 0 14px;
+}
+
+.empty-art {
+  display: block;
+  width: 124px;
+  height: 124px;
+  margin: 4px auto 10px;
+}
+
+@media (max-width: 720px) {
+  .hero-art {
+    width: 92px;
+    height: 92px;
+  }
 }
 
 .tone-meal {
@@ -1772,18 +1806,6 @@ main {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-}
-
-.note-icon {
-  width: 16px;
-  height: 16px;
-  flex: none;
-  margin-top: 2px;
-  fill: none;
-  stroke: var(--tone, var(--accent));
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 /* Hairlines and sparkles over the orbs. currentColor keeps them one token. */
