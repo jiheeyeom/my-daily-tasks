@@ -2167,3 +2167,131 @@ main {
   color: var(--muted-on-ground);
   opacity: 0.85;
 }
+
+/* ===========================================================================
+   Mobile is settled. Everything the decorative layer resolves to at 720px and
+   under is restated here, so later changes to the base rules — which are the
+   desktop ones — cannot reach it. Adjust desktop above; adjust mobile here.
+   =========================================================================== */
+@media (max-width: 720px) {
+  .runner {
+    top: 12vh;
+    width: 240vw;
+    margin-left: -170vw;
+  }
+  .orb {
+    filter: blur(52px);
+  }
+  .speck-a {
+    top: 9vh;
+    left: 12vw;
+    width: 92px;
+    opacity: 0.39;
+    transform: rotate(-9deg);
+  }
+  .speck-b {
+    top: 2vh;
+    left: 85vw;
+    width: 100px;
+    opacity: 0.8;
+    transform: rotate(11deg);
+  }
+  .speck-c {
+    display: none;
+  }
+  .speck-d {
+    top: 16vh;
+    left: 87vw;
+    width: 46px;
+    opacity: 0.338;
+    transform: rotate(7deg);
+  }
+  .speck-e {
+    top: 39vh;
+    left: 7vw;
+    width: 84px;
+    opacity: 0.26;
+    transform: rotate(14deg);
+  }
+  .speck-f {
+    top: 47vh;
+    left: 72vw;
+    width: 32px;
+    opacity: 0.312;
+    transform: rotate(-5deg);
+  }
+  .speck-g {
+    display: none;
+  }
+  .speck-h {
+    top: 62vh;
+    left: 23vw;
+    width: 42px;
+    opacity: 0.364;
+    transform: rotate(-12deg);
+  }
+  .speck-i {
+    display: none;
+  }
+  .speck-j {
+    top: 74vh;
+    left: 81vw;
+    width: 38px;
+    opacity: 0.299;
+    transform: rotate(-18deg);
+  }
+  .speck-k {
+    top: 86vh;
+    left: 16vw;
+    width: 34px;
+    opacity: 0.247;
+    transform: rotate(9deg);
+  }
+  .speck-l {
+    display: none;
+  }
+  .speck-m {
+    display: none;
+  }
+  .speck-n {
+    top: 41vh;
+    left: 93vw;
+    width: 26px;
+    opacity: 0.234;
+    transform: rotate(-11deg);
+  }
+  .speck-o {
+    top: 68vh;
+    left: 3vw;
+    width: 24px;
+    opacity: 0.156;
+    transform: rotate(15deg);
+  }
+  .speck-p {
+    top: 90vh;
+    left: 66vw;
+    width: 30px;
+    opacity: 0.325;
+    transform: rotate(-20deg);
+  }
+  .speck-q {
+    display: none;
+  }
+  .speck-r {
+    top: 27vh;
+    left: 76vw;
+    width: 24px;
+    opacity: 0.26;
+    transform: rotate(-14deg);
+  }
+  .speck-s {
+    display: none;
+  }
+  .speck-t {
+    display: none;
+  }
+
+  .charm {
+    display: none;
+  }
+}
