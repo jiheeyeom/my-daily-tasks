@@ -18,6 +18,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "image icon" / "health-illustration-set-complete"
+CHARMS = ROOT / "image icon" / "web-assets"
 OUT = ROOT / "images"
 
 # (source, output, rendered size in CSS pixels x2 for high-density screens)
@@ -48,6 +49,40 @@ PLAN = [
 ]
 
 
+# Charms decorating the page edges. These keep their own aspect ratio, so the
+# number is the longest side rather than a square.
+CHARM_PLAN = [
+    ("03-silver-clear-keyring.png", "charm-side-left.webp", 900),
+    ("02-silver-puffy-bow.png", "charm-side-right.webp", 900),
+    ("01-silver-charm-chain.png", "charm-top.webp", 1100),
+    # Drawn at 340px, so 560 is still a comfortable oversample and costs
+    # little; the chalk hatching is what makes this one expensive.
+    ("04-mom-exercise-chalk-note.png", "charm-note.webp", 560),
+    ("05-silver-formula-car.png", "charm-car.webp", 760),
+]
+
+
+def convert_charms():
+    if not CHARMS.exists():
+        print(f"  건너뜀 · 폴더 없음: {CHARMS.name}")
+        return 0
+    total = 0
+    for source, name, longest in CHARM_PLAN:
+        image = Image.open(CHARMS / source).convert("RGBA")
+        image = image.crop(image.getchannel("A").getbbox())
+        scale = longest / max(image.size)
+        image = image.resize(
+            (round(image.width * scale), round(image.height * scale)), Image.LANCZOS
+        )
+        target = OUT / name
+        # They are drawn at a third to a half opacity behind everything else,
+        # so a lower quality is invisible here and saves most of their weight.
+        image.save(target, "WEBP", quality=68, method=6)
+        total += target.stat().st_size
+        print(f"  {name:<22} {image.width:>4}x{image.height:<4} {target.stat().st_size:>7,} bytes")
+    return total
+
+
 def main():
     if not SRC.exists():
         sys.exit(f"원본 폴더를 찾을 수 없습니다: {SRC}")
@@ -74,6 +109,7 @@ def main():
         image.save(target, "WEBP", quality=quality, method=6)
         total += target.stat().st_size
         print(f"  {name:<22} {size:>4}px  {target.stat().st_size:>7,} bytes")
+    total += convert_charms()
     print(f"  {'합계':<22}       {total:>7,} bytes")
 
 
