@@ -2095,21 +2095,30 @@ main {
   margin-left: -310px;
 }
 
-/* The note and the car sit in the bottom corners. */
+/* The chalk note reads as a scribble in the margin beside the quote at the
+   top; the car takes the bottom-left corner. */
 .charm-note {
-  bottom: 3vh;
-  left: 2vw;
-  width: 340px;
+  top: 0.5vh;
+  right: 2vw;
+  width: 170px;
 }
 
 .charm-car {
   bottom: 2vh;
-  right: 2vw;
+  left: 2vw;
   width: 380px;
 }
 
 /* Below a desktop width the edges belong to the content, so the charms that
    would sit under it are dropped rather than shrunk into clutter. */
+/* The quote runs the full width of the content column, so under about 1600px
+   the margin beside it no longer clears the note. */
+@media (max-width: 1600px) {
+  .charm-note {
+    display: none;
+  }
+}
+
 @media (max-width: 1100px) {
   .charm-side-left,
   .charm-side-right,
@@ -2117,14 +2126,12 @@ main {
     display: none;
   }
 
-  .charm-note,
   .charm-car {
     width: 220px;
   }
 }
 
 @media (max-width: 720px) {
-  .charm-note,
   .charm-car {
     display: none;
   }
