@@ -1836,7 +1836,7 @@ main {
   width: 175vw;
   height: auto;
   margin-left: -87.5vw;
-  opacity: 0.08;
+  opacity: 0.12;
   filter: saturate(1.2);
 }
 
@@ -1851,7 +1851,7 @@ main {
 }
 
 :root[data-theme="dark"] .giant {
-  opacity: 0.11;
+  opacity: 0.15;
 }
 
 /* Scattered across the whole field. Size, opacity and angle all differ per
@@ -1868,15 +1868,15 @@ main {
   top: 9vh;
   left: 12vw;
   width: 92px;
-  opacity: 0.3;
+  opacity: 0.39;
   transform: rotate(-9deg);
 }
 
 .speck-b {
   top: 4vh;
   left: 63vw;
-  width: 100px;
-  opacity: 0.22;
+  width: 80px;
+  opacity: 0.286;
   transform: rotate(11deg);
 }
 
@@ -1884,7 +1884,7 @@ main {
   top: 24vh;
   left: 34vw;
   width: 30px;
-  opacity: 0.17;
+  opacity: 0.221;
   transform: rotate(-16deg);
 }
 
@@ -1892,7 +1892,7 @@ main {
   top: 16vh;
   left: 87vw;
   width: 46px;
-  opacity: 0.26;
+  opacity: 0.338;
   transform: rotate(7deg);
 }
 
@@ -1900,7 +1900,7 @@ main {
   top: 39vh;
   left: 7vw;
   width: 84px;
-  opacity: 0.2;
+  opacity: 0.26;
   transform: rotate(14deg);
 }
 
@@ -1908,7 +1908,7 @@ main {
   top: 47vh;
   left: 72vw;
   width: 32px;
-  opacity: 0.24;
+  opacity: 0.312;
   transform: rotate(-5deg);
 }
 
@@ -1916,7 +1916,7 @@ main {
   top: 33vh;
   left: 52vw;
   width: 26px;
-  opacity: 0.13;
+  opacity: 0.169;
   transform: rotate(19deg);
 }
 
@@ -1924,7 +1924,7 @@ main {
   top: 62vh;
   left: 23vw;
   width: 42px;
-  opacity: 0.28;
+  opacity: 0.364;
   transform: rotate(-12deg);
 }
 
@@ -1932,7 +1932,7 @@ main {
   top: 57vh;
   left: 44vw;
   width: 28px;
-  opacity: 0.16;
+  opacity: 0.208;
   transform: rotate(6deg);
 }
 
@@ -1940,7 +1940,7 @@ main {
   top: 74vh;
   left: 81vw;
   width: 38px;
-  opacity: 0.23;
+  opacity: 0.299;
   transform: rotate(-18deg);
 }
 
@@ -1948,7 +1948,7 @@ main {
   top: 86vh;
   left: 16vw;
   width: 34px;
-  opacity: 0.19;
+  opacity: 0.247;
   transform: rotate(9deg);
 }
 
@@ -1956,7 +1956,7 @@ main {
   top: 79vh;
   left: 57vw;
   width: 64px;
-  opacity: 0.21;
+  opacity: 0.273;
   transform: rotate(-7deg);
 }
 
@@ -1964,7 +1964,7 @@ main {
   top: 6vh;
   left: 29vw;
   width: 22px;
-  opacity: 0.15;
+  opacity: 0.195;
   transform: rotate(22deg);
 }
 
@@ -1972,7 +1972,7 @@ main {
   top: 41vh;
   left: 93vw;
   width: 26px;
-  opacity: 0.18;
+  opacity: 0.234;
   transform: rotate(-11deg);
 }
 
@@ -1980,7 +1980,7 @@ main {
   top: 68vh;
   left: 3vw;
   width: 24px;
-  opacity: 0.12;
+  opacity: 0.156;
   transform: rotate(15deg);
 }
 
@@ -1988,7 +1988,7 @@ main {
   top: 90vh;
   left: 66vw;
   width: 30px;
-  opacity: 0.25;
+  opacity: 0.325;
   transform: rotate(-20deg);
 }
 
@@ -1996,7 +1996,7 @@ main {
   top: 88vh;
   left: 40vw;
   width: 20px;
-  opacity: 0.14;
+  opacity: 0.182;
   transform: rotate(4deg);
 }
 
@@ -2004,7 +2004,7 @@ main {
   top: 27vh;
   left: 76vw;
   width: 24px;
-  opacity: 0.2;
+  opacity: 0.26;
   transform: rotate(-14deg);
 }
 
@@ -2012,7 +2012,7 @@ main {
   top: 46vh;
   left: 19vw;
   width: 22px;
-  opacity: 0.11;
+  opacity: 0.143;
   transform: rotate(17deg);
 }
 
@@ -2020,7 +2020,7 @@ main {
   top: 70vh;
   left: 50vw;
   width: 26px;
-  opacity: 0.17;
+  opacity: 0.221;
   transform: rotate(-3deg);
 }
 
