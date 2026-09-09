@@ -1823,15 +1823,19 @@ main {
   opacity: 0.4;
 }
 
-/* A figure looming far larger than the window, deliberately cropped by it:
-   the head runs off the top and the hands past both sides. Both terms of the
-   max() matter — the width one guarantees the sides crop on a wide screen, the
-   height one guarantees the head crops on a tall one. */
+/* A figure looming far larger than the window. Measured against the source:
+   the crown sits at 15.5% of the image, the neck at 32.7%, and the hands span
+   17.3%-82.7%. Offsetting the top by 17.2% of the size therefore clips only
+   the top of the forehead, while the width keeps both hands past the edges —
+   they are the weakest part of the drawing. The legs fall below the fold.
+   The width term crops the hands on a wide window, the height term keeps the
+   legs off-screen on a tall one. */
 .giant {
+  --size: max(175vw, 152vh);
   position: absolute;
   left: 50%;
-  bottom: -20vh;
-  width: max(112vw, 148vh);
+  top: calc(var(--size) * -0.172);
+  width: var(--size);
   height: auto;
   transform: translateX(-50%);
   opacity: 0.07;
@@ -1842,8 +1846,8 @@ main {
   opacity: 0.1;
 }
 
-/* Scattered across the whole field, not lined up down the edges. Sizes,
-   opacities and angles all differ so the eye reads it as a scatter. */
+/* Scattered across the whole field. Size, opacity and angle all differ per
+   speck, which is what stops the eye grouping them into rows. */
 .speck {
   position: absolute;
   height: auto;
@@ -1855,101 +1859,168 @@ main {
 .speck-a {
   top: 9vh;
   left: 12vw;
-  width: 128px;
-  opacity: 0.26;
+  width: 92px;
+  opacity: 0.3;
   transform: rotate(-9deg);
 }
 
 .speck-b {
   top: 4vh;
   left: 63vw;
-  width: 150px;
-  opacity: 0.24;
+  width: 100px;
+  opacity: 0.22;
   transform: rotate(11deg);
 }
 
 .speck-c {
   top: 24vh;
   left: 34vw;
-  width: 32px;
-  opacity: 0.2;
+  width: 30px;
+  opacity: 0.17;
   transform: rotate(-16deg);
 }
 
 .speck-d {
   top: 16vh;
   left: 87vw;
-  width: 50px;
-  opacity: 0.28;
+  width: 46px;
+  opacity: 0.26;
   transform: rotate(7deg);
 }
 
 .speck-e {
   top: 39vh;
   left: 7vw;
-  width: 104px;
-  opacity: 0.22;
+  width: 84px;
+  opacity: 0.2;
   transform: rotate(14deg);
 }
 
 .speck-f {
   top: 47vh;
   left: 72vw;
-  width: 34px;
-  opacity: 0.22;
+  width: 32px;
+  opacity: 0.24;
   transform: rotate(-5deg);
 }
 
 .speck-g {
   top: 33vh;
   left: 52vw;
-  width: 28px;
-  opacity: 0.18;
+  width: 26px;
+  opacity: 0.13;
   transform: rotate(19deg);
 }
 
 .speck-h {
   top: 62vh;
   left: 23vw;
-  width: 46px;
-  opacity: 0.26;
+  width: 42px;
+  opacity: 0.28;
   transform: rotate(-12deg);
 }
 
 .speck-i {
   top: 57vh;
   left: 44vw;
-  width: 30px;
-  opacity: 0.19;
+  width: 28px;
+  opacity: 0.16;
   transform: rotate(6deg);
 }
 
 .speck-j {
   top: 74vh;
   left: 81vw;
-  width: 40px;
-  opacity: 0.24;
+  width: 38px;
+  opacity: 0.23;
   transform: rotate(-18deg);
 }
 
 .speck-k {
   top: 86vh;
   left: 16vw;
-  width: 36px;
-  opacity: 0.21;
+  width: 34px;
+  opacity: 0.19;
   transform: rotate(9deg);
 }
 
 .speck-l {
   top: 79vh;
   left: 57vw;
-  width: 78px;
-  opacity: 0.2;
+  width: 64px;
+  opacity: 0.21;
   transform: rotate(-7deg);
 }
 
+.speck-m {
+  top: 6vh;
+  left: 29vw;
+  width: 22px;
+  opacity: 0.15;
+  transform: rotate(22deg);
+}
+
+.speck-n {
+  top: 41vh;
+  left: 93vw;
+  width: 26px;
+  opacity: 0.18;
+  transform: rotate(-11deg);
+}
+
+.speck-o {
+  top: 68vh;
+  left: 3vw;
+  width: 24px;
+  opacity: 0.12;
+  transform: rotate(15deg);
+}
+
+.speck-p {
+  top: 90vh;
+  left: 66vw;
+  width: 30px;
+  opacity: 0.25;
+  transform: rotate(-20deg);
+}
+
+.speck-q {
+  top: 88vh;
+  left: 40vw;
+  width: 20px;
+  opacity: 0.14;
+  transform: rotate(4deg);
+}
+
+.speck-r {
+  top: 27vh;
+  left: 76vw;
+  width: 24px;
+  opacity: 0.2;
+  transform: rotate(-14deg);
+}
+
+.speck-s {
+  top: 46vh;
+  left: 19vw;
+  width: 22px;
+  opacity: 0.11;
+  transform: rotate(17deg);
+}
+
+.speck-t {
+  top: 70vh;
+  left: 50vw;
+  width: 26px;
+  opacity: 0.17;
+  transform: rotate(-3deg);
+}
+
 :root[data-theme="dark"] .speck {
-  opacity: 0.34;
+  filter: drop-shadow(
+      0 0 18px color-mix(in srgb, var(--accent) 60%, transparent)
+    )
+    brightness(1.15);
 }
 
 @media (max-width: 720px) {
@@ -1963,7 +2034,11 @@ main {
   .speck-c,
   .speck-g,
   .speck-i,
-  .speck-l {
+  .speck-l,
+  .speck-m,
+  .speck-q,
+  .speck-s,
+  .speck-t {
     display: none;
   }
 }
