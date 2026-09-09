@@ -1762,6 +1762,19 @@ export function createApp({
     setText("weight-submit", weight ? "체중 수정" : "체중 기록");
   }
 
+  // Sections start folded so the tab opens as a list of headings. Which ones
+  // a person opens is a per-device preference, like the pinned foods.
+  function setUpFolds() {
+    for (const fold of doc.querySelectorAll(".section-fold")) {
+      const key = fold.querySelector("summary h2, summary h3")?.id;
+      if (!key) continue;
+      fold.open = preference(`fold_${key}`) === "open";
+      on(fold, "toggle", () =>
+        preference(`fold_${key}`, fold.open ? "open" : "shut"),
+      );
+    }
+  }
+
   function renderHealth() {
     const meals = state.data.meals.filter((item) => item.date === state.date),
       workouts = state.data.workouts.filter((item) => item.date === state.date);
@@ -2420,6 +2433,7 @@ export function createApp({
   renderTheme();
   // Resetting forms during auth changes should not reset a stored sort preference.
   $("sort-select").value = state.sort;
+  setUpFolds();
   if (preference("loadProcessedFoods") === "1") loadProcessedFoods(false);
   const stopAuth = store.observeAuth(authChanged);
   return {

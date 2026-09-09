@@ -207,13 +207,6 @@
         height="611"
       />
       <img
-        class="charm charm-note"
-        src="./images/charm-note.webp"
-        alt=""
-        width="560"
-        height="248"
-      />
-      <img
         class="charm charm-car"
         src="./images/charm-car.webp"
         alt=""
@@ -544,627 +537,691 @@
             class="health-section tone-balance"
             aria-labelledby="balance-title"
           >
-            <div class="section-heading">
-              <h3 id="balance-title">
+            <details class="section-fold">
+              <summary>
+                <div class="section-heading">
+                  <h3 id="balance-title">
+                    <img
+                      class="section-icon"
+                      src="./images/mark-balance.webp"
+                      alt=""
+                      width="128"
+                      height="128"
+                    />기초대사량 대비 오늘
+                  </h3>
+                  <span class="section-kicker">계산일 뿐, 목표가 아니에요</span>
+                </div>
+              </summary>
+              <div class="section-body">
+                <details id="body-profile-details" class="body-profile">
+                  <summary>내 기준 입력 (성별·출생연도·키)</summary>
+                  <form id="body-profile-form" class="form-grid two-col">
+                    <label
+                      >성별<select id="profile-sex">
+                        <option value="">선택 안 함</option>
+                        <option value="female">여성</option>
+                        <option value="male">남성</option>
+                      </select></label
+                    >
+                    <label
+                      >출생연도<input
+                        type="number"
+                        id="profile-birth-year"
+                        inputmode="numeric"
+                        min="1900"
+                        max="2100"
+                        step="1"
+                        placeholder="예: 1991"
+                    /></label>
+                    <label
+                      >키 (cm)<input
+                        type="number"
+                        id="profile-height"
+                        inputmode="decimal"
+                        min="100"
+                        max="250"
+                        step="0.1"
+                        placeholder="예: 164.8"
+                    /></label>
+                    <label
+                      >목표 열량 (kcal)<input
+                        type="number"
+                        id="profile-target"
+                        inputmode="numeric"
+                        min="500"
+                        max="10000"
+                        step="10"
+                        placeholder="비워두면 목표 없음"
+                    /></label>
+                    <div class="profile-actions">
+                      <button type="submit" class="primary-btn health-btn">
+                        저장
+                      </button>
+                      <button
+                        type="button"
+                        id="profile-use-bmr"
+                        class="text-btn"
+                      >
+                        기초대사량 값 넣기
+                      </button>
+                    </div>
+                  </form>
+                  <p class="help-text">
+                    이 기준은 <strong>내 구글 계정</strong>에 저장되어 다른
+                    기기에서도 같이 보입니다. 체중은 가장 최근 체중 기록을 쓰고,
+                    키는 비워 두면 최근 건강검진 값을 씁니다.
+                  </p>
+                </details>
                 <img
-                  class="section-icon"
-                  src="./images/mark-balance.webp"
+                  class="empty-art"
+                  src="./images/hero-balance.webp"
                   alt=""
-                  width="128"
-                  height="128"
-                />기초대사량 대비 오늘
-              </h3>
-              <span class="section-kicker">계산일 뿐, 목표가 아니에요</span>
-            </div>
-            <details id="body-profile-details" class="body-profile">
-              <summary>내 기준 입력 (성별·출생연도·키)</summary>
-              <form id="body-profile-form" class="form-grid two-col">
-                <label
-                  >성별<select id="profile-sex">
-                    <option value="">선택 안 함</option>
-                    <option value="female">여성</option>
-                    <option value="male">남성</option>
-                  </select></label
-                >
-                <label
-                  >출생연도<input
-                    type="number"
-                    id="profile-birth-year"
-                    inputmode="numeric"
-                    min="1900"
-                    max="2100"
-                    step="1"
-                    placeholder="예: 1991"
-                /></label>
-                <label
-                  >키 (cm)<input
-                    type="number"
-                    id="profile-height"
-                    inputmode="decimal"
-                    min="100"
-                    max="250"
-                    step="0.1"
-                    placeholder="예: 164.8"
-                /></label>
-                <label
-                  >목표 열량 (kcal)<input
-                    type="number"
-                    id="profile-target"
-                    inputmode="numeric"
-                    min="500"
-                    max="10000"
-                    step="10"
-                    placeholder="비워두면 목표 없음"
-                /></label>
-                <div class="profile-actions">
-                  <button type="submit" class="primary-btn health-btn">
-                    저장
-                  </button>
-                  <button type="button" id="profile-use-bmr" class="text-btn">
-                    기초대사량 값 넣기
-                  </button>
-                </div>
-              </form>
-              <p class="help-text">
-                이 기준은 <strong>내 구글 계정</strong>에 저장되어 다른
-                기기에서도 같이 보입니다. 체중은 가장 최근 체중 기록을 쓰고,
-                키는 비워 두면 최근 건강검진 값을 씁니다.
-              </p>
-            </details>
-            <img
-              class="empty-art"
-              src="./images/hero-balance.webp"
-              alt=""
-              width="320"
-              height="320"
-              loading="lazy"
-            />
-            <div id="balance-empty" class="empty-state">
-              내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
-            </div>
-            <div id="balance-goal" class="balance-goal" hidden>
-              <!-- The ring is the app's one piece of decoration: it is drawn
-                   from the numbers, so it cannot go stale or look generic. -->
-              <svg class="goal-ring" viewBox="0 0 130 130" aria-hidden="true">
-                <defs>
-                  <linearGradient id="goalArc" x1="0" y1="0" x2="1" y2="1">
-                    <stop
-                      offset="0"
-                      stop-color="var(--tone-2, var(--accent))"
-                    />
-                    <stop
-                      offset="1"
-                      stop-color="var(--tone, var(--accent-hover))"
-                    />
-                  </linearGradient>
-                </defs>
-                <circle class="goal-track" cx="65" cy="65" r="52" />
-                <circle
-                  id="balance-goal-bar"
-                  class="goal-bar"
-                  cx="65"
-                  cy="65"
-                  r="52"
+                  width="320"
+                  height="320"
+                  loading="lazy"
                 />
-              </svg>
-              <div class="goal-copy">
-                <span id="balance-goal-label"></span>
-                <strong id="balance-goal-left"></strong>
-                <p id="balance-goal-note" class="help-text"></p>
-              </div>
-              <div id="balance-result" hidden>
-                <div class="health-stats" aria-label="기초대사량 대비 오늘">
-                  <div class="stat-card">
-                    <span>기초대사량 추정</span
-                    ><strong id="balance-bmr">—</strong
-                    ><small id="balance-basis"></small>
-                  </div>
-                  <div class="stat-card">
-                    <span>오늘 기록한 섭취</span
-                    ><strong id="balance-intake">—</strong
-                    ><small id="balance-intake-note"></small>
-                  </div>
-                  <div class="stat-card">
-                    <span>차이</span><strong id="balance-diff">—</strong
-                    ><small id="balance-diff-note"></small>
-                  </div>
+                <div id="balance-empty" class="empty-state">
+                  내 기준을 입력하고 체중을 한 번 기록하면 계산해 드릴게요.
                 </div>
+                <div id="balance-goal" class="balance-goal" hidden>
+                  <!-- The ring is the app's one piece of decoration: it is drawn
+                   from the numbers, so it cannot go stale or look generic. -->
+                  <svg
+                    class="goal-ring"
+                    viewBox="0 0 130 130"
+                    aria-hidden="true"
+                  >
+                    <defs>
+                      <linearGradient id="goalArc" x1="0" y1="0" x2="1" y2="1">
+                        <stop
+                          offset="0"
+                          stop-color="var(--tone-2, var(--accent))"
+                        />
+                        <stop
+                          offset="1"
+                          stop-color="var(--tone, var(--accent-hover))"
+                        />
+                      </linearGradient>
+                    </defs>
+                    <circle class="goal-track" cx="65" cy="65" r="52" />
+                    <circle
+                      id="balance-goal-bar"
+                      class="goal-bar"
+                      cx="65"
+                      cy="65"
+                      r="52"
+                    />
+                  </svg>
+                  <div class="goal-copy">
+                    <span id="balance-goal-label"></span>
+                    <strong id="balance-goal-left"></strong>
+                    <p id="balance-goal-note" class="help-text"></p>
+                  </div>
+                  <div id="balance-result" hidden>
+                    <div class="health-stats" aria-label="기초대사량 대비 오늘">
+                      <div class="stat-card">
+                        <span>기초대사량 추정</span
+                        ><strong id="balance-bmr">—</strong
+                        ><small id="balance-basis"></small>
+                      </div>
+                      <div class="stat-card">
+                        <span>오늘 기록한 섭취</span
+                        ><strong id="balance-intake">—</strong
+                        ><small id="balance-intake-note"></small>
+                      </div>
+                      <div class="stat-card">
+                        <span>차이</span><strong id="balance-diff">—</strong
+                        ><small id="balance-diff-note"></small>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="balance-advice" class="balance-advice" hidden>
+                    <h4 id="balance-advice-title"></h4>
+                    <ul id="balance-advice-list" class="advice-list"></ul>
+                    <p id="balance-advice-note" class="help-text"></p>
+                  </div>
+                  <p id="balance-drift" class="balance-drift"></p>
+                </div>
+                <p class="help-text">
+                  기초대사량은 <strong>가만히 있을 때 쓰는 열량</strong>이라
+                  활동량이 빠져 있습니다. 하루 총소모열량이 아니고, 권장
+                  섭취량이나 감량 목표도 아닙니다. 체중 예상은 7,700kcal을
+                  1kg으로 잡은 어림값이라 실제와 다를 수 있어요.
+                </p>
               </div>
-              <div id="balance-advice" class="balance-advice" hidden>
-                <h4 id="balance-advice-title"></h4>
-                <ul id="balance-advice-list" class="advice-list"></ul>
-                <p id="balance-advice-note" class="help-text"></p>
-              </div>
-              <p id="balance-drift" class="balance-drift"></p>
-            </div>
-            <p class="help-text">
-              기초대사량은 <strong>가만히 있을 때 쓰는 열량</strong>이라
-              활동량이 빠져 있습니다. 하루 총소모열량이 아니고, 권장 섭취량이나
-              감량 목표도 아닙니다. 체중 예상은 7,700kcal을 1kg으로 잡은
-              어림값이라 실제와 다를 수 있어요.
-            </p>
+            </details>
           </section>
           <section
             class="health-section tone-meal"
             aria-labelledby="meal-title"
           >
-            <div class="section-heading">
-              <h3 id="meal-title">
-                <img
-                  class="section-icon"
-                  src="./images/mark-meal.webp"
-                  alt=""
-                  width="128"
-                  height="128"
-                />식사
-              </h3>
-              <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
-            </div>
-            <section id="quick-add" class="quick-add" hidden>
-              <h4 class="quick-add-title">빠른 추가</h4>
-              <div id="quick-add-list" class="chip-row"></div>
-              <p class="help-text">
-                누르면 아래 입력칸이 채워집니다. ★는 고정한 음식이고, 나머지는
-                최근에 기록한 음식이에요. 기록 버튼은 직접 눌러 주세요.
-              </p>
-            </section>
-            <form id="meal-form">
-              <div class="form-grid two-col">
-                <label
-                  >식사 구분<select id="meal-type">
-                    <option value="breakfast">아침</option>
-                    <option value="lunch">점심</option>
-                    <option value="dinner">저녁</option>
-                    <option value="snack">간식</option>
-                  </select></label
-                >
-                <label
-                  >음식 찾기<input
-                    type="search"
-                    id="food-search"
-                    placeholder="예: 밥, 달걀, 두부"
-                    maxlength="100"
-                /></label>
-              </div>
-              <div class="field food-pick-row">
-                <label class="food-pick-label"
-                  >음식 선택<select id="food-select" required>
-                    <option value="">음식을 선택해 주세요</option>
-                  </select></label
-                >
-                <button
-                  type="button"
-                  id="food-favorite"
-                  class="text-btn favorite-btn"
-                  aria-pressed="false"
-                  disabled
-                >
-                  ☆ 고정
-                </button>
-              </div>
-              <p id="food-count" class="help-text"></p>
-              <p class="help-text">
-                <button type="button" id="load-processed" class="text-btn">
-                  가공식품 25만 종 불러오기
-                </button>
-                <span id="processed-status"
-                  >약 5MB를 내려받습니다. 한 번 불러오면 이 기기에서는 다음부터
-                  자동으로 불러와요.</span
-                >
-              </p>
-              <p id="food-reference" class="help-text">
-                기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
-                등록해 주세요.
-              </p>
-              <div id="container-row" class="container-row" hidden>
-                <label
-                  >잔·캔·병으로 입력<input
-                    type="number"
-                    id="container-count"
-                    inputmode="decimal"
-                    min="0.5"
-                    max="50"
-                    step="0.5"
-                    value="1"
-                /></label>
-                <label
-                  ><span class="sr-only">용기 종류</span
-                  ><select id="container-select"></select
-                ></label>
-                <p id="container-hint" class="help-text" aria-live="polite"></p>
-              </div>
-              <div class="meal-amount-row">
-                <label
-                  >먹은 양
-                  <div class="unit-input">
-                    <input
-                      id="meal-amount"
-                      type="number"
-                      inputmode="decimal"
-                      min="0.1"
-                      max="5000"
-                      step="0.1"
-                      value="100"
-                      required
-                    /><span id="meal-unit">g</span>
-                  </div></label
-                >
-                <output id="meal-preview" aria-live="polite"
-                  >음식을 선택하면 계산됩니다.</output
-                >
-                <button
-                  id="meal-submit"
-                  class="primary-btn health-btn"
-                  type="submit"
-                >
-                  식사 기록
-                </button>
-                <button id="meal-cancel" class="text-btn" type="button" hidden>
-                  수정 취소
-                </button>
-              </div>
-            </form>
-            <details id="custom-food-details" class="custom-food">
-              <summary>찾는 음식이 없나요? 내 음식 등록</summary>
-              <p class="help-text">
-                포장지 영양표나 확인한 자료를 입력해 두면 다음부터 양만 적으면
-                됩니다. 영양성분을 모르는 칸은 비워 두세요.
-              </p>
-              <form id="food-form">
-                <label class="field"
-                  >음식명<input
-                    id="custom-food-name"
-                    type="text"
-                    maxlength="100"
-                    placeholder="예: 내가 먹는 그릭요거트"
-                    required
-                /></label>
-                <div class="form-grid three-col">
-                  <label
-                    >영양표 기준량<input
-                      id="custom-base-amount"
-                      type="number"
-                      inputmode="decimal"
-                      min="0.1"
-                      max="5000"
-                      step="0.1"
-                      value="100"
-                      required
-                  /></label>
-                  <label
-                    >기준 단위<select id="custom-base-unit">
-                      <option>g</option>
-                      <option>ml</option>
-                      <option>개</option>
-                    </select></label
-                  >
-                  <label
-                    >열량 (kcal)<input
-                      id="custom-kcal"
-                      type="number"
-                      inputmode="decimal"
-                      min="0"
-                      max="10000"
-                      step="0.1"
-                      required
-                  /></label>
-                  <label
-                    >단백질 (g)<input
-                      id="custom-protein"
-                      type="number"
-                      inputmode="decimal"
-                      min="0"
-                      max="2000"
-                      step="0.1"
-                      placeholder="선택"
-                  /></label>
-                  <label
-                    >탄수화물 (g)<input
-                      id="custom-carbs"
-                      type="number"
-                      inputmode="decimal"
-                      min="0"
-                      max="2000"
-                      step="0.1"
-                      placeholder="선택"
-                  /></label>
-                  <label
-                    >지방 (g)<input
-                      id="custom-fat"
-                      type="number"
-                      inputmode="decimal"
-                      min="0"
-                      max="2000"
-                      step="0.1"
-                      placeholder="선택"
-                  /></label>
+            <details class="section-fold">
+              <summary>
+                <div class="section-heading">
+                  <h3 id="meal-title">
+                    <img
+                      class="section-icon"
+                      src="./images/mark-meal.webp"
+                      alt=""
+                      width="128"
+                      height="128"
+                    />식사
+                  </h3>
+                  <span class="section-kicker">먹은 양만큼, 차곡차곡</span>
                 </div>
-                <label class="field"
-                  >출처·제품 메모<input
-                    id="custom-source"
-                    type="text"
-                    maxlength="240"
-                    placeholder="예: 제품 포장지 1개(80g) 기준"
-                /></label>
-                <button class="secondary-btn" type="submit">
-                  내 음식에 저장
-                </button>
-              </form>
-              <ul id="custom-food-list" class="compact-list"></ul>
-              <p class="help-text">
-                삭제한 음식도 이미 저장한 식사 기록에는 그대로 남습니다.
-              </p>
+              </summary>
+              <div class="section-body">
+                <section id="quick-add" class="quick-add" hidden>
+                  <h4 class="quick-add-title">빠른 추가</h4>
+                  <div id="quick-add-list" class="chip-row"></div>
+                  <p class="help-text">
+                    누르면 아래 입력칸이 채워집니다. ★는 고정한 음식이고,
+                    나머지는 최근에 기록한 음식이에요. 기록 버튼은 직접 눌러
+                    주세요.
+                  </p>
+                </section>
+                <form id="meal-form">
+                  <div class="form-grid two-col">
+                    <label
+                      >식사 구분<select id="meal-type">
+                        <option value="breakfast">아침</option>
+                        <option value="lunch">점심</option>
+                        <option value="dinner">저녁</option>
+                        <option value="snack">간식</option>
+                      </select></label
+                    >
+                    <label
+                      >음식 찾기<input
+                        type="search"
+                        id="food-search"
+                        placeholder="예: 밥, 달걀, 두부"
+                        maxlength="100"
+                    /></label>
+                  </div>
+                  <div class="field food-pick-row">
+                    <label class="food-pick-label"
+                      >음식 선택<select id="food-select" required>
+                        <option value="">음식을 선택해 주세요</option>
+                      </select></label
+                    >
+                    <button
+                      type="button"
+                      id="food-favorite"
+                      class="text-btn favorite-btn"
+                      aria-pressed="false"
+                      disabled
+                    >
+                      ☆ 고정
+                    </button>
+                  </div>
+                  <p id="food-count" class="help-text"></p>
+                  <p class="help-text">
+                    <button type="button" id="load-processed" class="text-btn">
+                      가공식품 25만 종 불러오기
+                    </button>
+                    <span id="processed-status"
+                      >약 5MB를 내려받습니다. 한 번 불러오면 이 기기에서는
+                      다음부터 자동으로 불러와요.</span
+                    >
+                  </p>
+                  <p id="food-reference" class="help-text">
+                    기본 식품은 참고값입니다. 제품·조리법이 다르면 영양표로 직접
+                    등록해 주세요.
+                  </p>
+                  <div id="container-row" class="container-row" hidden>
+                    <label
+                      >잔·캔·병으로 입력<input
+                        type="number"
+                        id="container-count"
+                        inputmode="decimal"
+                        min="0.5"
+                        max="50"
+                        step="0.5"
+                        value="1"
+                    /></label>
+                    <label
+                      ><span class="sr-only">용기 종류</span
+                      ><select id="container-select"></select
+                    ></label>
+                    <p
+                      id="container-hint"
+                      class="help-text"
+                      aria-live="polite"
+                    ></p>
+                  </div>
+                  <div class="meal-amount-row">
+                    <label
+                      >먹은 양
+                      <div class="unit-input">
+                        <input
+                          id="meal-amount"
+                          type="number"
+                          inputmode="decimal"
+                          min="0.1"
+                          max="5000"
+                          step="0.1"
+                          value="100"
+                          required
+                        /><span id="meal-unit">g</span>
+                      </div></label
+                    >
+                    <output id="meal-preview" aria-live="polite"
+                      >음식을 선택하면 계산됩니다.</output
+                    >
+                    <button
+                      id="meal-submit"
+                      class="primary-btn health-btn"
+                      type="submit"
+                    >
+                      식사 기록
+                    </button>
+                    <button
+                      id="meal-cancel"
+                      class="text-btn"
+                      type="button"
+                      hidden
+                    >
+                      수정 취소
+                    </button>
+                  </div>
+                </form>
+                <details id="custom-food-details" class="custom-food">
+                  <summary>찾는 음식이 없나요? 내 음식 등록</summary>
+                  <p class="help-text">
+                    포장지 영양표나 확인한 자료를 입력해 두면 다음부터 양만
+                    적으면 됩니다. 영양성분을 모르는 칸은 비워 두세요.
+                  </p>
+                  <form id="food-form">
+                    <label class="field"
+                      >음식명<input
+                        id="custom-food-name"
+                        type="text"
+                        maxlength="100"
+                        placeholder="예: 내가 먹는 그릭요거트"
+                        required
+                    /></label>
+                    <div class="form-grid three-col">
+                      <label
+                        >영양표 기준량<input
+                          id="custom-base-amount"
+                          type="number"
+                          inputmode="decimal"
+                          min="0.1"
+                          max="5000"
+                          step="0.1"
+                          value="100"
+                          required
+                      /></label>
+                      <label
+                        >기준 단위<select id="custom-base-unit">
+                          <option>g</option>
+                          <option>ml</option>
+                          <option>개</option>
+                        </select></label
+                      >
+                      <label
+                        >열량 (kcal)<input
+                          id="custom-kcal"
+                          type="number"
+                          inputmode="decimal"
+                          min="0"
+                          max="10000"
+                          step="0.1"
+                          required
+                      /></label>
+                      <label
+                        >단백질 (g)<input
+                          id="custom-protein"
+                          type="number"
+                          inputmode="decimal"
+                          min="0"
+                          max="2000"
+                          step="0.1"
+                          placeholder="선택"
+                      /></label>
+                      <label
+                        >탄수화물 (g)<input
+                          id="custom-carbs"
+                          type="number"
+                          inputmode="decimal"
+                          min="0"
+                          max="2000"
+                          step="0.1"
+                          placeholder="선택"
+                      /></label>
+                      <label
+                        >지방 (g)<input
+                          id="custom-fat"
+                          type="number"
+                          inputmode="decimal"
+                          min="0"
+                          max="2000"
+                          step="0.1"
+                          placeholder="선택"
+                      /></label>
+                    </div>
+                    <label class="field"
+                      >출처·제품 메모<input
+                        id="custom-source"
+                        type="text"
+                        maxlength="240"
+                        placeholder="예: 제품 포장지 1개(80g) 기준"
+                    /></label>
+                    <button class="secondary-btn" type="submit">
+                      내 음식에 저장
+                    </button>
+                  </form>
+                  <ul id="custom-food-list" class="compact-list"></ul>
+                  <p class="help-text">
+                    삭제한 음식도 이미 저장한 식사 기록에는 그대로 남습니다.
+                  </p>
+                </details>
+                <div id="meal-list" class="meal-list"></div>
+              </div>
             </details>
-            <div id="meal-list" class="meal-list"></div>
           </section>
           <div class="health-columns">
             <section
               class="health-section tone-workout"
               aria-labelledby="workout-title"
             >
-              <div class="section-heading">
-                <h3 id="workout-title">
+              <details class="section-fold">
+                <summary>
+                  <div class="section-heading">
+                    <h3 id="workout-title">
+                      <img
+                        class="section-icon"
+                        src="./images/mark-workout.webp"
+                        alt=""
+                        width="128"
+                        height="128"
+                      />운동
+                    </h3>
+                    <span class="section-kicker">오늘의 움직임</span>
+                  </div>
+                </summary>
+                <div class="section-body">
                   <img
-                    class="section-icon"
-                    src="./images/mark-workout.webp"
+                    class="section-art"
+                    src="./images/charm-note.webp"
                     alt=""
-                    width="128"
-                    height="128"
-                  />운동
-                </h3>
-                <span class="section-kicker">오늘의 움직임</span>
-              </div>
-              <div class="routine-card">
-                <div>
-                  <strong id="plan-title"></strong>
-                  <p id="plan-detail" class="help-text"></p>
+                    width="560"
+                    height="248"
+                    loading="lazy"
+                  />
+                  <div class="routine-card">
+                    <div>
+                      <strong id="plan-title"></strong>
+                      <p id="plan-detail" class="help-text"></p>
+                    </div>
+                    <label id="plan-check-wrap" class="plan-check"
+                      ><input type="checkbox" id="plan-check" /><span
+                        >완료</span
+                      ></label
+                    >
+                  </div>
+                  <p class="help-text">
+                    기본 일정: 수요일 인요가 · 금요일 골반/어깨 테라피. 다른
+                    운동이나 실제 시간은 아래에서 기록·수정하세요.
+                  </p>
+                  <form id="workout-form">
+                    <div class="form-grid two-col">
+                      <label
+                        >운동 종류<select id="workout-kind">
+                          <option value="walk">걷기</option>
+                          <option value="yoga">요가</option>
+                          <option value="strength">근력</option>
+                          <option value="other">기타</option>
+                        </select></label
+                      ><label
+                        >시간 (분)<input
+                          id="workout-minutes"
+                          type="number"
+                          inputmode="numeric"
+                          min="1"
+                          max="720"
+                          step="1"
+                          value="30"
+                          required
+                      /></label>
+                    </div>
+                    <label class="field"
+                      >운동명<input
+                        id="workout-label"
+                        type="text"
+                        maxlength="100"
+                        placeholder="예: 점심 먹고 산책"
+                        required
+                    /></label>
+                    <div class="button-row">
+                      <button
+                        id="workout-submit"
+                        class="secondary-btn"
+                        type="submit"
+                      >
+                        운동 기록</button
+                      ><button
+                        id="workout-cancel"
+                        class="text-btn"
+                        type="button"
+                        hidden
+                      >
+                        수정 취소
+                      </button>
+                    </div>
+                  </form>
+                  <ul id="workout-list" class="compact-list"></ul>
+                  <p class="help-text">
+                    운동 열량은 섭취 열량에서 자동으로 빼지 않아요.
+                  </p>
                 </div>
-                <label id="plan-check-wrap" class="plan-check"
-                  ><input type="checkbox" id="plan-check" /><span
-                    >완료</span
-                  ></label
-                >
-              </div>
-              <p class="help-text">
-                기본 일정: 수요일 인요가 · 금요일 골반/어깨 테라피. 다른
-                운동이나 실제 시간은 아래에서 기록·수정하세요.
-              </p>
-              <form id="workout-form">
-                <div class="form-grid two-col">
-                  <label
-                    >운동 종류<select id="workout-kind">
-                      <option value="walk">걷기</option>
-                      <option value="yoga">요가</option>
-                      <option value="strength">근력</option>
-                      <option value="other">기타</option>
-                    </select></label
-                  ><label
-                    >시간 (분)<input
-                      id="workout-minutes"
-                      type="number"
-                      inputmode="numeric"
-                      min="1"
-                      max="720"
-                      step="1"
-                      value="30"
-                      required
-                  /></label>
-                </div>
-                <label class="field"
-                  >운동명<input
-                    id="workout-label"
-                    type="text"
-                    maxlength="100"
-                    placeholder="예: 점심 먹고 산책"
-                    required
-                /></label>
-                <div class="button-row">
-                  <button
-                    id="workout-submit"
-                    class="secondary-btn"
-                    type="submit"
-                  >
-                    운동 기록</button
-                  ><button
-                    id="workout-cancel"
-                    class="text-btn"
-                    type="button"
-                    hidden
-                  >
-                    수정 취소
-                  </button>
-                </div>
-              </form>
-              <ul id="workout-list" class="compact-list"></ul>
-              <p class="help-text">
-                운동 열량은 섭취 열량에서 자동으로 빼지 않아요.
-              </p>
+              </details>
             </section>
             <section
               class="health-section tone-weight"
               aria-labelledby="weight-title"
             >
-              <div class="section-heading">
-                <h3 id="weight-title">
-                  <img
-                    class="section-icon"
-                    src="./images/mark-weight.webp"
-                    alt=""
-                    width="128"
-                    height="128"
-                  />체중
-                </h3>
-                <span class="section-kicker">하루 숫자보다 흐름</span>
-              </div>
-              <form id="weight-form">
-                <label class="field"
-                  >체중 (kg)<input
-                    id="weight-kg"
-                    type="number"
-                    inputmode="decimal"
-                    min="20"
-                    max="400"
-                    step="0.1"
-                    placeholder="아침 공복 체중"
-                    required
-                /></label>
-                <label class="field"
-                  >메모 (선택)<input
-                    id="weight-note"
-                    type="text"
-                    maxlength="200"
-                    placeholder="예: 생리 전, 붓기, 측정 시간"
-                /></label>
-                <div class="button-row">
-                  <button
-                    class="secondary-btn"
-                    id="weight-submit"
-                    type="submit"
-                  >
-                    체중 기록</button
-                  ><button
-                    id="weight-delete"
-                    class="text-btn danger"
-                    type="button"
-                    hidden
-                  >
-                    이 날짜 기록 삭제
-                  </button>
+              <details class="section-fold">
+                <summary>
+                  <div class="section-heading">
+                    <h3 id="weight-title">
+                      <img
+                        class="section-icon"
+                        src="./images/mark-weight.webp"
+                        alt=""
+                        width="128"
+                        height="128"
+                      />체중
+                    </h3>
+                    <span class="section-kicker">하루 숫자보다 흐름</span>
+                  </div>
+                </summary>
+                <div class="section-body">
+                  <form id="weight-form">
+                    <label class="field"
+                      >체중 (kg)<input
+                        id="weight-kg"
+                        type="number"
+                        inputmode="decimal"
+                        min="20"
+                        max="400"
+                        step="0.1"
+                        placeholder="아침 공복 체중"
+                        required
+                    /></label>
+                    <label class="field"
+                      >메모 (선택)<input
+                        id="weight-note"
+                        type="text"
+                        maxlength="200"
+                        placeholder="예: 생리 전, 붓기, 측정 시간"
+                    /></label>
+                    <div class="button-row">
+                      <button
+                        class="secondary-btn"
+                        id="weight-submit"
+                        type="submit"
+                      >
+                        체중 기록</button
+                      ><button
+                        id="weight-delete"
+                        class="text-btn danger"
+                        type="button"
+                        hidden
+                      >
+                        이 날짜 기록 삭제
+                      </button>
+                    </div>
+                  </form>
+                  <p class="help-text">
+                    하루 한 번 저장합니다. 같은 날짜에 다시 저장하면 수정돼요.
+                    목표 열량이나 감량 목표를 자동으로 정하지 않습니다.
+                  </p>
                 </div>
-              </form>
-              <p class="help-text">
-                하루 한 번 저장합니다. 같은 날짜에 다시 저장하면 수정돼요. 목표
-                열량이나 감량 목표를 자동으로 정하지 않습니다.
-              </p>
+              </details>
             </section>
           </div>
           <section
             class="health-section weekly-section tone-checkup"
             aria-labelledby="weekly-title"
           >
-            <div class="section-heading">
-              <h3 id="weekly-title">
-                <img
-                  class="section-icon"
-                  src="./images/mark-weekly.webp"
-                  alt=""
-                  width="128"
-                  height="128"
-                />최근 7일
-              </h3>
-              <span id="weekly-range" class="section-kicker"></span>
-            </div>
-            <div class="weekly-numbers">
-              <p>
-                <span>기록한 날의 평균 열량</span
-                ><strong id="weekly-kcal">—</strong
-                ><small id="weekly-meal-days"></small>
-              </p>
-              <p>
-                <span>운동</span><strong id="weekly-workout">—</strong
-                ><small id="weekly-workout-count"></small>
-              </p>
-              <p>
-                <span>평균 체중</span><strong id="weekly-weight">—</strong
-                ><small id="weekly-weight-days"></small>
-              </p>
-            </div>
-            <div class="chart-columns">
-              <figure>
-                <figcaption>식사 기록 · kcal</figcaption>
-                <div
-                  id="calorie-chart"
-                  class="calorie-chart"
-                  aria-label="7일간 기록한 섭취 열량"
-                ></div>
-              </figure>
-              <figure>
-                <figcaption>체중 흐름 · kg</figcaption>
-                <div id="weight-chart" class="weight-chart"></div>
-              </figure>
-            </div>
-            <p class="help-text">
-              미기록일은 평균에서 제외합니다. 일부 식사만 적은 날은 하루
-              총섭취량이 아니에요.
-            </p>
-            <details class="weekly-table-wrap">
-              <summary>날짜별 수치 보기</summary>
-              <table class="weekly-table">
-                <caption class="sr-only">
-                  7일간 식사와 운동, 체중 기록
-                </caption>
-                <thead>
-                  <tr>
-                    <th scope="col">날짜</th>
-                    <th scope="col">열량</th>
-                    <th scope="col">단백질</th>
-                    <th scope="col">운동</th>
-                    <th scope="col">체중</th>
-                  </tr>
-                </thead>
-                <tbody id="weekly-table-body"></tbody>
-              </table>
+            <details class="section-fold">
+              <summary>
+                <div class="section-heading">
+                  <h3 id="weekly-title">
+                    <img
+                      class="section-icon"
+                      src="./images/mark-weekly.webp"
+                      alt=""
+                      width="128"
+                      height="128"
+                    />최근 7일
+                  </h3>
+                  <span id="weekly-range" class="section-kicker"></span>
+                </div>
+              </summary>
+              <div class="section-body">
+                <div class="weekly-numbers">
+                  <p>
+                    <span>기록한 날의 평균 열량</span
+                    ><strong id="weekly-kcal">—</strong
+                    ><small id="weekly-meal-days"></small>
+                  </p>
+                  <p>
+                    <span>운동</span><strong id="weekly-workout">—</strong
+                    ><small id="weekly-workout-count"></small>
+                  </p>
+                  <p>
+                    <span>평균 체중</span><strong id="weekly-weight">—</strong
+                    ><small id="weekly-weight-days"></small>
+                  </p>
+                </div>
+                <div class="chart-columns">
+                  <figure>
+                    <figcaption>식사 기록 · kcal</figcaption>
+                    <div
+                      id="calorie-chart"
+                      class="calorie-chart"
+                      aria-label="7일간 기록한 섭취 열량"
+                    ></div>
+                  </figure>
+                  <figure>
+                    <figcaption>체중 흐름 · kg</figcaption>
+                    <div id="weight-chart" class="weight-chart"></div>
+                  </figure>
+                </div>
+                <p class="help-text">
+                  미기록일은 평균에서 제외합니다. 일부 식사만 적은 날은 하루
+                  총섭취량이 아니에요.
+                </p>
+                <details class="weekly-table-wrap">
+                  <summary>날짜별 수치 보기</summary>
+                  <table class="weekly-table">
+                    <caption class="sr-only">
+                      7일간 식사와 운동, 체중 기록
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">날짜</th>
+                        <th scope="col">열량</th>
+                        <th scope="col">단백질</th>
+                        <th scope="col">운동</th>
+                        <th scope="col">체중</th>
+                      </tr>
+                    </thead>
+                    <tbody id="weekly-table-body"></tbody>
+                  </table>
+                </details>
+              </div>
             </details>
           </section>
           <section
             class="health-section checkup-section tone-checkup"
             aria-labelledby="checkup-title"
           >
-            <div class="section-heading">
-              <h3 id="checkup-title">
-                <img
-                  class="section-icon"
-                  src="./images/mark-checkup.webp"
-                  alt=""
-                  width="128"
-                  height="128"
-                />건강검진 수치
-              </h3>
-              <span class="section-kicker">검진표에 적힌 그대로</span>
-            </div>
-            <p class="help-text privacy-note">
-              <img
-                class="note-icon"
-                src="./images/mark-checkup.webp"
-                alt=""
-                width="128"
-                height="128"
-              />
-              검진 결과 JSON 파일을 고르면 <strong>브라우저 안에서만</strong>
-              읽어 내 계정의 개인 공간에 저장합니다. 파일은 어디로도 전송되지
-              않고, 공개 저장소나 이 사이트 파일에는 절대 포함되지 않습니다.
-            </p>
-            <div class="checkup-import">
-              <label class="field"
-                >검진 결과 파일 (.json)<input
-                  type="file"
-                  id="checkup-file"
-                  accept="application/json,.json"
-              /></label>
-              <p
-                id="checkup-import-status"
-                class="help-text"
-                aria-live="polite"
-              >
-                아직 불러온 파일이 없어요.
-              </p>
-            </div>
-            <div id="checkup-trend" class="checkup-trend" hidden>
-              <label class="field"
-                >그래프로 볼 지표<select id="checkup-metric"></select
-              ></label>
-              <figure class="checkup-figure">
-                <figcaption id="checkup-chart-caption"></figcaption>
-                <div id="checkup-chart" class="checkup-chart"></div>
-              </figure>
-              <p id="checkup-chart-note" class="help-text"></p>
-            </div>
-            <div id="checkup-list" class="checkup-list"></div>
-            <p class="help-text">
-              검진표의 판정과 수치를 그대로 보관합니다. 정상·이상 여부를 앱이
-              판단하지 않고, 이 수치로 식사 목표를 자동으로 정하지도 않습니다.
-              값이 없는 항목은 0이 아니라 ‘—’로 둡니다.
-            </p>
+            <details class="section-fold">
+              <summary>
+                <div class="section-heading">
+                  <h3 id="checkup-title">
+                    <img
+                      class="section-icon"
+                      src="./images/mark-checkup.webp"
+                      alt=""
+                      width="128"
+                      height="128"
+                    />건강검진 수치
+                  </h3>
+                  <span class="section-kicker">검진표에 적힌 그대로</span>
+                </div>
+              </summary>
+              <div class="section-body">
+                <p class="help-text privacy-note">
+                  <img
+                    class="note-icon"
+                    src="./images/mark-checkup.webp"
+                    alt=""
+                    width="128"
+                    height="128"
+                  />
+                  검진 결과 JSON 파일을 고르면
+                  <strong>브라우저 안에서만</strong>
+                  읽어 내 계정의 개인 공간에 저장합니다. 파일은 어디로도
+                  전송되지 않고, 공개 저장소나 이 사이트 파일에는 절대 포함되지
+                  않습니다.
+                </p>
+                <div class="checkup-import">
+                  <label class="field"
+                    >검진 결과 파일 (.json)<input
+                      type="file"
+                      id="checkup-file"
+                      accept="application/json,.json"
+                  /></label>
+                  <p
+                    id="checkup-import-status"
+                    class="help-text"
+                    aria-live="polite"
+                  >
+                    아직 불러온 파일이 없어요.
+                  </p>
+                </div>
+                <div id="checkup-trend" class="checkup-trend" hidden>
+                  <label class="field"
+                    >그래프로 볼 지표<select id="checkup-metric"></select
+                  ></label>
+                  <figure class="checkup-figure">
+                    <figcaption id="checkup-chart-caption"></figcaption>
+                    <div id="checkup-chart" class="checkup-chart"></div>
+                  </figure>
+                  <p id="checkup-chart-note" class="help-text"></p>
+                </div>
+                <div id="checkup-list" class="checkup-list"></div>
+                <p class="help-text">
+                  검진표의 판정과 수치를 그대로 보관합니다. 정상·이상 여부를
+                  앱이 판단하지 않고, 이 수치로 식사 목표를 자동으로 정하지도
+                  않습니다. 값이 없는 항목은 0이 아니라 ‘—’로 둡니다.
+                </p>
+              </div>
+            </details>
           </section>
         </section>
       </section>

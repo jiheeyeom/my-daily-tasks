@@ -1784,11 +1784,15 @@ main {
    the colour comes from the orbs showing through the panel, not from a tint
    painted onto it. Solid surface stays as the fallback where blur is
    unsupported. */
+/* Softer edge: a panel that announces itself with a hard border reads as
+   pasted on. The colour comes through more and the outline barely shows, so
+   the surfaces separate by depth instead. Text still clears AA at 8:1. */
 .health-section {
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  -webkit-backdrop-filter: blur(26px) saturate(1.35);
-  backdrop-filter: blur(26px) saturate(1.35);
-  border: 1px solid color-mix(in srgb, var(--surface) 55%, transparent);
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  backdrop-filter: blur(30px) saturate(1.4);
+  border: 1px solid color-mix(in srgb, var(--surface) 22%, transparent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--ink) 10%, transparent);
 }
 
 @supports not (backdrop-filter: blur(1px)) {
@@ -2079,7 +2083,7 @@ main {
    up. Overlapping the other pieces is fine here. */
 .charm-side-left {
   top: -4vh;
-  left: -3vw;
+  left: -10vw;
   height: 84vh;
   width: auto;
 }
@@ -2111,36 +2115,15 @@ main {
 
 /* The chalk note reads as a scribble in the margin beside the quote at the
    top; the car takes the bottom-left corner. */
-/* The one charm that sits beside text rather than at an edge, so it keeps the
-   old ceiling: past 0.36 the quote stops clearing AA where it crosses the
-   chalk. */
-.charm-note {
-  top: 0.5vh;
-  left: 69vw;
-  width: 190px;
-  opacity: 0.6;
-}
-
-:root[data-theme="dark"] .charm-note {
-  opacity: 0.36;
-}
-
+/* Cropped by the corner: fully inside the frame it read as a sticker. */
 .charm-car {
-  bottom: 2vh;
-  left: 2vw;
-  width: 380px;
+  bottom: -5vh;
+  left: -7vw;
+  width: 620px;
 }
 
 /* Below a desktop width the edges belong to the content, so the charms that
    would sit under it are dropped rather than shrunk into clutter. */
-/* The quote runs the full width of the content column, so under about 1600px
-   the margin beside it no longer clears the note. */
-@media (max-width: 1600px) {
-  .charm-note {
-    display: none;
-  }
-}
-
 @media (max-width: 1100px) {
   .charm-side-left,
   .charm-side-right,
@@ -2294,4 +2277,60 @@ main {
   .charm {
     display: none;
   }
+}
+
+/* The chalk note now lives inside the workout section rather than the page
+   background, where it read as unrelated. */
+.section-art {
+  display: block;
+  width: 210px;
+  max-width: 46%;
+  height: auto;
+  margin: -6px 0 10px auto;
+  opacity: 0.75;
+}
+
+:root[data-theme="dark"] .section-art {
+  opacity: 0.6;
+}
+
+/* Folded sections: the summary carries the heading, so a closed tab reads as
+   a list of icons and titles. */
+.section-fold > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.section-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.section-fold > summary .section-heading {
+  margin-bottom: 0;
+}
+
+/* A chevron that turns, drawn from a border so it needs no asset. */
+.section-fold > summary .section-heading::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: none;
+  margin-left: 2px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.15s ease;
+}
+
+.section-fold[open] > summary .section-heading::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.section-fold > summary:hover .section-heading::after,
+.section-fold > summary:focus-visible .section-heading::after {
+  border-color: var(--ink);
+}
+
+.section-fold[open] > summary .section-heading {
+  margin-bottom: 13px;
 }

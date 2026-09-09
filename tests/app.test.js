@@ -927,6 +927,35 @@ test("controls inside a hidden row are disabled, but a hidden panel is not", (t)
   assert.equal(f.$("container-count").disabled, false);
 });
 
+test("sections start folded and remember what was opened", (t) => {
+  const f = fixture(t);
+  const folds = [...f.dom.window.document.querySelectorAll(".section-fold")];
+  assert.equal(folds.length, 6);
+  // A fresh device sees a list of headings, not six open panels.
+  assert.equal(
+    folds.every((fold) => fold.open),
+    false,
+  );
+  assert.equal(
+    folds.every((fold) => fold.querySelector("summary h2, summary h3")),
+    true,
+  );
+
+  const meal = folds.find(
+    (fold) => fold.querySelector("summary h3")?.id === "meal-title",
+  );
+  meal.open = true;
+  meal.dispatchEvent(new f.dom.window.Event("toggle"));
+  assert.equal(
+    f.dom.window.localStorage.getItem("myDailyTasks_fold_meal-title"),
+    "open",
+  );
+
+  // The controls inside a folded section are still reachable: details hides
+  // them visually, it does not remove them.
+  assert.equal(f.$("meal-form").closest(".section-fold"), meal);
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

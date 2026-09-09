@@ -139,6 +139,9 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   삽입 시 `id` 속성 제거(페이지 ID 공간 오염 방지), width/height 제거(CSS 로 크기 지정),
   `#6c63ff`→`var(--accent)`, `#f2f2f2`/`#e6e6e6`→`var(--surface-alt)`, `#3f3d56`/`#090814`→`var(--ink)`.
   **직접 SVG 를 손으로 그리지 말 것** — 렌더링 확인 수단이 없어 인물 그림은 반드시 실패함.
+- **섹션 접힘(2026-09-09)**: 건강 탭 6개 섹션을 `<details class="section-fold">` 로 감쌈.
+  기본 접힘, 연 것만 `preference("fold_<헤딩id>")` 로 기기별 기억. summary 안에 section-heading 이
+  통째로 들어가므로 아이콘·제목만 보임. details 는 숨길 뿐 DOM 에서 지우지 않아 기존 테스트 무사.
 - **모바일은 고정(2026-09-09)**: 사용자가 모바일 결과에 만족 → styles.css **맨 끝의
   `@media (max-width: 720px)` 블록**에 장식 레이어(runner/orb/speck 20개/charm)의 현재 값을
   명시적으로 못 박아 둠. **앞으로 데스크톱만 고칠 것** — 기본 규칙을 고쳐도 이 블록이 마지막이라
