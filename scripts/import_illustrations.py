@@ -33,7 +33,7 @@ PLAN = [
     ("orb/08-coffee-tea.png", "hero-balance.webp", 320),
     # The giant fills the window and is cropped by it, so it needs the source's
     # full resolution.
-    ("icon-only/01-meditation-icon.png", "giant-meditation.webp", 1024),
+    ("icon-only/04-running-icon.png", "giant-running.webp", 1024),
     # Small specks. The four that are drawn large get their own bigger files,
     # since upscaling a 96px one would show.
     ("icon-only/03-boxing-icon.png", "speck-boxing.webp", 96),

@@ -1823,27 +1823,35 @@ main {
   opacity: 0.4;
 }
 
-/* A figure looming far larger than the window. Measured against the source:
-   the crown sits at 15.5% of the image, the neck at 32.7%, and the hands span
-   17.3%-82.7%. Offsetting the top by 17.2% of the size therefore clips only
-   the top of the forehead, while the width keeps both hands past the edges —
-   they are the weakest part of the drawing. The legs fall below the fold.
-   The width term crops the hands on a wide window, the height term keeps the
-   legs off-screen on a tall one. */
+/* A figure looming far larger than the window and cropped by it. Plain single
+   unit values on purpose: an earlier version computed the offset from a
+   custom property, and when that failed to resolve both top and width fell
+   back to auto, dropping the image at its natural size in the corner.
+   The source has its crown at 15.3% of the image, so a top offset of 16.5%
+   of the drawn size takes the forehead and leaves the face. */
 .giant {
-  --size: max(175vw, 152vh);
   position: absolute;
   left: 50%;
-  top: calc(var(--size) * -0.172);
-  width: var(--size);
+  top: -28.9vw;
+  width: 175vw;
   height: auto;
-  transform: translateX(-50%);
-  opacity: 0.07;
+  margin-left: -87.5vw;
+  opacity: 0.08;
   filter: saturate(1.2);
 }
 
+/* Portrait: size from the height instead, or the figure would be too small to
+   crop and its legs would sit inside the window. */
+@media (max-aspect-ratio: 1 / 1) {
+  .giant {
+    top: -28.7vh;
+    width: 174vh;
+    margin-left: -87vh;
+  }
+}
+
 :root[data-theme="dark"] .giant {
-  opacity: 0.1;
+  opacity: 0.11;
 }
 
 /* Scattered across the whole field. Size, opacity and angle all differ per
@@ -2024,11 +2032,6 @@ main {
 }
 
 @media (max-width: 720px) {
-  .giant {
-    height: 34vh;
-    opacity: 0.07;
-  }
-
   /* The middle of a narrow screen is all content, so only the edges keep
      their specks. */
   .speck-c,
