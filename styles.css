@@ -1823,35 +1823,42 @@ main {
   opacity: 0.4;
 }
 
-/* A figure looming far larger than the window and cropped by it. Plain single
-   unit values on purpose: an earlier version computed the offset from a
-   custom property, and when that failed to resolve both top and width fell
-   back to auto, dropping the image at its natural size in the corner.
-   The source has its crown at 15.3% of the image, so a top offset of 16.5%
-   of the drawn size takes the forehead and leaves the face. */
-.giant {
+/* The runner crosses the page from left to right, trail first. It is wider
+   than the window so both the trail and the figure run off the edges, which
+   is what reads as movement rather than as a picture sitting on the page.
+   Two colourways: the cooler one holds up on the dark ground, the brighter
+   one on the light. */
+.runner {
   position: absolute;
   left: 50%;
-  top: -28.9vw;
-  width: 175vw;
+  top: 34vh;
+  width: 132vw;
   height: auto;
-  margin-left: -87.5vw;
-  opacity: 0.12;
-  filter: saturate(1.2);
+  margin-left: -66vw;
+  /* Their brightest pixels are pure white, and 0.36 is where body text still
+     clears AA if it crosses one. */
+  opacity: 0.3;
 }
 
-/* Portrait: size from the height instead, or the figure would be too small to
-   crop and its legs would sit inside the window. */
-@media (max-aspect-ratio: 1 / 1) {
-  .giant {
-    top: -28.7vh;
-    width: 174vh;
-    margin-left: -87vh;
+.runner-dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .runner-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .runner-dark {
+  display: block;
+  opacity: 0.34;
+}
+
+@media (max-width: 720px) {
+  .runner {
+    top: 40vh;
+    width: 190vw;
+    margin-left: -95vw;
   }
-}
-
-:root[data-theme="dark"] .giant {
-  opacity: 0.15;
 }
 
 /* Scattered across the whole field. Size, opacity and angle all differ per

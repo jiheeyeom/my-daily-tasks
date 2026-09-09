@@ -19,6 +19,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "image icon" / "health-illustration-set-complete"
 CHARMS = ROOT / "image icon" / "web-assets"
+RUNNERS = ROOT / "image icon" / "runner-7lock-colorways"
 OUT = ROOT / "images"
 
 # (source, output, rendered size in CSS pixels x2 for high-density screens)
@@ -60,6 +61,33 @@ CHARM_PLAN = [
     ("04-mom-exercise-chalk-note.png", "charm-note.webp", 560),
     ("05-silver-formula-car.png", "charm-car.webp", 760),
 ]
+
+
+# The runner behind the page, in the colourway that suits each theme: the
+# cooler one carries on a dark ground, the brighter one on a light.
+RUNNER_PLAN = [
+    ("runner-7lock-aurora.png", "runner-light.webp", 1600),
+    ("runner-7lock-moonlight.png", "runner-dark.webp", 1600),
+]
+
+
+def convert_runners():
+    if not RUNNERS.exists():
+        print(f"  건너뜀 · 폴더 없음: {RUNNERS.name}")
+        return 0
+    total = 0
+    for source, name, longest in RUNNER_PLAN:
+        image = Image.open(RUNNERS / source).convert("RGBA")
+        image = image.crop(image.getchannel("A").getbbox())
+        scale = longest / max(image.size)
+        image = image.resize(
+            (round(image.width * scale), round(image.height * scale)), Image.LANCZOS
+        )
+        target = OUT / name
+        image.save(target, "WEBP", quality=78, method=6)
+        total += target.stat().st_size
+        print(f"  {name:<22} {image.width:>4}x{image.height:<4} {target.stat().st_size:>7,} bytes")
+    return total
 
 
 def convert_charms():
@@ -110,6 +138,7 @@ def main():
         total += target.stat().st_size
         print(f"  {name:<22} {size:>4}px  {target.stat().st_size:>7,} bytes")
     total += convert_charms()
+    total += convert_runners()
     print(f"  {'합계':<22}       {total:>7,} bytes")
 
 
