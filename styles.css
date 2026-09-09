@@ -1823,99 +1823,144 @@ main {
   opacity: 0.4;
 }
 
-/* A figure standing behind the page, faint enough to read as light. It is
-   fixed, so it stays put while the panels scroll over it. */
+/* A figure standing behind the page. Sized by height so it can never reach
+   past the top of the window, and inset on the right so the hands stay in. */
 .giant {
   position: absolute;
-  right: -6vw;
-  bottom: -8vh;
-  width: min(58vw, 620px);
-  height: auto;
-  opacity: 0.13;
+  right: 3vw;
+  bottom: 3vh;
+  height: min(52vh, 430px);
+  width: auto;
+  opacity: 0.08;
   filter: saturate(1.2);
 }
 
 :root[data-theme="dark"] .giant {
-  opacity: 0.16;
+  opacity: 0.11;
 }
 
-/* Scattered like stars. Each sits at a different size and depth so the field
-   does not read as a grid. */
+/* Scattered across the whole field, not lined up down the edges. Sizes,
+   opacities and angles all differ so the eye reads it as a scatter. */
 .speck {
   position: absolute;
   height: auto;
-  opacity: 0.3;
   filter: drop-shadow(
     0 0 14px color-mix(in srgb, var(--accent) 45%, transparent)
   );
 }
 
-:root[data-theme="dark"] .speck {
-  opacity: 0.38;
-}
-
 .speck-a {
-  top: 7vh;
-  left: 6vw;
-  width: 46px;
+  top: 9vh;
+  left: 12vw;
+  width: 44px;
+  opacity: 0.3;
+  transform: rotate(-9deg);
 }
 
 .speck-b {
-  top: 15vh;
-  right: 9vw;
-  width: 62px;
-  opacity: 0.34;
+  top: 4vh;
+  left: 63vw;
+  width: 58px;
+  opacity: 0.26;
+  transform: rotate(11deg);
 }
 
 .speck-c {
-  top: 42vh;
-  left: 3vw;
-  width: 38px;
+  top: 24vh;
+  left: 34vw;
+  width: 32px;
+  opacity: 0.2;
+  transform: rotate(-16deg);
 }
 
 .speck-d {
-  top: 58vh;
-  right: 5vw;
-  width: 52px;
+  top: 16vh;
+  left: 87vw;
+  width: 50px;
+  opacity: 0.28;
+  transform: rotate(7deg);
 }
 
 .speck-e {
-  top: 78vh;
-  left: 11vw;
-  width: 34px;
+  top: 39vh;
+  left: 7vw;
+  width: 38px;
   opacity: 0.24;
+  transform: rotate(14deg);
 }
 
 .speck-f {
-  top: 92vh;
-  right: 14vw;
-  width: 44px;
+  top: 47vh;
+  left: 72vw;
+  width: 34px;
+  opacity: 0.22;
+  transform: rotate(-5deg);
 }
 
 .speck-g {
-  top: 30vh;
-  left: 14vw;
-  width: 40px;
-  opacity: 0.24;
+  top: 33vh;
+  left: 52vw;
+  width: 28px;
+  opacity: 0.18;
+  transform: rotate(19deg);
 }
 
 .speck-h {
-  top: 68vh;
-  right: 17vw;
-  width: 34px;
-  opacity: 0.22;
+  top: 62vh;
+  left: 23vw;
+  width: 46px;
+  opacity: 0.26;
+  transform: rotate(-12deg);
+}
+
+.speck-i {
+  top: 57vh;
+  left: 44vw;
+  width: 30px;
+  opacity: 0.19;
+  transform: rotate(6deg);
+}
+
+.speck-j {
+  top: 74vh;
+  left: 81vw;
+  width: 40px;
+  opacity: 0.24;
+  transform: rotate(-18deg);
+}
+
+.speck-k {
+  top: 86vh;
+  left: 16vw;
+  width: 36px;
+  opacity: 0.21;
+  transform: rotate(9deg);
+}
+
+.speck-l {
+  top: 79vh;
+  left: 57vw;
+  width: 26px;
+  opacity: 0.17;
+  transform: rotate(-7deg);
+}
+
+:root[data-theme="dark"] .speck {
+  opacity: 0.34;
 }
 
 @media (max-width: 720px) {
   .giant {
-    width: 74vw;
-    opacity: 0.1;
+    height: 34vh;
+    opacity: 0.07;
   }
 
-  /* Only the outermost ones survive; the rest would land under the content. */
+  /* The middle of a narrow screen is all content, so only the edges keep
+     their specks. */
   .speck-c,
-  .speck-e,
-  .speck-g {
+  .speck-g,
+  .speck-i,
+  .speck-l {
     display: none;
   }
 }
