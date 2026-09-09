@@ -1,8 +1,10 @@
 import { safeUrl } from "./domain.js";
 
 export async function refreshPublicContent(doc, fetcher = fetch) {
-  const quotesUrl =
-    "https://gist.githubusercontent.com/jiheeyeom/c9982ac10450b4c9bfda8cebe11213e9/raw/9de789bff7cdb6a1a662de2f3521cdb6c7197832/quotes.json";
+  // Quotes ship with the site: same origin, so no proxy and nothing to fail.
+  // Collected by scripts/fetch_quotes.py from Wikiquote, which carries the
+  // attribution with each line.
+  const quotesUrl = "./data/quotes.json";
   const json = async (url) => {
     const response = await fetcher(url, {
       signal: AbortSignal.timeout(12000),
@@ -15,16 +17,23 @@ export async function refreshPublicContent(doc, fetcher = fetch) {
   const quote = async () => {
     try {
       const rows = await json(quotesUrl);
-      const texts = Array.isArray(rows)
-        ? rows.filter((row) => typeof row === "string")
+      const usable = Array.isArray(rows)
+        ? rows.filter((row) => row && typeof row.text === "string")
         : [];
-      if (texts.length)
-        doc.getElementById("daily-quote").textContent =
-          texts[Math.floor(Math.random() * texts.length)];
+      if (!usable.length) return;
+      const pick = usable[Math.floor(Math.random() * usable.length)];
+      const credit = [pick.author, pick.work && `\u300E${pick.work}\u300F`]
+        .filter(Boolean)
+        .join(", ");
+      // textContent throughout: a quote is data, never markup.
+      doc.getElementById("daily-quote").textContent = credit
+        ? `\u201C${pick.text}\u201D \u2014 ${credit}`
+        : pick.text;
     } catch {
       /* Keep the local fallback. Public feeds never block private data. */
     }
   };
+
   const news = async (id, url) => {
     const list = doc.getElementById(id);
     try {

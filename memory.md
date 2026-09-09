@@ -115,6 +115,11 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   브라우저가 제출을 막는데, 그 입력이 hidden 이면 포커스도 못 줘서 **버튼이 조용히 죽음**.
   실제로 container-count(min .1 step .5 value 1) 때문에 식사 기록 버튼이 안 눌렸음(2026-09-01).
   숨긴 행의 입력은 반드시 disabled 로 둘 것 — 단 hidden 검사는 폼 내부까지만(탭 패널이 hidden 이라 전체가 죽음).
+- **명언 인용문(2026-09-09)**: `scripts/fetch_quotes.py` 로 영어 Wikiquote 38인에서 2,239개 수집,
+  `data/quotes.json` 에 커밋(같은 도메인이라 CORS 없음, gist 의존 제거).
+  **"Quotes about" 섹션은 반드시 제외** — 그건 타인이 그 작가에 대해 한 말이라 귀속이 거짓이 됨.
+  misattributed/disputed 섹션도 제외. 비영어 원문(프루스트 등)도 필터.
+  **인용문을 직접 지어내 실존 작가에 붙이지 말 것.** 한국어 Wikiquote 는 이 작가들 문서가 거의 없음.
 - **배경 러너(2026-09-09)**: `image icon/runner-7lock-colorways/` 4색 중 라이트=aurora,
   다크=moonlight 를 테마별로 표시(나머지 silver/sunset 은 예비). 2:1 가로형이라 좌우로 흘려보내
   움직임을 만듦(132vw). 흰 하이라이트 때문에 **다크 상한 0.36**. 이전 세로형 giant 는 대체됨.

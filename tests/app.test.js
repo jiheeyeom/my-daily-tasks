@@ -1127,6 +1127,29 @@ test("legacy import requires backup and only configured owner can see it", async
   assert.equal(f.$("legacy-import").disabled, true);
 });
 
+test("a quote is shown with its attribution and never as markup", async (t) => {
+  const f = fixture(t);
+  await refreshPublicContent(f.dom.window.document, async (url) => ({
+    ok: true,
+    json: async () =>
+      url.includes("quotes.json")
+        ? [
+            {
+              text: "<img src=x onerror=alert(1)>",
+              author: "Someone",
+              work: "A Book",
+            },
+          ]
+        : { contents: "<rss><channel></channel></rss>" },
+  }));
+  const quote = f.$("daily-quote");
+  assert.match(quote.textContent, /Someone/);
+  assert.match(quote.textContent, /『A Book』/);
+  // The quote is data, so markup inside it must stay text.
+  assert.match(quote.textContent, /<img/);
+  assert.equal(quote.querySelector("img"), null);
+});
+
 test("RSS title markup and unsafe URLs cannot execute HTML or script", async (t) => {
   const f = fixture(t);
   const rss =
@@ -1134,7 +1157,9 @@ test("RSS title markup and unsafe URLs cannot execute HTML or script", async (t)
   await refreshPublicContent(f.dom.window.document, async (url) => ({
     ok: true,
     json: async () =>
-      url.includes("gist.") ? ["Example quote"] : { contents: rss },
+      url.includes("quotes.json")
+        ? [{ text: "Example quote", author: "Someone", work: "A Book" }]
+        : { contents: rss },
   }));
   assert.equal(f.$("kr-news-list").querySelectorAll("a").length, 1);
   assert.equal(f.$("kr-news-list").querySelector("img"), null);
