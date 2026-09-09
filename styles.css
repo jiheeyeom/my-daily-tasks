@@ -1872,11 +1872,14 @@ main {
   transform: rotate(-9deg);
 }
 
+/* The moon reads as a real element rather than part of the wash, close to the
+   heading illustration but a shade softer. Its 512px source is drawn at 100px,
+   so the filigree holds up at this opacity. */
 .speck-b {
   top: 4vh;
   left: 63vw;
-  width: 80px;
-  opacity: 0.286;
+  width: 100px;
+  opacity: 0.8;
   transform: rotate(11deg);
 }
 
