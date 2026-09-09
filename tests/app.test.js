@@ -1136,6 +1136,7 @@ test("a quote is shown with its attribution and never as markup", async (t) => {
         ? [
             {
               text: "<img src=x onerror=alert(1)>",
+              ko: "<b>번역</b>",
               author: "Someone",
               work: "A Book",
             },
@@ -1143,11 +1144,32 @@ test("a quote is shown with its attribution and never as markup", async (t) => {
         : { contents: "<rss><channel></channel></rss>" },
   }));
   const quote = f.$("daily-quote");
+  const origin = f.$("daily-quote-origin");
+  // The translation leads and carries the credit.
+  assert.match(quote.textContent, /번역/);
   assert.match(quote.textContent, /Someone/);
   assert.match(quote.textContent, /『A Book』/);
-  // The quote is data, so markup inside it must stay text.
-  assert.match(quote.textContent, /<img/);
-  assert.equal(quote.querySelector("img"), null);
+  // The original is always shown alongside it.
+  assert.match(origin.textContent, /<img/);
+  assert.equal(origin.hidden, false);
+  // Both are data, so markup inside them must stay text.
+  assert.equal(quote.querySelector("b"), null);
+  assert.equal(origin.querySelector("img"), null);
+});
+
+test("a quote with no translation shows the original alone", async (t) => {
+  const f = fixture(t);
+  await refreshPublicContent(f.dom.window.document, async (url) => ({
+    ok: true,
+    json: async () =>
+      url.includes("quotes.json")
+        ? [{ text: "Only the original", author: "Someone", work: "" }]
+        : { contents: "<rss><channel></channel></rss>" },
+  }));
+  assert.match(f.$("daily-quote").textContent, /Only the original — Someone/);
+  // Nothing is repeated underneath.
+  assert.equal(f.$("daily-quote-origin").textContent, "");
+  assert.equal(f.$("daily-quote-origin").hidden, true);
 });
 
 test("RSS title markup and unsafe URLs cannot execute HTML or script", async (t) => {

@@ -25,10 +25,16 @@ export async function refreshPublicContent(doc, fetcher = fetch) {
       const credit = [pick.author, pick.work && `\u300E${pick.work}\u300F`]
         .filter(Boolean)
         .join(", ");
+      // The Korean line leads and the original always follows, so the wording
+      // can be checked against the source it is credited to.
+      const lead = pick.ko || pick.text;
       // textContent throughout: a quote is data, never markup.
       doc.getElementById("daily-quote").textContent = credit
-        ? `\u201C${pick.text}\u201D \u2014 ${credit}`
-        : pick.text;
+        ? `${lead} \u2014 ${credit}`
+        : lead;
+      const origin = doc.getElementById("daily-quote-origin");
+      origin.textContent = pick.ko ? `\u201C${pick.text}\u201D` : "";
+      origin.hidden = !pick.ko;
     } catch {
       /* Keep the local fallback. Public feeds never block private data. */
     }

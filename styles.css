@@ -2073,19 +2073,21 @@ main {
 
 /* The left keyring hangs from the top; the right is an accent rather than a
    full drop, so neither reaches the note and the car in the bottom corners. */
-/* Both hang from the top edge and are clipped by it, like the bag charm, so
-   they read as suspended from the frame rather than floating in it. */
+/* All three hang from the same line as the bag charm, cropped by the top edge,
+   so they read as suspended from one rail rather than floating. Each image is
+   cropped to its own artwork, so a shared top means their tops really do line
+   up. Overlapping the other pieces is fine here. */
 .charm-side-left {
-  top: -3vh;
+  top: -4vh;
   left: -3vw;
-  height: 76vh;
+  height: 84vh;
   width: auto;
 }
 
 .charm-side-right {
-  top: -2vh;
+  top: -4vh;
   right: 0;
-  height: 38vh;
+  height: 46vh;
   width: auto;
 }
 
@@ -2099,9 +2101,9 @@ main {
   opacity: 0.85;
 }
 
-/* The bag charm lies across the top. */
+/* The bag charm lies across the top, on the same line as the two keyrings. */
 .charm-top {
-  top: -3vh;
+  top: -4vh;
   left: 50%;
   width: 620px;
   margin-left: -310px;
@@ -2155,4 +2157,13 @@ main {
   .charm-car {
     display: none;
   }
+}
+
+/* The original sits under the translation, quieter but always present. */
+.quote-origin {
+  margin-top: 2px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted-on-ground);
+  opacity: 0.85;
 }
