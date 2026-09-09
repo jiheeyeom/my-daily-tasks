@@ -1823,20 +1823,23 @@ main {
   opacity: 0.4;
 }
 
-/* A figure standing behind the page. Sized by height so it can never reach
-   past the top of the window, and inset on the right so the hands stay in. */
+/* A figure looming far larger than the window, deliberately cropped by it:
+   the head runs off the top and the hands past both sides. Both terms of the
+   max() matter — the width one guarantees the sides crop on a wide screen, the
+   height one guarantees the head crops on a tall one. */
 .giant {
   position: absolute;
-  right: 3vw;
-  bottom: 3vh;
-  height: min(52vh, 430px);
-  width: auto;
-  opacity: 0.08;
+  left: 50%;
+  bottom: -20vh;
+  width: max(112vw, 148vh);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: 0.07;
   filter: saturate(1.2);
 }
 
 :root[data-theme="dark"] .giant {
-  opacity: 0.11;
+  opacity: 0.1;
 }
 
 /* Scattered across the whole field, not lined up down the edges. Sizes,
@@ -1852,16 +1855,16 @@ main {
 .speck-a {
   top: 9vh;
   left: 12vw;
-  width: 44px;
-  opacity: 0.3;
+  width: 128px;
+  opacity: 0.26;
   transform: rotate(-9deg);
 }
 
 .speck-b {
   top: 4vh;
   left: 63vw;
-  width: 58px;
-  opacity: 0.26;
+  width: 150px;
+  opacity: 0.24;
   transform: rotate(11deg);
 }
 
@@ -1884,8 +1887,8 @@ main {
 .speck-e {
   top: 39vh;
   left: 7vw;
-  width: 38px;
-  opacity: 0.24;
+  width: 104px;
+  opacity: 0.22;
   transform: rotate(14deg);
 }
 
@@ -1940,8 +1943,8 @@ main {
 .speck-l {
   top: 79vh;
   left: 57vw;
-  width: 26px;
-  opacity: 0.17;
+  width: 78px;
+  opacity: 0.2;
   transform: rotate(-7deg);
 }
 
