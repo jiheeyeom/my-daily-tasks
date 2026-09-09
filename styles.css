@@ -1834,7 +1834,7 @@ main {
   top: 34vh;
   width: 132vw;
   height: auto;
-  margin-left: -66vw;
+  margin-left: -91vw;
   /* Their brightest pixels are pure white, and 0.36 is where body text still
      clears AA if it crosses one. */
   opacity: 0.3;
@@ -1857,7 +1857,7 @@ main {
   .runner {
     top: 40vh;
     width: 190vw;
-    margin-left: -95vw;
+    margin-left: -132vw;
   }
 }
 
@@ -2062,30 +2062,29 @@ main {
 .charm {
   position: absolute;
   height: auto;
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
+/* 0.36 is the ceiling here: past it, body text crossing a white highlight
+   stops clearing AA on the dark ground. */
 :root[data-theme="dark"] .charm {
-  opacity: 0.32;
+  opacity: 0.36;
 }
 
-/* The two keyrings hang the full height of the window, one on each side. */
-.charm-side-left,
-.charm-side-right {
-  top: 0;
-  height: 100vh;
+/* The left keyring hangs from the top; the right is an accent rather than a
+   full drop, so neither reaches the note and the car in the bottom corners. */
+.charm-side-left {
+  top: 4vh;
+  left: -3vw;
+  height: 56vh;
   width: auto;
 }
 
-/* Full height as asked, but pulled outward so the half that reaches into the
-   content column is the plain chain rather than the charms. Where they do pass
-   behind a panel the glass mutes them to about a fifth. */
-.charm-side-left {
-  left: -14vw;
-}
-
 .charm-side-right {
-  right: -20vw;
+  top: 13vh;
+  right: 1vw;
+  height: 22vh;
+  width: auto;
 }
 
 /* The bag charm lies across the top. */
@@ -2111,13 +2110,6 @@ main {
 
 /* Below a desktop width the edges belong to the content, so the charms that
    would sit under it are dropped rather than shrunk into clutter. */
-@media (max-width: 1400px) {
-  .charm-side-left,
-  .charm-side-right {
-    opacity: 0.3;
-  }
-}
-
 @media (max-width: 1100px) {
   .charm-side-left,
   .charm-side-right,
