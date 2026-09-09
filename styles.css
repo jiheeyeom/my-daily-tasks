@@ -1532,21 +1532,21 @@ main {
 .health-section .section-heading h2 {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
 }
 
 /* Rendered illustrations replace the line icons. Fixed box so a slow image
    cannot shift the heading as it arrives. */
 .section-icon {
-  width: 26px;
-  height: 26px;
+  width: 38px;
+  height: 38px;
   flex: none;
   object-fit: contain;
 }
 
 .note-icon {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   flex: none;
   margin-top: 1px;
   object-fit: contain;
@@ -1821,4 +1821,101 @@ main {
 :root[data-theme="dark"] .backdrop .lines {
   color: #cfd6ff;
   opacity: 0.4;
+}
+
+/* A figure standing behind the page, faint enough to read as light. It is
+   fixed, so it stays put while the panels scroll over it. */
+.giant {
+  position: absolute;
+  right: -6vw;
+  bottom: -8vh;
+  width: min(58vw, 620px);
+  height: auto;
+  opacity: 0.13;
+  filter: saturate(1.2);
+}
+
+:root[data-theme="dark"] .giant {
+  opacity: 0.16;
+}
+
+/* Scattered like stars. Each sits at a different size and depth so the field
+   does not read as a grid. */
+.speck {
+  position: absolute;
+  height: auto;
+  opacity: 0.3;
+  filter: drop-shadow(
+    0 0 14px color-mix(in srgb, var(--accent) 45%, transparent)
+  );
+}
+
+:root[data-theme="dark"] .speck {
+  opacity: 0.38;
+}
+
+.speck-a {
+  top: 7vh;
+  left: 6vw;
+  width: 46px;
+}
+
+.speck-b {
+  top: 15vh;
+  right: 9vw;
+  width: 62px;
+  opacity: 0.34;
+}
+
+.speck-c {
+  top: 42vh;
+  left: 3vw;
+  width: 38px;
+}
+
+.speck-d {
+  top: 58vh;
+  right: 5vw;
+  width: 52px;
+}
+
+.speck-e {
+  top: 78vh;
+  left: 11vw;
+  width: 34px;
+  opacity: 0.24;
+}
+
+.speck-f {
+  top: 92vh;
+  right: 14vw;
+  width: 44px;
+}
+
+.speck-g {
+  top: 30vh;
+  left: 14vw;
+  width: 40px;
+  opacity: 0.24;
+}
+
+.speck-h {
+  top: 68vh;
+  right: 17vw;
+  width: 34px;
+  opacity: 0.22;
+}
+
+@media (max-width: 720px) {
+  .giant {
+    width: 74vw;
+    opacity: 0.1;
+  }
+
+  /* Only the outermost ones survive; the rest would land under the content. */
+  .speck-c,
+  .speck-e,
+  .speck-g {
+    display: none;
+  }
 }

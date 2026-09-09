@@ -31,6 +31,14 @@ PLAN = [
     ("orb/01-meditation.png", "hero-health.webp", 440),
     ("orb/10-heart.png", "hero-auth.webp", 360),
     ("orb/08-coffee-tea.png", "hero-balance.webp", 320),
+    # The giant standing behind the page, and the specks scattered across it.
+    ("icon-only/01-meditation-icon.png", "giant-meditation.webp", 720),
+    ("icon-only/03-boxing-icon.png", "speck-boxing.webp", 96),
+    ("icon-only/05-stretching-icon.png", "speck-stretching.webp", 96),
+    ("icon-only/07-avocado-icon.png", "speck-avocado.webp", 96),
+    ("icon-only/12-moon-stars-icon.png", "speck-moon.webp", 96),
+    ("icon-only/09-water-glass-icon.png", "speck-water.webp", 96),
+    ("icon-only/10-heart-icon.png", "speck-heart.webp", 96),
 ]
 
 
