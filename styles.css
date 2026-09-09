@@ -2073,18 +2073,30 @@ main {
 
 /* The left keyring hangs from the top; the right is an accent rather than a
    full drop, so neither reaches the note and the car in the bottom corners. */
+/* Both hang from the top edge and are clipped by it, like the bag charm, so
+   they read as suspended from the frame rather than floating in it. */
 .charm-side-left {
-  top: 2vh;
+  top: -3vh;
   left: -3vw;
-  height: 74vh;
+  height: 76vh;
   width: auto;
 }
 
 .charm-side-right {
-  top: 17vh;
+  top: -2vh;
   right: 0;
-  height: 34vh;
+  height: 38vh;
   width: auto;
+}
+
+/* The ribbon is the smallest of them and sits furthest from any text, so it
+   carries the most colour. */
+.charm-side-right {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .charm-side-right {
+  opacity: 0.85;
 }
 
 /* The bag charm lies across the top. */
