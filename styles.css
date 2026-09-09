@@ -1831,10 +1831,12 @@ main {
 .runner {
   position: absolute;
   left: 50%;
-  top: 34vh;
-  width: 132vw;
+  /* Sized and offset from the artwork's own geometry: her face spans 80%-94.5%
+     of its width, so this lands it just past the right edge at every size. */
+  top: 2vh;
+  width: 175vw;
   height: auto;
-  margin-left: -91vw;
+  margin-left: -113vw;
   /* Their brightest pixels are pure white, and 0.36 is where body text still
      clears AA if it crosses one. */
   opacity: 0.3;
@@ -1855,9 +1857,9 @@ main {
 
 @media (max-width: 720px) {
   .runner {
-    top: 40vh;
-    width: 190vw;
-    margin-left: -132vw;
+    top: 12vh;
+    width: 240vw;
+    margin-left: -170vw;
   }
 }
 
@@ -1883,8 +1885,8 @@ main {
    heading illustration but a shade softer. Its 512px source is drawn at 100px,
    so the filigree holds up at this opacity. */
 .speck-b {
-  top: 4vh;
-  left: 76vw;
+  top: 2vh;
+  left: 85vw;
   width: 100px;
   opacity: 0.8;
   transform: rotate(11deg);
@@ -2062,28 +2064,26 @@ main {
 .charm {
   position: absolute;
   height: auto;
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
-/* 0.36 is the ceiling here: past it, body text crossing a white highlight
-   stops clearing AA on the dark ground. */
 :root[data-theme="dark"] .charm {
-  opacity: 0.36;
+  opacity: 0.6;
 }
 
 /* The left keyring hangs from the top; the right is an accent rather than a
    full drop, so neither reaches the note and the car in the bottom corners. */
 .charm-side-left {
-  top: 4vh;
+  top: 2vh;
   left: -3vw;
-  height: 56vh;
+  height: 74vh;
   width: auto;
 }
 
 .charm-side-right {
-  top: 13vh;
-  right: 1vw;
-  height: 22vh;
+  top: 17vh;
+  right: 0;
+  height: 34vh;
   width: auto;
 }
 
@@ -2097,10 +2097,18 @@ main {
 
 /* The chalk note reads as a scribble in the margin beside the quote at the
    top; the car takes the bottom-left corner. */
+/* The one charm that sits beside text rather than at an edge, so it keeps the
+   old ceiling: past 0.36 the quote stops clearing AA where it crosses the
+   chalk. */
 .charm-note {
   top: 0.5vh;
-  right: 2vw;
-  width: 170px;
+  left: 69vw;
+  width: 190px;
+  opacity: 0.6;
+}
+
+:root[data-theme="dark"] .charm-note {
+  opacity: 0.36;
 }
 
 .charm-car {
