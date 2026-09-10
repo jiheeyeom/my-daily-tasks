@@ -30,6 +30,7 @@ const ALLOWED = new Set([
   "weights",
   "checkups",
   "profile",
+  "stickers",
 ]);
 
 export function createFirebaseStore(config) {

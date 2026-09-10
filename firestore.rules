@@ -102,6 +102,18 @@ service cloud.firestore {
         && optionalNumIn(d.heightCm, 100, 250)
         && optionalNumIn(d.targetKcal, 500, 10000) && times(d);
     }
+    // Decorative stickers. The source is either a bundled image path or an
+    // inline data URL; anything else could point the page at a third party.
+    function validSticker(d) {
+      return d.keys().hasAll(['src', 'x', 'y', 'width', 'rotation', 'opacity', 'saturation', 'z', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['src', 'x', 'y', 'width', 'rotation', 'opacity', 'saturation', 'z', 'createdAt', 'updatedAt'])
+        && str(d.src, 700000) && d.src.size() > 0
+        && (d.src.matches('^\\./images/[a-zA-Z0-9._-]+$')
+            || d.src.matches('^data:image/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$'))
+        && num(d.x, -20, 120) && num(d.y, -20, 120) && num(d.width, 1, 200)
+        && num(d.rotation, -180, 180) && num(d.opacity, 0.05, 1)
+        && num(d.saturation, 0, 3) && num(d.z, -50, 50) && times(d);
+    }
     function validCheckup(d, id) {
       return d.keys().hasAll(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
         && d.keys().hasOnly(['date', 'kind', 'label', 'measurements', 'note', 'createdAt', 'updatedAt'])
@@ -140,6 +152,11 @@ service cloud.firestore {
       allow read, delete: if owner(uid);
       allow create: if owner(uid) && validProfile(request.resource.data, id);
       allow update: if owner(uid) && stableCreation() && validProfile(request.resource.data, id);
+    }
+    match /users/{uid}/stickers/{id} {
+      allow read, delete: if owner(uid);
+      allow create: if owner(uid) && validSticker(request.resource.data);
+      allow update: if owner(uid) && stableCreation() && validSticker(request.resource.data);
     }
     match /users/{uid}/checkups/{id} {
       allow read, delete: if owner(uid);

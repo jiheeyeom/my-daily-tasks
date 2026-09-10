@@ -486,6 +486,38 @@ export function weightDriftKg(dailyDifferenceKcal, days = 30) {
   return round((dailyDifferenceKcal * days) / KCAL_PER_KG, 2);
 }
 
+// Decorative stickers the owner arranges on the page. Positions are stored as
+// percentages of the viewport so a layout made on one window still reads on
+// another, and an uploaded image travels as a data URL inside its own record.
+export const STICKER_LIMIT = 40;
+export const STICKER_SRC_LIMIT = 700000;
+
+export function makeSticker(input, now = Date.now()) {
+  const src = String(input.src ?? "");
+  if (!src) throw new Error("스티커 이미지를 확인해 주세요.");
+  if (src.length > STICKER_SRC_LIMIT)
+    throw new Error("이미지가 너무 큽니다. 더 작은 파일을 올려 주세요.");
+  if (
+    !/^(\.\/images\/[\w.-]+|data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+)$/.test(
+      src,
+    )
+  )
+    throw new Error("지원하지 않는 이미지 형식입니다.");
+  return {
+    src,
+    // Percentages, not pixels: the same arrangement has to survive a resize.
+    x: numberValue(input.x, "가로 위치", { min: -20, max: 120 }),
+    y: numberValue(input.y, "세로 위치", { min: -20, max: 120 }),
+    width: numberValue(input.width, "크기", { min: 1, max: 200 }),
+    rotation: numberValue(input.rotation ?? 0, "회전", { min: -180, max: 180 }),
+    opacity: numberValue(input.opacity ?? 1, "투명도", { min: 0.05, max: 1 }),
+    saturation: numberValue(input.saturation ?? 1, "채도", { min: 0, max: 3 }),
+    z: numberValue(input.z ?? 0, "겹침 순서", { min: -50, max: 50 }),
+    createdAt: input.createdAt ?? now,
+    updatedAt: now,
+  };
+}
+
 export function nutritionTotals(meals) {
   const values = { kcal: 0, protein: 0, carbs: 0, fat: 0 };
   const missing = { kcal: 0, protein: 0, carbs: 0, fat: 0 };

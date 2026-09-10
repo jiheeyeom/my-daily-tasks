@@ -2421,3 +2421,99 @@ main {
 :root[data-theme="dark"] .charm-side-right {
   opacity: 0.92;
 }
+
+/* ---- Stickers ------------------------------------------------------------
+   A saved arrangement replaces the fixed decoration rather than joining it. */
+.sticker-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.sticker {
+  position: absolute;
+  height: auto;
+  transform-origin: center;
+  user-select: none;
+}
+
+:root.has-stickers .charm,
+:root.has-stickers .speck {
+  display: none;
+}
+
+/* Only while editing does the layer take the pointer; otherwise it is scenery
+   and every click belongs to the page underneath. */
+:root.editing-stickers .backdrop,
+:root.editing-stickers .sticker-layer {
+  pointer-events: auto;
+}
+
+:root.editing-stickers .sticker {
+  cursor: grab;
+  outline: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 3px;
+}
+
+:root.editing-stickers .sticker[data-selected="true"] {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.sticker-edit-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.sticker-tools {
+  position: sticky;
+  top: 8px;
+  z-index: 40;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.sticker-tools-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.sticker-tools-row + .sticker-tools-row {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.sticker-tools label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sticker-tools input[type="range"] {
+  width: 108px;
+}
+
+.sticker-upload {
+  cursor: pointer;
+}
+
+/* Editing needs a pointer and a window wide enough for the arrangement to
+   mean anything. */
+@media (max-width: 899px) {
+  .sticker-edit-btn,
+  .sticker-tools {
+    display: none !important;
+  }
+}

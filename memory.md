@@ -139,6 +139,12 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   삽입 시 `id` 속성 제거(페이지 ID 공간 오염 방지), width/height 제거(CSS 로 크기 지정),
   `#6c63ff`→`var(--accent)`, `#f2f2f2`/`#e6e6e6`→`var(--surface-alt)`, `#3f3d56`/`#090814`→`var(--ink)`.
   **직접 SVG 를 손으로 그리지 말 것** — 렌더링 확인 수단이 없어 인물 그림은 반드시 실패함.
+- **스티커 꾸미기(2026-09-10)**: 배경 장식을 데이터로 전환. `users/{uid}/stickers/{id}` 에 저장
+  (x·y·width 는 **vw/vh 퍼센트** — 창 크기가 바뀌어도 배치가 유지되도록). 편집은 **900px 이상에서만**.
+  저장된 스티커가 하나라도 있으면 `html.has-stickers` 로 기존 CSS 장식(.charm/.speck)을 감춤.
+  업로드 이미지는 캔버스로 480px WebP 로 줄여 **data URL 로 문서에 저장**(Storage 미사용, 문서 1MB 한계).
+  src 는 `./images/...` 또는 data:image 만 허용 — 규칙과 클라이언트 양쪽에서 검사.
+  **firestore.rules 재게시 필요.**
 - **섹션 접힘(2026-09-09)**: 건강 탭 6개 섹션을 `<details class="section-fold">` 로 감쌈.
   기본 접힘, 연 것만 `preference("fold_<헤딩id>")` 로 기기별 기억. summary 안에 section-heading 이
   통째로 들어가므로 아이콘·제목만 보임. details 는 숨길 뿐 DOM 에서 지우지 않아 기존 테스트 무사.

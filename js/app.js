@@ -21,6 +21,8 @@ import {
   makeCheckup,
   checkupId,
   makeBodyProfile,
+  makeSticker,
+  STICKER_LIMIT,
   BODY_PROFILE_ID,
   basalMetabolicRate,
   energyBalance,
@@ -83,6 +85,7 @@ export function createApp({
     "weights",
     "checkups",
     "profile",
+    "stickers",
   ];
   const state = {
     user: null,
@@ -454,6 +457,7 @@ export function createApp({
       else if (kind === "foods") renderFoods();
       else if (kind === "checkups") renderCheckups();
       else if (kind === "profile") renderBalance();
+      else if (kind === "stickers") renderStickers();
       else renderHealth();
       if (kind === "weights") fillWeight(true);
       showSync();
@@ -478,7 +482,8 @@ export function createApp({
             else if (kind === "profile") {
               fillBodyProfile();
               renderBalance();
-            } else {
+            } else if (kind === "stickers") renderStickers();
+            else {
               renderHealth();
               if (kind === "weights") fillWeight();
             }
@@ -599,6 +604,7 @@ export function createApp({
       // Checkups span years, so they are not bound to the 7-day health window.
       watch("checkups", null, subscriptions, state.epoch);
       watch("profile", null, subscriptions, state.epoch);
+      watch("stickers", null, subscriptions, state.epoch);
       listenHealth();
     }
     showSync();
@@ -1766,6 +1772,155 @@ export function createApp({
 
   // Sections start folded so the tab opens as a list of headings. Which ones
   // a person opens is a per-device preference, like the pinned foods.
+  // ---- Stickers -----------------------------------------------------------
+  // The decoration stops being a stylesheet and becomes data the owner can
+  // move. Editing is desktop only: the arrangement is stored in viewport
+  // percentages, and a phone-width window would squash it into nonsense.
+  const DESKTOP_STICKERS = "(min-width: 900px)";
+  const stickerEditor = { on: false, selected: null, drag: null };
+
+  // The starting arrangement, mirroring what the stylesheet drew, so the first
+  // edit begins from what was already on screen rather than a blank page.
+  const DEFAULT_STICKERS = [
+    ["./images/charm-side-left.webp", -6, -3, 26, 0, 0.9, 1, -2],
+    ["./images/charm-top.webp", 34, -4, 32, 0, 0.9, 1, -2],
+    ["./images/charm-side-right.webp", 84, -1, 13, 0, 1, 1, -1],
+    ["./images/charm-car.webp", 3, 74, 10, 0, 1, 1, -1],
+    ["./images/speck-heart.webp", 12, 9, 5, -9, 0.39, 1, -3],
+    ["./images/speck-moon.webp", 85, 2, 5.5, 11, 0.8, 1, -3],
+    ["./images/speck-water.webp", 7, 39, 4.5, 14, 0.26, 1, -3],
+    ["./images/speck-boxing.webp", 87, 16, 2.5, 7, 0.34, 1, -3],
+    ["./images/speck-stretching.webp", 72, 47, 1.8, -5, 0.31, 1, -3],
+    ["./images/speck-avocado.webp", 34, 24, 1.6, -16, 0.22, 1, -3],
+    ["./images/mark-weekly.webp", 23, 62, 2.3, -12, 0.36, 1, -3],
+    ["./images/mark-meal.webp", 52, 33, 1.4, 19, 0.17, 1, -3],
+    ["./images/mark-balance.webp", 16, 86, 1.9, 9, 0.25, 1, -3],
+    ["./images/speck-lock.webp", 57, 79, 3.4, -7, 0.27, 1, -3],
+  ].map(([src, x, y, width, rotation, opacity, saturation, z]) => ({
+    src,
+    x,
+    y,
+    width,
+    rotation,
+    opacity,
+    saturation,
+    z,
+  }));
+
+  const stickerRows = () =>
+    [...(state.data.stickers || [])].sort((a, b) => (a.z ?? 0) - (b.z ?? 0));
+
+  const desktopStickers = () =>
+    Boolean(win.matchMedia && win.matchMedia(DESKTOP_STICKERS).matches);
+
+  function renderStickers() {
+    const layer = $("sticker-layer"),
+      rows = stickerRows();
+    const live = desktopStickers() && rows.length > 0;
+    layer.hidden = !live;
+    // Once a saved arrangement exists it replaces the fixed decoration
+    // outright, or the two would sit on top of each other.
+    doc.documentElement.classList.toggle("has-stickers", live);
+    $("sticker-edit").hidden = !state.user || !desktopStickers();
+    layer.replaceChildren();
+    if (!live) return;
+    for (const row of rows) {
+      const node = el("img", "sticker");
+      node.src = safeStickerSrc(row.src);
+      node.alt = "";
+      node.draggable = false;
+      node.dataset.id = row.id;
+      node.style.left = `${row.x}vw`;
+      node.style.top = `${row.y}vh`;
+      node.style.width = `${row.width}vw`;
+      node.style.opacity = String(row.opacity);
+      node.style.transform = `rotate(${row.rotation}deg)`;
+      node.style.filter = `saturate(${row.saturation})`;
+      node.style.zIndex = String(row.z);
+      if (stickerEditor.selected === row.id) node.dataset.selected = "true";
+      layer.append(node);
+    }
+  }
+
+  // Only two shapes are ever legitimate here; anything else is refused rather
+  // than handed to the browser as a URL.
+  function safeStickerSrc(src) {
+    return /^(\.\/images\/[\w.-]+|data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+)$/.test(
+      src,
+    )
+      ? src
+      : "";
+  }
+
+  const stickerById = (id) =>
+    (state.data.stickers || []).find((row) => row.id === id) || null;
+
+  function saveSticker(row, changes) {
+    const next = makeSticker({ ...row, ...changes });
+    return action("sticker", "stickers", (uid) =>
+      store.save(uid, "stickers", row.id, next),
+    );
+  }
+
+  function selectSticker(id) {
+    stickerEditor.selected = id;
+    const row = stickerById(id);
+    $("sticker-controls").hidden = !row;
+    if (row) {
+      $("sticker-width").value = row.width;
+      $("sticker-rotation").value = row.rotation;
+      $("sticker-opacity").value = row.opacity;
+      $("sticker-saturation").value = row.saturation;
+    }
+    renderStickers();
+  }
+
+  function setEditing(on) {
+    stickerEditor.on = on && desktopStickers();
+    doc.documentElement.classList.toggle("editing-stickers", stickerEditor.on);
+    $("sticker-tools").hidden = !stickerEditor.on;
+    $("sticker-edit").setAttribute("aria-pressed", String(stickerEditor.on));
+    if (!stickerEditor.on) selectSticker(null);
+  }
+
+  async function seedStickers() {
+    if ((state.data.stickers || []).length) return;
+    await action(
+      "sticker",
+      "stickers",
+      async (uid) => {
+        for (const row of DEFAULT_STICKERS)
+          await store.save(uid, "stickers", null, makeSticker(row));
+      },
+      () => toast("기본 스티커를 불러왔어요."),
+    );
+  }
+
+  // Uploads are redrawn small before they are stored: a document has to hold
+  // the whole image, and a phone photo would not fit.
+  async function stickerFromFile(file) {
+    const url = win.URL.createObjectURL(file);
+    try {
+      const image = await new Promise((resolve, reject) => {
+        const node = new win.Image();
+        node.onload = () => resolve(node);
+        node.onerror = () => reject(new Error("이미지를 읽지 못했어요."));
+        node.src = url;
+      });
+      const side = Math.max(image.width, image.height);
+      const scale = Math.min(1, 480 / side);
+      const canvas = doc.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      canvas
+        .getContext("2d")
+        .drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL("image/webp", 0.8);
+    } finally {
+      win.URL.revokeObjectURL(url);
+    }
+  }
+
   function closeAccountMenu() {
     $("account-bar").hidden = true;
     $("account-toggle").setAttribute("aria-expanded", "false");
@@ -2441,6 +2596,151 @@ export function createApp({
   // Resetting forms during auth changes should not reset a stored sort preference.
   $("sort-select").value = state.sort;
   setUpFolds();
+
+  // ---- Sticker editing wiring --------------------------------------------
+  on($("sticker-edit"), "click", async () => {
+    if (stickerEditor.on) return setEditing(false);
+    await seedStickers();
+    setEditing(true);
+  });
+  on($("sticker-done"), "click", () => setEditing(false));
+
+  on($("sticker-layer"), "pointerdown", (event) => {
+    const node = event.target.closest(".sticker");
+    if (!stickerEditor.on || !node) return;
+    const row = stickerById(node.dataset.id);
+    if (!row) return;
+    event.preventDefault();
+    selectSticker(row.id);
+    // Track the grab offset so the sticker does not jump to the cursor.
+    stickerEditor.drag = {
+      id: row.id,
+      dx: (event.clientX / win.innerWidth) * 100 - row.x,
+      dy: (event.clientY / win.innerHeight) * 100 - row.y,
+      node,
+    };
+    node.setPointerCapture?.(event.pointerId);
+  });
+
+  on(doc, "pointermove", (event) => {
+    const drag = stickerEditor.drag;
+    if (!drag) return;
+    const x = (event.clientX / win.innerWidth) * 100 - drag.dx;
+    const y = (event.clientY / win.innerHeight) * 100 - drag.dy;
+    drag.moved = true;
+    drag.x = Math.min(120, Math.max(-20, x));
+    drag.y = Math.min(120, Math.max(-20, y));
+    drag.node.style.left = `${drag.x}vw`;
+    drag.node.style.top = `${drag.y}vh`;
+  });
+
+  on(doc, "pointerup", () => {
+    const drag = stickerEditor.drag;
+    stickerEditor.drag = null;
+    // Only a drag that actually moved is worth a write.
+    if (!drag?.moved) return;
+    const row = stickerById(drag.id);
+    if (row) saveSticker(row, { x: drag.x, y: drag.y });
+  });
+
+  for (const [id, field] of [
+    ["sticker-width", "width"],
+    ["sticker-rotation", "rotation"],
+    ["sticker-opacity", "opacity"],
+    ["sticker-saturation", "saturation"],
+  ]) {
+    // Preview on input, write on release: dragging a slider would otherwise
+    // send a write per pixel.
+    on($(id), "input", () => {
+      const node = $("sticker-layer").querySelector('[data-selected="true"]');
+      if (!node) return;
+      const value = Number($(id).value);
+      if (field === "width") node.style.width = `${value}vw`;
+      if (field === "rotation") node.style.transform = `rotate(${value}deg)`;
+      if (field === "opacity") node.style.opacity = String(value);
+      if (field === "saturation") node.style.filter = `saturate(${value})`;
+    });
+    on($(id), "change", () => {
+      const row = stickerById(stickerEditor.selected);
+      if (row) saveSticker(row, { [field]: Number($(id).value) });
+    });
+  }
+
+  for (const [id, step] of [
+    ["sticker-front", 1],
+    ["sticker-back", -1],
+  ])
+    on($(id), "click", () => {
+      const row = stickerById(stickerEditor.selected);
+      if (row)
+        saveSticker(row, {
+          z: Math.min(50, Math.max(-50, (row.z ?? 0) + step)),
+        });
+    });
+
+  on($("sticker-delete"), "click", () => {
+    const row = stickerById(stickerEditor.selected);
+    if (!row || !ask("이 스티커를 지울까요?")) return;
+    action(
+      "sticker",
+      "stickers",
+      (uid) => store.remove(uid, "stickers", row.id),
+      () => selectSticker(null),
+    );
+  });
+
+  on($("sticker-reset"), "click", () => {
+    if (!ask("스티커를 기본 배치로 되돌릴까요? 올린 이미지도 지워집니다."))
+      return;
+    action(
+      "sticker",
+      "stickers",
+      async (uid) => {
+        await store.removeMany(
+          uid,
+          "stickers",
+          (state.data.stickers || []).map((row) => row.id),
+        );
+        for (const row of DEFAULT_STICKERS)
+          await store.save(uid, "stickers", null, makeSticker(row));
+      },
+      () => {
+        selectSticker(null);
+        toast("기본 배치로 되돌렸어요.");
+      },
+    );
+  });
+
+  on($("sticker-file"), "change", async () => {
+    const [file] = $("sticker-file").files;
+    if (!file) return;
+    if ((state.data.stickers || []).length >= STICKER_LIMIT) {
+      toast(`스티커는 ${STICKER_LIMIT}개까지 올릴 수 있어요.`, true);
+      return;
+    }
+    setText("sticker-status", "이미지를 줄이는 중…");
+    let src;
+    try {
+      src = await stickerFromFile(file);
+    } catch (error) {
+      setText("sticker-status", friendlyError(error));
+      return;
+    }
+    $("sticker-file").value = "";
+    await action(
+      "sticker",
+      "stickers",
+      (uid) =>
+        store.save(
+          uid,
+          "stickers",
+          null,
+          makeSticker({ src, x: 45, y: 40, width: 12, z: 5 }),
+        ),
+      () =>
+        setText("sticker-status", "스티커를 추가했어요. 끌어서 옮겨 보세요."),
+    );
+  });
   on($("account-toggle"), "click", () => {
     const shown = $("account-bar").hidden;
     $("account-bar").hidden = !shown;

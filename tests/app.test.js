@@ -112,8 +112,16 @@ class FakeStore {
   }
 }
 
-function fixture(t, overrides = {}) {
+function fixture(t, overrides = {}, options = {}) {
   const dom = new JSDOM(html, { url: "https://example.com/my-daily-tasks/" });
+  // jsdom has no layout, so the desktop check is stubbed explicitly.
+  const desktop = options.desktop !== false;
+  dom.window.matchMedia = (query) => ({
+    matches: desktop && query.includes("min-width"),
+    media: query,
+    addEventListener() {},
+    removeEventListener() {},
+  });
   const store = new FakeStore(),
     downloads = [];
   const app = createApp({
@@ -164,12 +172,22 @@ test("no auth means no subscriptions or visible private data; setup guard also b
 test("login loads only UID-scoped paths and default yoga is Wednesday", (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);
-  // tasks, foods, checkups, profile plus the three date-scoped health collections.
-  assert.equal(f.store.listeners.length, 7);
+  // tasks, foods, checkups, profile, stickers plus the three date-scoped
+  // health collections.
+  assert.equal(f.store.listeners.length, 8);
   assert.ok(f.store.listeners.every((item) => item.uid === "alice"));
   assert.deepEqual(
     [...new Set(f.store.listeners.map((item) => item.kind))].sort(),
-    ["checkups", "foods", "meals", "profile", "tasks", "weights", "workouts"],
+    [
+      "checkups",
+      "foods",
+      "meals",
+      "profile",
+      "stickers",
+      "tasks",
+      "weights",
+      "workouts",
+    ],
   );
   assert.equal(f.$("private-app").hidden, false);
   assert.equal(f.$("day-kcal").textContent, "—");
@@ -980,6 +998,113 @@ test("account details hide behind a header button until asked for", (t) => {
   );
   assert.equal(bar.hidden, true);
   assert.equal(toggle.getAttribute("aria-expanded"), "false");
+});
+
+test("stickers only render, and only offer editing, on a desktop-width window", (t) => {
+  const f = fixture(t, {}, { desktop: false });
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "stickers", [
+    {
+      id: "s1",
+      src: "./images/speck-heart.webp",
+      x: 10,
+      y: 20,
+      width: 6,
+      rotation: 0,
+      opacity: 0.8,
+      saturation: 1,
+      z: 0,
+    },
+  ]);
+  // A phone-width window keeps the fixed decoration and hides the editor.
+  assert.equal(f.$("sticker-layer").hidden, true);
+  assert.equal(f.$("sticker-edit").hidden, true);
+});
+
+test("a saved arrangement replaces the fixed decoration and can be dragged", async (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "stickers", [
+    {
+      id: "s1",
+      src: "./images/speck-heart.webp",
+      x: 10,
+      y: 20,
+      width: 6,
+      rotation: -9,
+      opacity: 0.8,
+      saturation: 1.2,
+      z: 3,
+    },
+  ]);
+  const layer = f.$("sticker-layer");
+  assert.equal(layer.hidden, false);
+  assert.equal(f.$("sticker-edit").hidden, false);
+  const root = f.dom.window.document.documentElement;
+  assert.equal(root.classList.contains("has-stickers"), true);
+
+  const node = layer.querySelector(".sticker");
+  assert.equal(node.getAttribute("src"), "./images/speck-heart.webp");
+  assert.equal(node.style.left, "10vw");
+  assert.equal(node.style.width, "6vw");
+  assert.equal(node.style.transform, "rotate(-9deg)");
+  assert.equal(node.style.filter, "saturate(1.2)");
+
+  f.$("sticker-edit").click();
+  // Entering edit mode seeds defaults first, so it settles a tick later.
+  await tick();
+  assert.equal(root.classList.contains("editing-stickers"), true);
+
+  const pointer = (type, x, y) =>
+    f.dom.window.document.dispatchEvent(
+      Object.assign(new f.dom.window.Event(type, { bubbles: true }), {
+        clientX: x,
+        clientY: y,
+      }),
+    );
+  node.dispatchEvent(
+    Object.assign(
+      new f.dom.window.Event("pointerdown", {
+        bubbles: true,
+        cancelable: true,
+      }),
+      {
+        clientX: 100,
+        clientY: 200,
+      },
+    ),
+  );
+  pointer("pointermove", 300, 400);
+  pointer("pointerup", 300, 400);
+
+  const saved = f.store.writes.filter((w) => w.kind === "stickers").at(-1);
+  assert.equal(saved.id, "s1");
+  // Stored as viewport percentages, so the arrangement survives a resize.
+  assert.ok(saved.data.x > 10, `x moved right: ${saved.data.x}`);
+  assert.ok(saved.data.y > 20, `y moved down: ${saved.data.y}`);
+  assert.equal(saved.data.rotation, -9);
+});
+
+test("an unrecognised sticker source is never handed to the browser", (t) => {
+  const f = fixture(t);
+  f.store.emitAuth(USER);
+  f.store.seed(USER.uid, "stickers", [
+    {
+      id: "bad",
+      src: "https://evil.example/x.png",
+      x: 5,
+      y: 5,
+      width: 5,
+      rotation: 0,
+      opacity: 1,
+      saturation: 1,
+      z: 0,
+    },
+  ]);
+  assert.equal(
+    f.$("sticker-layer").querySelector(".sticker").getAttribute("src"),
+    "",
+  );
 });
 
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
