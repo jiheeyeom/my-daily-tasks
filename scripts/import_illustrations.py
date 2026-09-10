@@ -19,7 +19,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "image icon" / "health-illustration-set-complete"
 CHARMS = ROOT / "image icon" / "web-assets"
-RUNNERS = ROOT / "image icon" / "runner-7lock-colorways"
+RUNNERS = ROOT / "image icon" / "runner_colors"
 OUT = ROOT / "images"
 
 # (source, output, rendered size in CSS pixels x2 for high-density screens)
@@ -66,8 +66,8 @@ CHARM_PLAN = [
 # The runner behind the page, in the colourway that suits each theme: the
 # cooler one carries on a dark ground, the brighter one on a light.
 RUNNER_PLAN = [
-    ("runner-7lock-aurora.png", "runner-light.webp", 1600),
-    ("runner-7lock-moonlight.png", "runner-dark.webp", 1600),
+    ("aurora.png", "runner-light.webp", 1700),
+    ("silver.png", "runner-dark.webp", 1700),
 ]
 
 

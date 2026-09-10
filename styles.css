@@ -1835,15 +1835,16 @@ main {
 .runner {
   position: absolute;
   left: 50%;
-  /* Sized and offset from the artwork's own geometry: her face spans 80%-94.5%
-     of its width, so this lands it just past the right edge at every size. */
+  /* Sized and offset from the artwork's own geometry: her face spans 75%-91%
+     of its width, so this lands it just past the right edge at every size.
+     The offset solves 50 + margin + 0.91 x width = 102. */
   top: 2vh;
-  width: 175vw;
+  width: 170vw;
   height: auto;
-  margin-left: -113vw;
-  /* Their brightest pixels are pure white, and 0.36 is where body text still
-     clears AA if it crosses one. */
-  opacity: 0.3;
+  margin-left: -102.7vw;
+  /* No pure white in this artwork, so it can sit brighter than the last one
+     without body text crossing the trail losing contrast. */
+  opacity: 0.5;
 }
 
 .runner-dark {
@@ -1856,14 +1857,14 @@ main {
 
 :root[data-theme="dark"] .runner-dark {
   display: block;
-  opacity: 0.34;
+  opacity: 0.4;
 }
 
 @media (max-width: 720px) {
   .runner {
-    top: 12vh;
-    width: 240vw;
-    margin-left: -170vw;
+    top: 10vh;
+    width: 260vw;
+    margin-left: -184.6vw;
   }
 }
 
@@ -2158,9 +2159,9 @@ main {
    =========================================================================== */
 @media (max-width: 720px) {
   .runner {
-    top: 12vh;
-    width: 240vw;
-    margin-left: -170vw;
+    top: 10vh;
+    width: 260vw;
+    margin-left: -184.6vw;
   }
   .orb {
     filter: blur(52px);
