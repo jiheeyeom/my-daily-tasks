@@ -1714,10 +1714,17 @@ main {
 }
 
 .balance-goal {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 20px;
+  gap: 12px 20px;
   margin-top: 1rem;
+}
+
+/* Only the ring and its caption share a row. Everything after them is a block
+   of its own width. */
+.balance-goal > :not(.goal-ring):not(.goal-copy) {
+  grid-column: 1 / -1;
 }
 
 .goal-ring {
@@ -1771,7 +1778,7 @@ main {
 
 @media (max-width: 560px) {
   .balance-goal {
-    gap: 14px;
+    gap: 10px 14px;
   }
 
   .goal-ring {
@@ -2159,7 +2166,9 @@ main {
   .runner {
     top: 12vh;
     width: 240vw;
-    margin-left: -170vw;
+    /* The right edge falls at 90.8% of the artwork, which is the middle of her
+       neck: 50 - margin = 0.908 x width. */
+    margin-left: -167.9vw;
     opacity: 0.3;
   }
   :root[data-theme="dark"] .runner-dark {
