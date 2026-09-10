@@ -571,7 +571,9 @@ export function createApp({
     setText("account-email", user?.email || "");
     setText("account-uid", user?.uid || "");
     $("auth-card").hidden = Boolean(user);
-    $("account-bar").hidden = !user;
+    // The bar is a popover now: the button stands in for it in the header.
+    $("account-toggle").hidden = !user;
+    closeAccountMenu();
     $("account-settings").hidden = !user;
     $("setup-banner").hidden = !user || config.securityRulesConfigured;
     $("private-app").hidden = !user || !config.securityRulesConfigured;
@@ -1764,6 +1766,11 @@ export function createApp({
 
   // Sections start folded so the tab opens as a list of headings. Which ones
   // a person opens is a per-device preference, like the pinned foods.
+  function closeAccountMenu() {
+    $("account-bar").hidden = true;
+    $("account-toggle").setAttribute("aria-expanded", "false");
+  }
+
   function setUpFolds() {
     for (const fold of doc.querySelectorAll(".section-fold")) {
       const key = fold.querySelector("summary h2, summary h3")?.id;
@@ -2434,6 +2441,18 @@ export function createApp({
   // Resetting forms during auth changes should not reset a stored sort preference.
   $("sort-select").value = state.sort;
   setUpFolds();
+  on($("account-toggle"), "click", () => {
+    const shown = $("account-bar").hidden;
+    $("account-bar").hidden = !shown;
+    $("account-toggle").setAttribute("aria-expanded", String(shown));
+  });
+  // Clicking away or pressing Escape closes it, as a menu should.
+  on(doc, "click", (event) => {
+    if (!event.target.closest(".account-menu")) closeAccountMenu();
+  });
+  on(doc, "keydown", (event) => {
+    if (event.key === "Escape") closeAccountMenu();
+  });
   if (preference("loadProcessedFoods") === "1") loadProcessedFoods(false);
   const stopAuth = store.observeAuth(authChanged);
   return {

@@ -2334,3 +2334,90 @@ main {
 .section-fold[open] > summary .section-heading {
   margin-bottom: 13px;
 }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-menu {
+  position: relative;
+}
+
+/* The account details hang off the button instead of taking a full-width row
+   of their own. */
+.account-menu .account-bar {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 2px;
+  min-width: 210px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--ink) 18%, transparent);
+  text-align: left;
+}
+
+.account-menu .account-bar .muted {
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.account-menu .account-bar .text-btn {
+  justify-self: start;
+  margin-top: 6px;
+  padding: 0;
+}
+
+/* The day's four numbers are a glance, not a dashboard: less box, less air,
+   and the caption under each dropped to a hint. */
+.health-stats {
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.stat-card {
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.stat-card > span {
+  font-size: 11px;
+}
+
+.stat-card strong,
+.health-stats strong {
+  font-size: 19px;
+  margin: 3px 0 1px;
+}
+
+.stat-card small {
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+/* Stickers stuck to the page, which is the bag. Small, sharp, fully in frame
+   — cropping them made them read as scenery rather than as objects on it. */
+.charm-car {
+  bottom: 6vh;
+  left: 3vw;
+  width: 190px;
+  opacity: 1;
+}
+
+.charm-side-right {
+  top: -1vh;
+  right: 1vw;
+  height: 26vh;
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .charm-car,
+:root[data-theme="dark"] .charm-side-right {
+  opacity: 0.92;
+}

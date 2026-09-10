@@ -956,6 +956,32 @@ test("sections start folded and remember what was opened", (t) => {
   assert.equal(f.$("meal-form").closest(".section-fold"), meal);
 });
 
+test("account details hide behind a header button until asked for", (t) => {
+  const f = fixture(t);
+  const toggle = f.$("account-toggle");
+  const bar = f.$("account-bar");
+  // Signed out: neither the button nor the panel.
+  assert.equal(toggle.hidden, true);
+  assert.equal(bar.hidden, true);
+
+  f.store.emitAuth(USER);
+  assert.equal(toggle.hidden, false);
+  assert.equal(bar.hidden, true);
+  assert.equal(toggle.getAttribute("aria-expanded"), "false");
+
+  toggle.click();
+  assert.equal(bar.hidden, false);
+  assert.equal(toggle.getAttribute("aria-expanded"), "true");
+  assert.equal(f.$("account-email").textContent, USER.email);
+
+  // Clicking anywhere else closes it.
+  f.dom.window.document.body.dispatchEvent(
+    new f.dom.window.Event("click", { bubbles: true }),
+  );
+  assert.equal(bar.hidden, true);
+  assert.equal(toggle.getAttribute("aria-expanded"), "false");
+});
+
 test("custom food supports ml, missing macros and true zero calories", async (t) => {
   const f = fixture(t);
   f.store.emitAuth(USER);

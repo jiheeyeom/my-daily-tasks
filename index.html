@@ -249,15 +249,37 @@
           <h1>My Daily Tasks <span class="cloud-label">Cloud Sync</span></h1>
           <p class="subtitle">해야 할 일도, 나를 돌보는 일도.</p>
         </div>
-        <button
-          id="theme-toggle"
-          class="icon-btn"
-          type="button"
-          aria-label="다크 모드 전환"
-          title="Alt + D"
-        >
-          🌙
-        </button>
+        <div class="header-actions">
+          <div class="account-menu">
+            <button
+              id="account-toggle"
+              class="icon-btn"
+              type="button"
+              aria-label="계정"
+              aria-expanded="false"
+              aria-controls="account-bar"
+              hidden
+            >
+              🙂
+            </button>
+            <section id="account-bar" class="account-bar" hidden>
+              <strong id="account-name"></strong>
+              <span id="account-email" class="muted"></span>
+              <button id="logout-btn" class="text-btn" type="button">
+                로그아웃
+              </button>
+            </section>
+          </div>
+          <button
+            id="theme-toggle"
+            class="icon-btn"
+            type="button"
+            aria-label="다크 모드 전환"
+            title="Alt + D"
+          >
+            🌙
+          </button>
+        </div>
       </header>
       <section id="auth-card" class="auth-card" aria-labelledby="auth-title">
         <span class="eyebrow">PRIVATE DAILY SPACE</span>
@@ -284,13 +306,6 @@
             이 페이지는 JavaScript를 켜야 사용할 수 있습니다.
           </p></noscript
         >
-      </section>
-      <section id="account-bar" class="account-bar" hidden>
-        <div>
-          <strong id="account-name"></strong
-          ><span id="account-email" class="muted"></span>
-        </div>
-        <button id="logout-btn" class="text-btn" type="button">로그아웃</button>
       </section>
       <div id="setup-banner" class="notice warning" role="status" hidden>
         <strong>개인정보 보호 설정이 먼저 필요해요</strong>
@@ -513,8 +528,8 @@
               </button>
             </div>
           </div>
-          <p id="health-date-label" class="muted"></p>
-          <p id="health-sync-status" class="muted" role="status"></p>
+          <p id="health-date-label" class="sr-only"></p>
+          <p id="health-sync-status" class="sr-only" role="status"></p>
           <div class="health-stats" aria-label="선택한 날짜의 요약">
             <div class="stat-card">
               <span>기록한 열량</span><strong id="day-kcal">—</strong
