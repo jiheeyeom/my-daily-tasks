@@ -36,7 +36,10 @@ before(async () => {
     throw new Error("Only a local emulator is allowed for security tests.");
   const rules = (
     await readFile(new URL("../firestore.rules", import.meta.url), "utf8")
-  ).replace("let uid = '';", "let uid = 'owner';");
+  )
+    // The real owner UID lives in the file; swap in whatever is there for a
+    // name the test can authenticate as.
+    .replace(/let uid = '[^']*';/, "let uid = 'owner';");
   env = await initializeTestEnvironment({
     projectId: "demo-my-daily-tasks",
     firestore: { rules },

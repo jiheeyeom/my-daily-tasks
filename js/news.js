@@ -40,29 +40,56 @@ export async function refreshPublicContent(doc, fetcher = fetch) {
     }
   };
 
-  const news = async (id, url) => {
-    const list = doc.getElementById(id);
+  // The feeds themselves send no Access-Control-Allow-Origin and every free
+  // CORS proxy we relied on has gone dark, so a scheduled job collects them
+  // into a file on our own origin. See scripts/fetch_news.py.
+  const NEWS_URL = "./data/news.json";
+  const LISTS = ["kr-news-list", "bbc-news-list"];
+  // Google News turns over many times a day, so headlines that have not moved
+  // in three days mean the job has stopped, not that the world went quiet.
+  const STALE_MS = 3 * 24 * 60 * 60 * 1000;
+
+  const fail = (message) => {
+    for (const id of LISTS) {
+      const row = doc.createElement("li");
+      row.textContent = "뉴스를 불러오지 못했습니다.";
+      doc.getElementById(id).replaceChildren(row);
+    }
+    doc.getElementById("daily-news").textContent = message;
+  };
+
+  const news = async () => {
+    let data;
     try {
-      const data = await json(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-      );
-      const xml = new doc.defaultView.DOMParser().parseFromString(
-        data.contents,
-        "text/xml",
-      );
-      if (xml.querySelector("parsererror")) throw new Error("Invalid RSS");
-      const items = [...xml.querySelectorAll("item")]
-        .slice(0, 10)
-        .map((item) => ({
-          title: item.querySelector("title")?.textContent || "제목 없음",
-          url: safeUrl(item.querySelector("link")?.textContent),
+      data = await json(NEWS_URL);
+    } catch {
+      fail("뉴스는 잠시 쉬는 중입니다.");
+      return;
+    }
+    const feeds = data?.feeds ?? {};
+    let headline = "";
+    for (const id of LISTS) {
+      const list = doc.getElementById(id);
+      // Generated from third-party feeds, so it is checked again here: being
+      // same-origin makes it reachable, not trustworthy.
+      const items = (Array.isArray(feeds[id]) ? feeds[id] : [])
+        .map((row) => ({
+          title: typeof row?.title === "string" ? row.title : "",
+          url: safeUrl(row?.url),
         }))
-        .filter((item) => item.url);
-      if (!items.length) throw new Error("Empty RSS");
+        .filter((row) => row.title && row.url)
+        .slice(0, 10);
+      if (!items.length) {
+        const row = doc.createElement("li");
+        row.textContent = "뉴스를 불러오지 못했습니다.";
+        list.replaceChildren(row);
+        continue;
+      }
       list.replaceChildren();
       for (const item of items) {
         const row = doc.createElement("li"),
           link = doc.createElement("a");
+        // textContent throughout: a headline is data, never markup.
         link.textContent = item.title;
         link.href = item.url;
         link.target = "_blank";
@@ -70,21 +97,17 @@ export async function refreshPublicContent(doc, fetcher = fetch) {
         row.append(link);
         list.append(row);
       }
-      if (id === "kr-news-list")
-        doc.getElementById("daily-news").textContent =
-          `오늘의 뉴스 · ${items[0].title}`;
-    } catch {
-      const row = doc.createElement("li");
-      row.textContent = "뉴스를 불러오지 못했습니다.";
-      list.replaceChildren(row);
-      if (id === "kr-news-list")
-        doc.getElementById("daily-news").textContent =
-          "뉴스는 잠시 쉬는 중입니다.";
+      if (id === LISTS[0]) headline = items[0].title;
     }
+    const collected = Date.parse(data?.generatedAt ?? "");
+    const stale =
+      Number.isFinite(collected) && Date.now() - collected > STALE_MS;
+    doc.getElementById("daily-news").textContent = !headline
+      ? "뉴스는 잠시 쉬는 중입니다."
+      : stale
+        ? `${new Date(collected).toLocaleDateString("ko-KR")} 이후 갱신이 멈춰 있어요 · ${headline}`
+        : `오늘의 뉴스 · ${headline}`;
   };
-  await Promise.all([
-    quote(),
-    news("kr-news-list", "https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko"),
-    news("bbc-news-list", "https://feeds.bbci.co.uk/news/rss.xml"),
-  ]);
+
+  await Promise.all([quote(), news()]);
 }

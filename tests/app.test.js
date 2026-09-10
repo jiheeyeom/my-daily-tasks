@@ -1321,7 +1321,7 @@ test("a quote is shown with its attribution and never as markup", async (t) => {
               work: "A Book",
             },
           ]
-        : { contents: "<rss><channel></channel></rss>" },
+        : { feeds: {} },
   }));
   const quote = f.$("daily-quote");
   const origin = f.$("daily-quote-origin");
@@ -1344,7 +1344,7 @@ test("a quote with no translation shows the original alone", async (t) => {
     json: async () =>
       url.includes("quotes.json")
         ? [{ text: "Only the original", author: "Someone", work: "" }]
-        : { contents: "<rss><channel></channel></rss>" },
+        : { feeds: {} },
   }));
   assert.match(f.$("daily-quote").textContent, /Only the original — Someone/);
   // Nothing is repeated underneath.
@@ -1352,19 +1352,79 @@ test("a quote with no translation shows the original alone", async (t) => {
   assert.equal(f.$("daily-quote-origin").hidden, true);
 });
 
-test("RSS title markup and unsafe URLs cannot execute HTML or script", async (t) => {
-  const f = fixture(t);
-  const rss =
-    "<rss><channel><item><title>&lt;img src=x onerror=alert(1)&gt;</title><link>https://example.com/news</link></item><item><title>bad</title><link>javascript:alert(1)</link></item></channel></rss>";
-  await refreshPublicContent(f.dom.window.document, async (url) => ({
+// The file is same-origin but generated from third-party feeds, so it gets the
+// same treatment a proxied feed did.
+const newsFile = (feeds, generatedAt = new Date().toISOString()) => ({
+  generatedAt,
+  feeds,
+});
+
+const publicContent = (f, feeds, generatedAt) =>
+  refreshPublicContent(f.dom.window.document, async (url) => ({
     ok: true,
     json: async () =>
       url.includes("quotes.json")
         ? [{ text: "Example quote", author: "Someone", work: "A Book" }]
-        : { contents: rss },
+        : newsFile(feeds, generatedAt),
   }));
+
+test("news titles and unsafe URLs cannot execute HTML or script", async (t) => {
+  const f = fixture(t);
+  await publicContent(f, {
+    "kr-news-list": [
+      {
+        title: "<img src=x onerror=alert(1)>",
+        url: "https://example.com/news",
+      },
+      { title: "bad", url: "javascript:alert(1)" },
+      { title: "", url: "https://example.com/empty" },
+    ],
+  });
   assert.equal(f.$("kr-news-list").querySelectorAll("a").length, 1);
   assert.equal(f.$("kr-news-list").querySelector("img"), null);
   assert.match(f.$("daily-news").textContent, /<img/);
   assert.equal(f.$("daily-news").querySelector("img"), null);
+  // A feed with nothing usable says so rather than showing an empty list.
+  assert.match(f.$("bbc-news-list").textContent, /불러오지 못했습니다/);
+});
+
+test("both news lists render and the ticker leads with the Korean headline", async (t) => {
+  const f = fixture(t);
+  await publicContent(f, {
+    "kr-news-list": [{ title: "국내 소식", url: "https://example.com/kr" }],
+    "bbc-news-list": [{ title: "World story", url: "https://example.com/uk" }],
+  });
+  assert.equal(f.$("kr-news-list").querySelectorAll("a").length, 1);
+  assert.equal(f.$("bbc-news-list").querySelectorAll("a").length, 1);
+  assert.equal(
+    f.$("bbc-news-list").querySelector("a").rel,
+    "noopener noreferrer",
+  );
+  assert.match(f.$("daily-news").textContent, /^오늘의 뉴스 · 국내 소식$/);
+});
+
+test("headlines that stopped moving days ago say so instead of claiming to be today's", async (t) => {
+  const f = fixture(t);
+  const old = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString();
+  await publicContent(
+    f,
+    { "kr-news-list": [{ title: "지난 소식", url: "https://example.com/kr" }] },
+    old,
+  );
+  assert.match(f.$("daily-news").textContent, /갱신이 멈춰 있어요/);
+  // The headlines are still real, so they stay on the page.
+  assert.equal(f.$("kr-news-list").querySelectorAll("a").length, 1);
+});
+
+test("an unreachable news file leaves the ticker and both lists explained", async (t) => {
+  const f = fixture(t);
+  await refreshPublicContent(f.dom.window.document, async (url) => ({
+    ok: !url.includes("news.json"),
+    json: async () => [{ text: "Example quote", author: "Someone", work: "" }],
+  }));
+  assert.match(f.$("daily-news").textContent, /잠시 쉬는 중/);
+  assert.match(f.$("kr-news-list").textContent, /불러오지 못했습니다/);
+  assert.match(f.$("bbc-news-list").textContent, /불러오지 못했습니다/);
+  // A dead feed never takes the quote down with it.
+  assert.match(f.$("daily-quote").textContent, /Example quote/);
 });
