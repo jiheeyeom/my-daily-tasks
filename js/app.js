@@ -377,7 +377,7 @@ export function createApp({
         "앞선 저장이 아직 끝나지 않았어요. 잠시 후 다시 눌러 주세요.",
         true,
       );
-      return;
+      return false;
     }
     if (kind && !canUse(kind)) {
       toast(
@@ -386,18 +386,18 @@ export function createApp({
           : "서버 동기화를 마친 뒤 다시 시도해 주세요.",
         true,
       );
-      return;
+      return false;
     }
     if (!state.user) {
       toast("로그인한 뒤 저장할 수 있어요.", true);
-      return;
+      return false;
     }
     if (win.navigator.onLine === false) {
       toast(
         "인터넷 연결 후 저장해 주세요. 오프라인 저장은 지원하지 않습니다.",
         true,
       );
-      return;
+      return false;
     }
     const epoch = state.epoch,
       uid = state.user.uid;
@@ -406,8 +406,10 @@ export function createApp({
     try {
       const result = await work(uid);
       if (isCurrent(epoch)) success?.(result);
+      return true;
     } catch (error) {
       if (isCurrent(epoch)) toast(friendlyError(error), true);
+      return false;
     } finally {
       if (isCurrent(epoch)) {
         busy.delete(key);
@@ -1884,8 +1886,8 @@ export function createApp({
   }
 
   async function seedStickers() {
-    if ((state.data.stickers || []).length) return;
-    await action(
+    if ((state.data.stickers || []).length) return true;
+    return action(
       "sticker",
       "stickers",
       async (uid) => {
@@ -2600,8 +2602,7 @@ export function createApp({
   // ---- Sticker editing wiring --------------------------------------------
   on($("sticker-edit"), "click", async () => {
     if (stickerEditor.on) return setEditing(false);
-    await seedStickers();
-    setEditing(true);
+    if (await seedStickers()) setEditing(true);
   });
   on($("sticker-done"), "click", () => setEditing(false));
 
@@ -2620,6 +2621,12 @@ export function createApp({
       node,
     };
     node.setPointerCapture?.(event.pointerId);
+  });
+
+  on(doc, "pointerdown", (event) => {
+    if (!stickerEditor.on || !stickerEditor.selected) return;
+    if (event.target.closest(".sticker,.sticker-tools")) return;
+    selectSticker(null);
   });
 
   on(doc, "pointermove", (event) => {

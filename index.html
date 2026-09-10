@@ -29,20 +29,32 @@
       <span class="orb orb-4"></span>
       <!-- A figure standing behind the whole page at low opacity, and the
            smaller pieces scattered across it like stars. -->
-      <img
-        class="runner runner-light"
-        src="./images/runner-light.webp"
-        alt=""
-        width="1600"
-        height="715"
-      />
-      <img
-        class="runner runner-dark"
-        src="./images/runner-dark.webp"
-        alt=""
-        width="1600"
-        height="725"
-      />
+      <picture>
+        <source
+          media="(max-width: 720px)"
+          srcset="./images/runner-light-classic.webp"
+        />
+        <img
+          class="runner runner-light"
+          src="./images/runner-light.webp"
+          alt=""
+          width="1700"
+          height="704"
+        />
+      </picture>
+      <picture>
+        <source
+          media="(max-width: 720px)"
+          srcset="./images/runner-dark-classic.webp"
+        />
+        <img
+          class="runner runner-dark"
+          src="./images/runner-dark.webp"
+          alt=""
+          width="1700"
+          height="704"
+        />
+      </picture>
       <img
         class="speck speck-a"
         src="./images/speck-heart.webp"
@@ -213,9 +225,6 @@
         width="760"
         height="381"
       />
-      <!-- Stickers the owner has arranged. Replaces the fixed decoration above
-           once any exist, and only on a desktop-sized window. -->
-      <div id="sticker-layer" class="sticker-layer" hidden></div>
       <!-- The reference's radiating hairlines and sparkles, drawn over the
            orbs but always behind the glass panels. -->
       <svg
@@ -241,6 +250,12 @@
         </g>
       </svg>
     </div>
+    <!-- Stickers the owner has arranged. Replaces the fixed decoration above
+         once any exist, and only on a desktop-sized window. A sibling of the
+         backdrop rather than a child of it: the backdrop is a stacking context
+         below the content, and while editing the stickers have to come up
+         above it to be grabbable. -->
+    <div id="sticker-layer" class="sticker-layer" hidden></div>
     <div class="ticker-wrap">
       <p id="daily-quote" class="quote-text">하루의 작은 기록이 쌓이는 곳.</p>
       <p id="daily-quote-origin" class="quote-origin"></p>

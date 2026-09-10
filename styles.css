@@ -1860,13 +1860,8 @@ main {
   opacity: 0.4;
 }
 
-@media (max-width: 720px) {
-  .runner {
-    top: 10vh;
-    width: 260vw;
-    margin-left: -184.6vw;
-  }
-}
+/* Mobile keeps the earlier artwork and its own geometry; see the pinned
+   block at the end of the file. */
 
 /* Scattered across the whole field. Size, opacity and angle all differ per
    speck, which is what stops the eye grouping them into rows. */
@@ -2158,10 +2153,17 @@ main {
    desktop ones — cannot reach it. Adjust desktop above; adjust mobile here.
    =========================================================================== */
 @media (max-width: 720px) {
+  /* A different picture source here: the earlier artwork, at the size and
+     opacity it was settled at. Solved for its own 2.238 ratio, not the
+     desktop one. */
   .runner {
-    top: 10vh;
-    width: 260vw;
-    margin-left: -184.6vw;
+    top: 12vh;
+    width: 240vw;
+    margin-left: -170vw;
+    opacity: 0.3;
+  }
+  :root[data-theme="dark"] .runner-dark {
+    opacity: 0.34;
   }
   .orb {
     filter: blur(52px);
@@ -2426,8 +2428,13 @@ main {
 /* ---- Stickers ------------------------------------------------------------
    A saved arrangement replaces the fixed decoration rather than joining it. */
 .sticker-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: 0;
+  /* Scenery by default: the layer itself is never a click target, so the page
+     underneath keeps every click. Only the stickers take the pointer, and only
+     while editing. */
+  pointer-events: none;
   overflow: hidden;
 }
 
@@ -2436,6 +2443,7 @@ main {
   height: auto;
   transform-origin: center;
   user-select: none;
+  -webkit-user-drag: none;
 }
 
 :root.has-stickers .charm,
@@ -2443,17 +2451,24 @@ main {
   display: none;
 }
 
-/* Only while editing does the layer take the pointer; otherwise it is scenery
-   and every click belongs to the page underneath. */
-:root.editing-stickers .backdrop,
+/* Editing lifts the whole layer above the content column. Otherwise the
+   stickers sit behind the panels and half of them cannot be reached. The
+   backdrop stays untouched: giving it the pointer turns every decorative
+   image into a native drag source, which is what showed the no-drop cursor. */
 :root.editing-stickers .sticker-layer {
-  pointer-events: auto;
+  z-index: 30;
 }
 
 :root.editing-stickers .sticker {
+  pointer-events: auto;
+  touch-action: none;
   cursor: grab;
   outline: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent);
   outline-offset: 3px;
+}
+
+:root.editing-stickers .sticker:active {
+  cursor: grabbing;
 }
 
 :root.editing-stickers .sticker[data-selected="true"] {

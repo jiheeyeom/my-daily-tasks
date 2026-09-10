@@ -22,6 +22,7 @@ import {
   makeMeal,
   makeWorkout,
   makeWeight,
+  makeSticker,
   foodSnapshot,
 } from "../js/domain.js";
 import { FOOD_CATALOG } from "../js/foods.js";
@@ -75,6 +76,21 @@ const records = {
   weights: {
     id: "2026-08-20",
     data: makeWeight({ date: "2026-08-20", kg: 68, note: "Test data" }, 1000),
+  },
+  stickers: {
+    id: "one",
+    data: makeSticker(
+      {
+        src: "./images/speck-heart.webp",
+        x: 12,
+        y: 9,
+        width: 5,
+        rotation: -9,
+        opacity: 0.39,
+        z: -3,
+      },
+      1000,
+    ),
   },
 };
 
@@ -203,4 +219,34 @@ test("unknown collections and root profiles are denied even to authenticated use
   await assertFails(setDoc(doc(db, "users/alice"), { admin: true }));
   await assertFails(setDoc(doc(db, "users/alice/secrets/x"), { value: true }));
   await assertFails(getDocs(collection(db, "users")));
+});
+
+test("sticker sources are limited to bundled images and inline data URLs", async () => {
+  const db = env.authenticatedContext("alice").firestore(),
+    ref = doc(db, "users/alice/stickers/s");
+  const sticker = records.stickers.data;
+  for (const src of [
+    "https://example.com/a.png",
+    "javascript:alert(1)",
+    "./images/../../secret.png",
+    "data:text/html;base64,PHNjcmlwdD4=",
+    "",
+  ])
+    await assertFails(setDoc(ref, { ...sticker, src }));
+  await assertSucceeds(
+    setDoc(ref, { ...sticker, src: "data:image/webp;base64,UklGRg==" }),
+  );
+  // The arrangement is stored in percentages, and the rules hold them to the
+  // same range the client does.
+  for (const bad of [
+    { ...sticker, x: 200 },
+    { ...sticker, y: -50 },
+    { ...sticker, width: 0 },
+    { ...sticker, opacity: 0 },
+    { ...sticker, rotation: 400 },
+    { ...sticker, saturation: 9 },
+    { ...sticker, z: 99 },
+    { ...sticker, x: "12" },
+  ])
+    await assertFails(setDoc(ref, bad));
 });
