@@ -196,6 +196,21 @@ python3 -m http.server 8000 --bind 127.0.0.1  # 로컬 서버
   손으로 넣는 항목(비-mfds)은 `tests/domain.test.js` 에서 42개로 고정 단언 중 — 늘리면 함께 수정.
   USDA API는 `DEMO_KEY` 로 시간당 10회 제한 — 검색 결과 JSON을 파일로 받아 재사용할 것.
 
+- **스티커 층은 backdrop 의 자식이 아니라 형제**: `.backdrop` 은 `z-index: 0` 으로
+  스택 컨텍스트를 만들고 `main` 은 그 위(`z-index: 1`)에 있음. 층을 backdrop 안에 두면
+  본문 칼럼에 가린 스티커를 잡을 수 없어, 편집 중에만 `z-index: 30` 으로 올림.
+  또한 편집 중 `.backdrop` 에 pointer-events 를 주면 장식 `<img>` 들이 브라우저 기본
+  드래그 대상이 되어 no-drop(🚫) 커서가 뜸 — 포인터는 `.sticker` 에만 줄 것.
+- **모바일 거인은 데스크톱과 다른 그림**: `<picture>` 의 `media="(max-width: 720px)"`
+  소스로 `runner-*-classic.webp` 를 따로 내려줌. 데스크톱은 aurora/silver.
+  좌표는 그림마다 다시 풀어야 함 — 화면 우측 절단점 f 는 `f = (50 - margin) / width`,
+  classic 은 목 한가운데인 0.908 에 맞춰 `240vw / -167.9vw`.
+- **`.balance-goal` 은 grid**: 자식이 링·문구·수치카드·음식제안·체중예측 다섯이라
+  flex row 로 두면 전부 세로 기둥이 되어 좁은 화면에서 글자가 한 줄에 한 자씩 떨어짐.
+  링과 문구만 첫 줄을 쓰고 나머지는 `grid-column: 1 / -1`.
+- **`action()` 은 성공 여부를 boolean 으로 반환**: 거부됐는데도 편집 모드를 켜면
+  옮길 것이 없는 빈 화면이 됨.
+
 ---
 
 ## 배포 흐름 (GitHub Pages, main 브랜치 루트)
