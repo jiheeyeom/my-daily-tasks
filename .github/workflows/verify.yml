@@ -3,6 +3,9 @@ on:
   pull_request:
   push:
     branches: [main]
+    # The scheduled news job commits a generated file every few hours; there
+    # is no code in it to verify.
+    paths-ignore: [data/news.json]
 permissions:
   contents: read
 jobs:

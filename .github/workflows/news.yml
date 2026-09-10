@@ -1,0 +1,42 @@
+name: news
+
+# The RSS feeds send no Access-Control-Allow-Origin, so the browser cannot read
+# them. This collects them into data/news.json, which the site reads from its
+# own origin. Change the cron below to fetch more or less often.
+on:
+  schedule:
+    - cron: "20 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Never two pushes to main at once, and never cancel a run mid-push.
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Standard library only, so there is nothing to install.
+      - run: python scripts/fetch_news.py
+      - name: Commit when the headlines moved
+        run: |
+          if git diff --quiet -- data/news.json; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/news.json
+          git commit -m "chore: refresh the news feed"
+          # A push of our own may have landed in the meantime; this only ever
+          # touches one generated file, so replaying it on top is safe.
+          git push || (git pull --rebase origin main && git push)
