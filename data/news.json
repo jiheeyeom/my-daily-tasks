@@ -1,52 +1,56 @@
 {
-  "generatedAt": "2026-09-21T19:59:54Z",
+  "generatedAt": "2026-09-22T00:07:50Z",
   "feeds": {
     "kr-news-list": [
       {
-        "title": "강훈식 사의, 정국 전환될지는 미지수…야당 ‘비선 인사’ 의혹 공세 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9VNlJUN1k1bF9ob1RBMGlSNl9peDBpVjNYOF96T1QyTGc2Z0dGcnRKRGtVVHMwdlpqMzhEbE5yU3llZEFMX3FlRkZRSWNOOFMwcExFSzFsZnczQkM1NF8xU1ppZ3lRTDlRSTY4?oc=5"
-      },
-      {
         "title": "김승원 전직 보좌관, 청와대에 45쪽 ‘회계부정 의혹’ 자료 전달 - 한겨레",
         "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE54NmJzamYwaGZlX0lybURoU2luT3JVeENmSTFGVjRVaFB5ZjRhTUJMbEo5VHdza3paTlMyVWpHQUhULS1JRU12czg1Z29pbGhyeGt3VlRMX0UyNjFOQ182M0xIRllYMFFyVEE?oc=5"
+      },
+      {
+        "title": "이 대통령 “강남불패·부동산투기공화국은 이제 과거 이야기 될 것” - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5PcjgyUFNfdHpFNXdkR0hqc3JKVjRZOUtVNFpTQUpYTjlDZHBkdGZwWXdqYTlVRlpmLVkyUXFVSTlCZjFBVGpLSGk4U0JOa29WVzdmbzlha0Uwd9IBX0FVX3lxTFBMYjZxMDhncWhRdDhSZDNacElnZlJrYUVJcEc5MjJnS0xDVzVmYVdmRWxzdkpTckdZT3RXY0Eyd214UTJVd3l6TEVRWmpLQ183Mm5ieVgtcklPMUhFQ2NZ?oc=5"
+      },
+      {
+        "title": "이 대통령, 강신철·이형일·홍지선 임명안 재가 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1wYmRvUTIzbklvT2J6am9GaHB4RFNhYjZGMEEwTzducEhLZzJVWFR1Q1dkeG5pSmVaU1JiVnhsc3lJbW85ZkRINk1EcDBFQjVOTDJEcF9IVnZpWGwweTVOVGtzRjBfTUJ6TjBj?oc=5"
+      },
+      {
+        "title": "한·미·일 “북한 대화 복귀 촉구…대만해협 평화 유지 중요” - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5GQ1ZVdU9hNDROWlBTRGl5OGwtZG1rMFpSTVFUS2JQNlpFd2d4RlZ5M3NyZzVGcXZoQ3RUU1VaT1NQTjJFTWNHVzU0cTZLNDJ0T3poLU03c2pFUdIBX0FVX3lxTE8tNWZ4eXNSNi1RUGYtTUlJSC1hTTZaTWJxU1V5VXpTb0pDREF2MGRCczU4U2RmandpLWlNbXlSQjBxMVgxcGdRU3ZhVk1oajQ2aDBQT2ZmNmdPN1JCLUdJ?oc=5"
+      },
+      {
+        "title": "국힘 ‘개각인사 실패’ 총공세로 민심 잡기 - 국제신문",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNYmpfWjlTUFVQaWg2ekQ4dlQ3aGVCWE1zdXE0VTEwTnh6WHh5MUxMbWR1OTZZUDJLbGFWaGhFMkc1ZFBxRXVackNubkFVa1U3b3JDcE5NbDdhSGNkMnphUDcxNnFyRGZWQjd0VEVFNU1sV2k0UVVRUlJJQWdhckNOM0M3NktrVTE4X3Bheg?oc=5"
+      },
+      {
+        "title": "김현지 공격 받자 강훈식이 떠난다 - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOdnFCME5wbl8yVkpYeE1ZOFdRUjc5RlBlRF9EN3RaVk9IalUyc0VXc3lXekJoWXBpOWJkbV9ldDVYbmhDbHk0dWpLbngzRy0zT1dwalVmMTBLd1A2YUlBVW9ELW55UzRLOXVVMUNYZmhaZlkxVWM3eGVPTktXTzBWcDdHWGx6d0Na?oc=5"
       },
       {
         "title": "한동훈 ‘검찰 캐비닛 유출’ 경찰 수사 착수…유출 경로 밝힐 수 있을까 - 경향신문",
         "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ma1FRVlFOcGQzY1F2LVVhT3FZNEtoUDFmQnl4czRxRXdSRlhpY0lSRkQ4RmRWWThZOXota2R2cG85T05sNjRZckMwRjlPVFBISS1RaUFoY0tQQdIBX0FVX3lxTE5CRllxZGd1aWdTRE1pbFFQY3FEOXRFeXd2Skdfc3BMemp1d0NRTlVSMnNGRFRfODRwZmhDRHdPeDg3UFRhY1BWV0tJQ3JXVHo5ZW9FYXFIVFpTMFlOb0Rr?oc=5"
       },
       {
-        "title": "이재명 대통령, 22일 유엔총회 기조연설...”트럼프 대통령과 별도 접촉 예정” - VOA 한국어 홈페이지",
-        "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5JSnpBbUtwMHh0ajg4NzZJcEpFRk4tMDFvOFpNUFJGMXo1S2FFRXpiOHdid3ROLXRhYkpoQ1FVUlVuNm9UUTJFckdFYUZ3R05sMW9xcExKZjRpZGpaeUhVSEltdnlqQkNFV3hDRzVWVkF1QzTSAXZBVV95cUxPZ194ejF3Ui1oWnBRek1wQ1cyb1gyamt3TnFkOXdkLWhCSUhna0RqdkpsQjZCcmtGcy10MWFRUXhfSUxLSzVWT29LTklIaW1KMUZlTWZQeTRQdW9BWGx5aGg0VHI3bHM0SDhNUnFPTUp5ajBjVVV3?oc=5"
+        "title": "“택시기사들, 섬박람회 유언비어 유포”…여수시, ‘입단속 공문’ 빈축 - v.daum.net",
+        "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTFBSSkhlVWRRTjRDWmJOVzFVZkZ0aEJGNzB0bkJseWVrQlZYdmZ6Yi1ldHpEZFp5X2dQZzFlTHlXZTlNRHdkcWc?oc=5"
       },
       {
-        "title": "부산 도심 상어 등장에 ‘출산설’까지...“수로 출구 못 찾은 듯” - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQSjRBckhTUTNrV2tRUDl6SURTdTJUbUJ2ZmMxWnpKLUFNX2dvc0dtYjhFVEhsbGZMTUFzV2lIclBEbHVqN1VqVl94OTVRQjdTS0hMZmdqTXVOWldUSldROGhodmVPbTE1VGFwQUE3RGZRa3g2MWNySTYzY2c4UkpPN29EOUpSUQ?oc=5"
+        "title": "靑 \"김승원 탄원서 의혹은 가십… 대답할 책임·의무 없다\" - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQQnRqdjFRRnRRTTV4VmxSalRyRzFLQXYwc0VjbUpLdTlVNGQ5Zm5NZXZUejFUZVhYdnA2U2JLMHVldi1rNjFiME5xT0JkV1NZbVdoZXF1ODJOdm1hZFNTNk5remtxUzBHdXdYaWlWOVNHa01FYXU3TlNOZHlXMEhrcjdYaXg3MG1haXBGM1VLdWM?oc=5"
       },
       {
-        "title": "DMZ서 '쾅' 대대장 발목 절단…'북한 지뢰' 가능성 촉각 - 한국경제",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBPeFRla1diV0tjX2puTWM3bmVtakQxdm9XZTl4TDZIQW9Na0g4UmJpZkVYX3JFeTg1Ml9oVkR4VlNWZmoxWEF4ZlBIZGRZSC1tSm1HMXpYcUJwZw?oc=5"
-      },
-      {
-        "title": "김민석 “볼수록 잘 된 인사”라더니…김승원 추가 의혹엔 ‘침묵’ - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1lbllUbWFGdWswYjliQ2kxVk5LYjRaSFoxQUVQLUNtRC1tYm85bHhEWHI1bThJREJMN2NIZmVOUFFwWi1WTGZTOEUxRURNZHNPdTZPdFhKeUk1TjQ4Z1h4a2FWR0FiTDF4OV9maEJxcWpNVk9Y?oc=5"
-      },
-      {
-        "title": "여인형 전 방첩사령관 징역 18년…’계엄 가담’ 군 장성들 1심 중형 - 연합뉴스TV",
-        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFB6RXM0NHpaSVd4YUFkZzByako4NW1CTUhlcnNTWHRBOUN3UWdtVUpRTHYyZlFqclV3NHY5LWtUMlRmSVB6dDRVTGxwYVNtUXAyYjgxeHcyOFpZbkg2TTFuTUxaYXQxa2M?oc=5"
-      },
-      {
-        "title": "[날씨] 전국 대체로 맑음‥큰 일교차·짙은 안개 유의 - imnews.imbc.com",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1Gc1N1aUhobDBKekRlSFBxMUk2N1hiRkY1S25ReFdwRmtQblhDeVQ5dXVNUV9WY1BhT05UV1hoLTlxVWM5Qk1DdlVLVGY2bjIzTDloc3hoeUVKbnU1Y0hxV1hNZWRuR05pWmJsaUFxV29wcDVDazNz0gF3QVVfeXFMTVRRaFdEenhEWmNlNVg5OFVoSXRVa3J1UWg0NXlINkNucnFuLTZyemNZOGVJYmFKT09FTEZoUnRERm45ak1XNENLNjV0QkVHWEdGWFZSYkJxQ1FDcDhDRTVTNk9Udzc3a0otYXFnYjhxaVNuVmw0cWM?oc=5"
-      },
-      {
-        "title": "관행적 농지 임대차·휴경에는 강제처분 유예한다...불법 농지 전용도 사후 추인 허용 - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPVTZMQjgzRDdTclFaWU9KdjdCYWhwdVJGUFhITFVDeklpaG9KQkJaTzRTZWY4NlduX3lITUU3VVpDUFBZSHJTRFNXTVFSNjBCVkY4cTdMUVY2bEw2dE40LVdCSXQ2cDV4Sk1VVTg0bHdmTTFoVmc1N1FIczJuamZLN1pPNFppbzNEWEFsU0xB?oc=5"
+        "title": "농사 안짓는 고령·상속농지, 투기 아니면 안팔아도 된다 - 한국경제",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0wVUk0T0JieG1TVE9EQXVDcE15LW91clJwb0ZKUmtiTVJiU0FlQmVYVjZEdnJIWnA4akl3YnZENU1PVXNMZTVzOVdPZGJJYTBqZVFESFh3TDdPQQ?oc=5"
       }
     ],
     "bbc-news-list": [
       {
         "title": "Airlines criticise air traffic control as second glitch causes more disruption",
         "url": "https://www.bbc.co.uk/news/articles/cqp80p78mxx5o?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "UK to provide Saudi Arabia with 'defensive' military support, says Burnham",
+        "url": "https://www.bbc.co.uk/news/articles/cqlykpe4dk0yo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Yemenis flee across Red Sea as Houthis and Saudi-backed forces escalate war",
@@ -57,8 +61,12 @@
         "url": "https://www.bbc.co.uk/news/articles/cr2092216nywo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Seventeen arrested in Teesside organised crime raids",
-        "url": "https://www.bbc.co.uk/news/articles/ckjrxpz03w8no?at_medium=RSS&at_campaign=rss"
+        "title": "Flights at major US airports delayed after cable cut by construction workers",
+        "url": "https://www.bbc.co.uk/news/articles/ckvgyzzgvv4wo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Watch: Police raid organised crime targets in Teesside",
+        "url": "https://www.bbc.co.uk/news/videos/c9x2z1m45vlno?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "CNN, MS NOW and Politico file lawsuit against Trump's White House ban",
@@ -69,20 +77,12 @@
         "url": "https://www.bbc.co.uk/sport/football/articles/c639m2yggm1ro?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Man charged with causing death by dangerous driving over crash that killed 6",
-        "url": "https://www.bbc.co.uk/news/articles/cmqlwpkl72plo?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Millions urged to evacuate as powerful Typhoon Dujuan hits Japan",
-        "url": "https://www.bbc.co.uk/news/articles/cm3wj2lexl97o?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "British Museum bans visitors from photographing Bayeux Tapestry",
-        "url": "https://www.bbc.co.uk/news/articles/cmd79p4z98lzo?at_medium=RSS&at_campaign=rss"
-      },
-      {
         "title": "Death of Cindy Crawford's son Presley Gerber being investigated as suspected overdose",
         "url": "https://www.bbc.co.uk/news/articles/cmdx0pqrv72wo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Man charged with causing death by dangerous driving over crash that killed 6",
+        "url": "https://www.bbc.co.uk/news/articles/cmqlwpkl72plo?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
