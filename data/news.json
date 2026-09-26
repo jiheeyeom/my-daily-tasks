@@ -1,52 +1,60 @@
 {
-  "generatedAt": "2026-09-26T21:10:41Z",
+  "generatedAt": "2026-09-26T23:38:03Z",
   "feeds": {
     "kr-news-list": [
       {
-        "title": "미중 나란히 '성과' 발표에도…희토류·AI·대만 등 곳곳 온도차 - 연합뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5Zb0FVdHJQbkRGaS1KZTU0LTE2em51dXJ5RlhoQnpMbklWYW9FS0xfek0tOUw3dFZUM1JNdjJNRVREdWlpckdrVm1OS2Faa0stVUs3bVNnWE42dDTSAWBBVV95cUxPd3lSazgxUWY4ejY3NzJqWnpHbUpDTG9QbFUzcUNHOEdyVmlJT2c5UExGdDB5SkpqbG43SlpONWtMVkxkNDFrTW1UeHEzUjhKdEZ6YnowRkR1dmdxYVFWdVQ?oc=5"
+        "title": "트럼프, 이란 ‘호르무즈 재개방 7일안’ 거부…“선거 뒤 폭격 재개 가능성” - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1mclUwTnlOem56Rm1nZTgwUG1hN2xmbFJFTjJod2U5T1VOQ3VvTjJBM3kwRjdYRklQMlNPNExQeGNOR3lsT0ctWXFUOWVBWDJPbHJHaEQ0ZWM0Sk1vUFB5dkVUa1h2aTdoZ3U4Z0pwWUNaODA?oc=5"
+      },
+      {
+        "title": "트럼프 “중국도 만족할 것”, 시진핑 “안정 관계 발전”···무역 휴전 2달 연장 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5JbjVscEs2Z3FBVUZGbE81bVU3eU9oSUFCN0lyNzBXRC02aGtMSHcyWEhuQTVRX1o3UDdReEZIek5FX2RHQWVPem9kMHNQMl92V0xYS09nSVBPd9IBX0FVX3lxTE1pRXZ2aGNYblY3MTQzcHFldU9nNTBWd0RyUnlJN2VTTWNOSnRVWEVJdU81UGt0ZUtUcFU0QWN5dGRWUTF6eGROQUlZNWRDWDd1eWlhR29qYXYzLTI3MDVz?oc=5"
+      },
+      {
+        "title": "조희대 ‘재제청 거부’에... 與 “외부세력 결탁” 野 “겁박 중단하라” - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPcDZCbmpCdjJiaG1pZ0hjQXhTcHg1SXExbFpmc3cwQ0hHMC1PQ1plNU10cTkzeWV6bzc4ZmVySUFlT1ItSjVOSXVtR3lEZ0liSW1IVGU1bmFtaUFPclZ1NkE5NWtuRDh6NDVjUTZfZ0ZSNmRPVzVUcVIyejJIUko2d2hXaUtCLUVhSmlMWDhfUGk?oc=5"
+      },
+      {
+        "title": "추석 연휴 마지막날 대체로 맑음… 남부·제주도에는 비 또는 소나기 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE95MU9YTmNDWlJfM2hKT2VDYzdhc0dReDRRU3B5UjViZlU4UUpxVU9KRElaTjd0YThOUFJQejltYVVicFYxdjRUbFBtb0dxZUxsSXV1c1ptNmNKZ2FSNGdTVlZpcGlzWUd6OEdYdA?oc=5"
+      },
+      {
+        "title": "이 대통령, 미·멕시코 순방 마치고 귀국길…대법관 재제청 등 현안 산적 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9zNENTYVJwMXlMUHhnMkR1ZG9mWkVIMEtQOXFiNEU2ZnY2OFBKNkVfTjNFd045b1J2clhxNUNKRFBDWHhQa04zNWZyYzJ3cUQxN2Nyd0lvSFgwZlVpNDVjeEt4WmZEVUJFOXFz?oc=5"
       },
       {
         "title": "‘DMZ 지뢰 폭발’ 5일 만에…군·유엔사, 현장조사 준비 - 한겨레",
         "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9aUTBkeFJqNU1BLV9iNG8tZjBocnJaTHBINFZoTlFiNFdTTk8tRjdicWQzdktMVy1ZajJNSXQ1YUEwVVAtZklWV1h5ZG9UelRjN0tRZlpocC1lTGRmTWpvWFJ1NWJQQzRfVU5FcFZLaG5xSmVn?oc=5"
       },
       {
-        "title": "조희대 ‘재제청 거부’에... 與 “외부세력 결탁” 野 “겁박 중단하라” - chosun.com",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPcDZCbmpCdjJiaG1pZ0hjQXhTcHg1SXExbFpmc3cwQ0hHMC1PQ1plNU10cTkzeWV6bzc4ZmVySUFlT1ItSjVOSXVtR3lEZ0liSW1IVGU1bmFtaUFPclZ1NkE5NWtuRDh6NDVjUTZfZ0ZSNmRPVzVUcVIyejJIUko2d2hXaUtCLUVhSmlMWDhfUGk?oc=5"
+        "title": "[아시안게임] 여자 농구 대표팀, 일본 물리치고 12년 만에 금메달 - MBC 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9Gc3QyazRseHZ4WXRzVjQwU05mQVRNOEk0LWFyZG9BUjJNUXgzVHBQLU9rMEpDS253VjdMNmd4QkpkT0IwWFI5Ti1CbEYteVB5d0tUM3VzdEMzNEJ5VW1qV1lGYjNMelJFUGdNdWtOYk1JN3BqMXfSAXZBVV95cUxNTHE5MFhVYjZZNkctNTE4R08wb0lCa1lHaUJsUnkzc0wybnR1Q0dqbVJkenRoZkUyQmV1dkV2LXRNZTJsbloyd0xVaURyeEd0SmNISjNUaE5hbnJBSy1RTklndVpOMmJUd2VlQTJzeEt2WHBKY3R3?oc=5"
       },
       {
-        "title": "트럼프 \"이란 제안 거절‥이란, 크게 지고있어 해협 개방 원해\" - imnews.imbc.com",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE43UGZqYXlzckNXSUZnb3hRcUsyNnR3dFpIU2lUNUkyTWdvdDlsT2stbEtYVXZQbVR3ZHNfaFpFMU90R1lpSzNiZG8xSzkxc0dDM2ZLLUd6V1VuUnFJdlZremlBSmozOFhkclJXTmNfR01GWHVv0gF0QVVfeXFMTTZ6d2pPdDBsa2JZYmVVeTZCcUhhWUVuTWh6OXI2aGpTM0lYR1NfZkFZWXRjZkk2N2djakdQQnFNWEtQUERZb1RadWw1cl9FNGVhQ1BFRU5qbmx2UFFicFNNdlF0LW5qWE42azBpb2ExUlFaTTM?oc=5"
+        "title": "‘부캉이보러’ 8만 3천명 부산 북항으로…사흘간 32만명 방문 - KBS 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE8wSlVhUUlNSmh5VkdDZjE2eG5mZEZNYUF2R0FvdkhJVFJqVmtFRExxOVYzRkxXMGd4eTNtaExjTVhqalVvUmNROXZMekIyNEt0TnZVdzd4NkR6MlE?oc=5"
       },
       {
-        "title": "이 대통령, 미·멕시코 순방 마치고 귀국… 대법관 재제청 등 현안 산적 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9zNENTYVJwMXlMUHhnMkR1ZG9mWkVIMEtQOXFiNEU2ZnY2OFBKNkVfTjNFd045b1J2clhxNUNKRFBDWHhQa04zNWZyYzJ3cUQxN2Nyd0lvSFgwZlVpNDVjeEt4WmZEVUJFOXFz?oc=5"
+        "title": "추석 연휴 마지막날 524만대 이동‥오후 4~5시 귀경길 정체 절정 - MBC 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5xYUJsUWVub25aM0RiWXVwS3Z0WnpDR3JMTF9fLTdnX0t0OUROXzBlWFNhMXhTRGFUcUxMQ0duNXRlYjVGeGVZSC1DbnlobXZYd2wtY0RrekFvdzBFYW9qZGV3eDI3Sm90ckJDNFZUaGhVTEV0Wjhn0gF3QVVfeXFMT1NHeFJkemU3R0R2MVNpWHA0dDhRYXl4Y2UxczY1NjZwaXhSNy1rMndrSVhRc2FkLXZSRUVBblFrbHJPZGhfSk1FV2pnTkVieFp3ME5Cb0NxazJYSXl1Y0E4Z0ZOV1NUWWFtc1pXR21qM0VtdW0tanM?oc=5"
       },
       {
-        "title": "한동훈 \"이 대통령, '포로송환' 국제망신\"‥이기헌 \"정치하려면 염치 알아야\" - imnews.imbc.com",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9IVExRbVkwbFJxeko3Z0Q1Wm1uMXRsTGg3blVXZ3dBZTF3QXVpbHlNNmt5V3lsYll0dWh0Y1JFbXBnTjlKM2lwYWd4VHc4RTVkQU1DNTNJdmJCNjRWRzZpTUNIT25fbFdyTkNObzRDNVg0MGJvbXZUZNIBeEFVX3lxTE50d1VzTDFKV3lzcW1WZnlQT0NPdXJCa1plV0hkbkg0dnFBcnBlNGJteVFSTjdQblBmRlhUX3paNEdsYkVsV21oZElXblphQzhxYXZwdU91SUs1VHM0MElHWHZSdlJMenVhT283aWNONWhON29UaWRyeg?oc=5"
-      },
-      {
-        "title": "여자농구 일본 꺾고 12년 만에 ‘아시아 정상’…맏언니 강이슬, 끝내기 자유투 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBxM1BpVUxJRGF6MHBqeUh6Mk54MjBuYmViWEw0c1ZlZTBtRUgzdlhaTUN0UEI5THJ6aGo3b2dTdEhKRGJxdENfQXJLeWtNVGxtZklhdjRZYVRfUHVUR19WUUwzbzByX3BITWhBTVlNVGZJTTA2OXdr?oc=5"
-      },
-      {
-        "title": "강훈식 사의 표명에 與 서울시장 보궐 후보군 요동? “민심 악화” 딜레마 - 문화일보",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE10WENYYXZPdXc0aU10eFZCUlBCQlV5NVk1S2dWaWE2ZTRINFN4NWdBV3hVOF9rX3dObXEzOWxwUUdOc0g5UUw3V2NEYTNZMUli?oc=5"
-      },
-      {
-        "title": "이 대통령 부부, 멕시코 청소년과 ‘스트레이 키즈’ 공연 관람 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE4xM1ZTSHJjNmt0TDRJTmxYNEphaUhLNkpCa2FpeENSbmlzZUxTZlVkWHlzOGpzX1FRdGpHMWJsWUN0TjROVFNXVXVwN2xvSnhELWJ1cFZPV3FWLTAwSl85WmFhSzRUeFdMVV84?oc=5"
-      },
-      {
-        "title": "부산~서울 귀경길 7시간 예상... 오후 4~5시 정체 절정 달할 듯 - chosun.com",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNNDJBN0VWcENYa2N6VS1WUTJCMU85emZXWVFscUF3WTFWRnZObFJMR3cwRmc3dk5pa2sxZklQWGFSWHk4eHVDQzBqbTZ0NDY5Z1ltRXFPNkhkWDVFdDRCd2RUNTBMZk9wZXIzd3c1Znk4emp6WEwzZ0w2NWRMUVUyMWlKSXNkWFFJaEc4bnBRQVk?oc=5"
+        "title": "강훈식 사의 표명에…與 서울시장 보궐 후보군 다시 주목 - 동아일보",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE0xSzhZSFNkWkpSeXNEcGVfSnpXT0tWMjFKWE5tU256bjRWdGNUa1BidFZubERiSzREeE81MGVvTC1WdlNjOFgwbU5nWV9QclMzRFY4Y0tBWkFhNVdaam5KOWR5X1pPeEQwTXQ0R3pzNmxaLVRKb21n0gFmQVVfeXFMTkFFYW9JOEFFWUlBQ1NiaU5pa2R1YTBCcFJXWUhoM1RZek04VDN5SFJIbnIySWxBc29jRXFHeS1CbFdiTE5EcjVoZkZsZndmeEh2MGJRUTRBM0U0MTN0UGtjRTlYeDdB?oc=5"
       }
     ],
     "bbc-news-list": [
       {
-        "title": "Burnham announces scheme to help first-time buyers onto housing ladder",
+        "title": "Burnham announces scheme to help first-time buyers on to housing ladder",
         "url": "https://www.bbc.co.uk/news/articles/cv8e33gdw17no?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Faisal Islam: The two big calls the chancellor has to make ahead of the Budget",
+        "url": "https://www.bbc.co.uk/news/articles/cklye5e40531o?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Court of Appeal overturns ban on Drumcree parade",
+        "url": "https://www.bbc.co.uk/news/articles/ckjrxx22wqgdo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Heathrow Airport warns third runway could be delayed by four years",
@@ -57,32 +65,24 @@
         "url": "https://www.bbc.co.uk/news/articles/cqgmrr9ekr7ko?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "How long can Labour's feel-good factor last?",
-        "url": "https://www.bbc.co.uk/news/articles/cwn8mn0rzkzlo?at_medium=RSS&at_campaign=rss"
-      },
-      {
         "title": "Republic of Ireland to wear black armbands for Israel game",
         "url": "https://www.bbc.co.uk/sport/football/articles/ckddvv5dn4eyo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Watch: Prince Harry says 'kids are happy' in British school after six years in US",
-        "url": "https://www.bbc.co.uk/news/articles/cm5yww993n10o?at_medium=RSS&at_campaign=rss"
+        "title": "Celebrity Traitors 2 cast: Who are this year's 'big dogs' and dark horses?",
+        "url": "https://www.bbc.co.uk/news/articles/cv5yjzz803edo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "How the bare nails trend became a class issue",
-        "url": "https://www.bbc.co.uk/news/articles/cpd7zw43wexo?at_medium=RSS&at_campaign=rss"
+        "title": "Can you eat ultra-processed foods and still be healthy? A dietitian analysed my weekly shop",
+        "url": "https://www.bbc.co.uk/news/articles/cqn4knlj9v81o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Your child has left home. Here's why it's time to stop checking up on them",
-        "url": "https://www.bbc.co.uk/news/articles/c6evwmzxdn4do?at_medium=RSS&at_campaign=rss"
+        "title": "Christa Pike to be first woman executed in Tennessee in 200 years - but her defence say she's a victim too",
+        "url": "https://www.bbc.co.uk/news/articles/c6pwl9g9ne1lo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Murder or medical mix-up? New questions in the case of killer nurse Colin Norris",
-        "url": "https://www.bbc.co.uk/news/articles/ckg7q33gnwro?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "The treasured 'eternal snow' on this tropical island is about to disappear forever",
-        "url": "https://www.bbc.co.uk/news/articles/cm5ydvww0erdo?at_medium=RSS&at_campaign=rss"
+        "title": "Young people in China are fangirling over a professor who gets their anxiety",
+        "url": "https://www.bbc.co.uk/news/articles/cq70dgdndr46o?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
