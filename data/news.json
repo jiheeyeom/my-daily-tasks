@@ -1,68 +1,64 @@
 {
-  "generatedAt": "2026-09-26T16:24:00Z",
+  "generatedAt": "2026-09-26T21:10:41Z",
   "feeds": {
     "kr-news-list": [
+      {
+        "title": "미중 나란히 '성과' 발표에도…희토류·AI·대만 등 곳곳 온도차 - 연합뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5Zb0FVdHJQbkRGaS1KZTU0LTE2em51dXJ5RlhoQnpMbklWYW9FS0xfek0tOUw3dFZUM1JNdjJNRVREdWlpckdrVm1OS2Faa0stVUs3bVNnWE42dDTSAWBBVV95cUxPd3lSazgxUWY4ejY3NzJqWnpHbUpDTG9QbFUzcUNHOEdyVmlJT2c5UExGdDB5SkpqbG43SlpONWtMVkxkNDFrTW1UeHEzUjhKdEZ6YnowRkR1dmdxYVFWdVQ?oc=5"
+      },
       {
         "title": "‘DMZ 지뢰 폭발’ 5일 만에…군·유엔사, 현장조사 준비 - 한겨레",
         "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9aUTBkeFJqNU1BLV9iNG8tZjBocnJaTHBINFZoTlFiNFdTTk8tRjdicWQzdktMVy1ZajJNSXQ1YUEwVVAtZklWV1h5ZG9UelRjN0tRZlpocC1lTGRmTWpvWFJ1NWJQQzRfVU5FcFZLaG5xSmVn?oc=5"
       },
       {
-        "title": "조희대 ‘재제청 거부’에... 與 “외부세력 결탁” 野 “겁박 중단하라” - 조선일보",
+        "title": "조희대 ‘재제청 거부’에... 與 “외부세력 결탁” 野 “겁박 중단하라” - chosun.com",
         "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPcDZCbmpCdjJiaG1pZ0hjQXhTcHg1SXExbFpmc3cwQ0hHMC1PQ1plNU10cTkzeWV6bzc4ZmVySUFlT1ItSjVOSXVtR3lEZ0liSW1IVGU1bmFtaUFPclZ1NkE5NWtuRDh6NDVjUTZfZ0ZSNmRPVzVUcVIyejJIUko2d2hXaUtCLUVhSmlMWDhfUGk?oc=5"
       },
       {
-        "title": "트럼프, ‘호르무즈→트럼프 해협’ 지도 SNS에 올려 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOZU9sc1NhQTZWa2FtNlNMTFdiUHVqQ2xWbW9VT01RZjROQ2ZoSGNPeVhpSGJnNlFva1pRZi1oRnB3MjR4bDJYN3JVUGZjb3NnWXRhb1BmZElGcFF3dDNvQWYzaWVmcVh2NzhnUkVDLVdOaWlWWEZ4bnpGeDFsakVLSjh3?oc=5"
+        "title": "트럼프 \"이란 제안 거절‥이란, 크게 지고있어 해협 개방 원해\" - imnews.imbc.com",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE43UGZqYXlzckNXSUZnb3hRcUsyNnR3dFpIU2lUNUkyTWdvdDlsT2stbEtYVXZQbVR3ZHNfaFpFMU90R1lpSzNiZG8xSzkxc0dDM2ZLLUd6V1VuUnFJdlZremlBSmozOFhkclJXTmNfR01GWHVv0gF0QVVfeXFMTTZ6d2pPdDBsa2JZYmVVeTZCcUhhWUVuTWh6OXI2aGpTM0lYR1NfZkFZWXRjZkk2N2djakdQQnFNWEtQUERZb1RadWw1cl9FNGVhQ1BFRU5qbmx2UFFicFNNdlF0LW5qWE42azBpb2ExUlFaTTM?oc=5"
       },
       {
-        "title": "한동훈 \"이 대통령, '포로송환' 국제망신\"‥이기헌 \"정치하려면 염치 알아야\" - MBC 뉴스",
+        "title": "이 대통령, 미·멕시코 순방 마치고 귀국… 대법관 재제청 등 현안 산적 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9zNENTYVJwMXlMUHhnMkR1ZG9mWkVIMEtQOXFiNEU2ZnY2OFBKNkVfTjNFd045b1J2clhxNUNKRFBDWHhQa04zNWZyYzJ3cUQxN2Nyd0lvSFgwZlVpNDVjeEt4WmZEVUJFOXFz?oc=5"
+      },
+      {
+        "title": "한동훈 \"이 대통령, '포로송환' 국제망신\"‥이기헌 \"정치하려면 염치 알아야\" - imnews.imbc.com",
         "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9IVExRbVkwbFJxeko3Z0Q1Wm1uMXRsTGg3blVXZ3dBZTF3QXVpbHlNNmt5V3lsYll0dWh0Y1JFbXBnTjlKM2lwYWd4VHc4RTVkQU1DNTNJdmJCNjRWRzZpTUNIT25fbFdyTkNObzRDNVg0MGJvbXZUZNIBeEFVX3lxTE50d1VzTDFKV3lzcW1WZnlQT0NPdXJCa1plV0hkbkg0dnFBcnBlNGJteVFSTjdQblBmRlhUX3paNEdsYkVsV21oZElXblphQzhxYXZwdU91SUs1VHM0MElHWHZSdlJMenVhT283aWNONWhON29UaWRyeg?oc=5"
       },
       {
-        "title": "[미중정상회담] 美전문가들 \"취약한 무역휴전 연장…AI경쟁 본능 억제못해\" - 연합뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1EQURlN2I2UjBtMVYzQkk5T0V1Zk54SUx1amtILUxMTGZ3alRXVW9pM0x5R1VtVUFuNHg5SEE4MjBYSVYyRTF5c0VtWEhjMmZnOXhScUNnOE9UWDDSAWBBVV95cUxOMGxuTmFjWFJrbHZ2ZGt6SlQwYWtuWlNvTXNKM0dfa1dJMHhEZGVyWVlkUV9oSHdHZ3dmWnlaclhzVmV2NTZ2WHJYRmMzWWsxTkhvN3FiNXZTb3psck5YNHM?oc=5"
-      },
-      {
-        "title": "\"부캉이 돌려보내지 마세요\" 추석에만 전국서 23만명 왔다 - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPSnlCWTFob1c3SHgyVFRPeGxhZTVSYmlwQ1NFZGNmdVBGaVRtMnhFMzlEaDVsSzZUZXZPMm5veHF4eTBXMkM2eVlBLXlybnRKaG5KbV9IQUFZTTA0SzZwSllob0lObGxVenJwZFlLM19TM0ZPb1lvMWoyd3NNT3FuenJwaVVfUQ?oc=5"
-      },
-      {
-        "title": "맏언니 주장 강이슬의 끝내기 자유투…한국 여자농구 일본 꺾고 아시아 정상 - 한겨레",
+        "title": "여자농구 일본 꺾고 12년 만에 ‘아시아 정상’…맏언니 강이슬, 끝내기 자유투 - 한겨레",
         "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBxM1BpVUxJRGF6MHBqeUh6Mk54MjBuYmViWEw0c1ZlZTBtRUgzdlhaTUN0UEI5THJ6aGo3b2dTdEhKRGJxdENfQXJLeWtNVGxtZklhdjRZYVRfUHVUR19WUUwzbzByX3BITWhBTVlNVGZJTTA2OXdr?oc=5"
       },
       {
-        "title": "[1보] 한국 펜싱 남자 사브르, 아시안게임 단체전 4연패…오상욱 2관왕 - 연합뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5qcm5tcjZTLUpiZHI4T2ZqVHBFbzA4T19hVlMyVVRjVWVoclpaVGNzUXJ4a3F6SEFCY3ZfVHJHbEV6OHVjUDB3UnptcTZ0d3pocGJyazZmZXAwMjTSAWBBVV95cUxNR1p5SjR6MXdDZ000U1htLW5tbXdwUWxkd3lKOXZ4Rl9pemtGTnpDLVYyVGpwMUpWMlN4dlV1TE5rRUNEZEQ5Z1ZvVWNsdkdvOEx2UWM1ZW01LXota1lHRGc?oc=5"
+        "title": "강훈식 사의 표명에 與 서울시장 보궐 후보군 요동? “민심 악화” 딜레마 - 문화일보",
+        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE10WENYYXZPdXc0aU10eFZCUlBCQlV5NVk1S2dWaWE2ZTRINFN4NWdBV3hVOF9rX3dObXEzOWxwUUdOc0g5UUw3V2NEYTNZMUli?oc=5"
       },
       {
-        "title": "부산~서울 귀경길 7시간 예상... 오후 4~5시 정체 절정 달할 듯 - 조선일보",
+        "title": "이 대통령 부부, 멕시코 청소년과 ‘스트레이 키즈’ 공연 관람 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE4xM1ZTSHJjNmt0TDRJTmxYNEphaUhLNkpCa2FpeENSbmlzZUxTZlVkWHlzOGpzX1FRdGpHMWJsWUN0TjROVFNXVXVwN2xvSnhELWJ1cFZPV3FWLTAwSl85WmFhSzRUeFdMVV84?oc=5"
+      },
+      {
+        "title": "부산~서울 귀경길 7시간 예상... 오후 4~5시 정체 절정 달할 듯 - chosun.com",
         "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNNDJBN0VWcENYa2N6VS1WUTJCMU85emZXWVFscUF3WTFWRnZObFJMR3cwRmc3dk5pa2sxZklQWGFSWHk4eHVDQzBqbTZ0NDY5Z1ltRXFPNkhkWDVFdDRCd2RUNTBMZk9wZXIzd3c1Znk4emp6WEwzZ0w2NWRMUVUyMWlKSXNkWFFJaEc4bnBRQVk?oc=5"
-      },
-      {
-        "title": "이 대통령, '작은 서울'로 불리는 소나 로사 방문…한인동포 등과 소통 - 정책브리핑",
-        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9wQ3hESEJwVDJyOXFQR3FHR0lqMFNGZW9PVGFQclRvVlNSMHpNQ0J2MXdyckJTVkdmcTZkY2J6MEFONldOcXBZM3I1aGxjcXEwRjdZRnFNUkpxOVVtT0pJbzczZkt5RXZWOExoTQ?oc=5"
       }
     ],
     "bbc-news-list": [
       {
+        "title": "Burnham announces scheme to help first-time buyers onto housing ladder",
+        "url": "https://www.bbc.co.uk/news/articles/cv8e33gdw17no?at_medium=RSS&at_campaign=rss"
+      },
+      {
         "title": "Heathrow Airport warns third runway could be delayed by four years",
         "url": "https://www.bbc.co.uk/news/articles/crx2zz401935o?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Man City chairman confident club will prove innocence",
-        "url": "https://www.bbc.co.uk/sport/football/articles/c6d944ylqkkeo?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "How long can Labour's feel-good factor last?",
-        "url": "https://www.bbc.co.uk/news/articles/cwn8mn0rzkzlo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Trump rejects Iran deal to reopen Strait of Hormuz in seven days",
         "url": "https://www.bbc.co.uk/news/articles/cqgmrr9ekr7ko?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Met to re-examine CCTV from Jill Dando murder case",
-        "url": "https://www.bbc.co.uk/news/articles/c60m334grx9vo?at_medium=RSS&at_campaign=rss"
+        "title": "How long can Labour's feel-good factor last?",
+        "url": "https://www.bbc.co.uk/news/articles/cwn8mn0rzkzlo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Republic of Ireland to wear black armbands for Israel game",
@@ -83,6 +79,10 @@
       {
         "title": "Murder or medical mix-up? New questions in the case of killer nurse Colin Norris",
         "url": "https://www.bbc.co.uk/news/articles/ckg7q33gnwro?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "The treasured 'eternal snow' on this tropical island is about to disappear forever",
+        "url": "https://www.bbc.co.uk/news/articles/cm5ydvww0erdo?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
