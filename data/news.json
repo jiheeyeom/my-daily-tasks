@@ -1,49 +1,53 @@
 {
-  "generatedAt": "2026-09-26T23:38:03Z",
+  "generatedAt": "2026-09-27T05:18:59Z",
   "feeds": {
     "kr-news-list": [
+      {
+        "title": "‘빅딜’ 없었던 미·중 정상회담…화려한 의전 속 ‘관리된 휴전’ 선택 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBxUjVEUjJLUmhXM1Rna0FSTXVwNC13T0ZLa0J0NDVlMXpKREtEZmExRWNFbXo2YUVmbER5eTM4djd6WGhUeGYxaTJoeWxUZTQyVEQtOWNkX2o4NF81VnQwUi1ZYkxvMWtJbTlBaGctdw?oc=5"
+      },
+      {
+        "title": "민주당 \"추석 민심, 당·정·청 하나 돼 힘 있는 여당 되라는 것\" - MBC 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9ucWpkVDdFSHpWaWNKaVpNckRMczFFeURjanJCb3BMNXJQSFJWYUNIM3dPYTdCWWF5aXI4UmUzMUVFUmtlWmQyYk9jbUpoTUR0TVhqYWI2NHNXYmRwLWdQd3JaVERHUXZUeW9US2VCR3BhNE9scW80M9IBeEFVX3lxTE1XNFEwTE1renh0SFRPWVpkRjNBOXRiUUxNWkdMUVJtM1lvb3B4WlFTYVlCRFlkSGlla0xFQTVMY0kxYi1Bczd6V0lOdUFsa0hMc1hFYTFmeUgwQ0ZZblIxNkdYckRoTjJZNFNiRDZzMjF0UzJiZWhTbw?oc=5"
+      },
+      {
+        "title": "이 대통령 ‘사법 리스크’가 가라앉지 않는 이유 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBoU3pkMXBTMjhON3lNRzN0bmFxQjZyYkRvZnVuR1VUaDg0bEU3aVNkNkVqd1c3VzVReDFjcW4yZ28yczFxdzZrREJpZlFYZmhwYU9icUNKQU50SWY0bzl6emNvQk0wNlpicXlET25IMHloTHRj?oc=5"
+      },
+      {
+        "title": "여 \"DMZ 음모론 양산\"…야 \"조사 고의지연은 탄핵사유\" - 연합뉴스TV",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hbjB2dEd6cVZfRzVuSGl5WUl1RmJXdmpJX1l0Q3JGRFdoZkc5eGZtRmxMcEd5c0RyYWg1SGZuUHlIdjFBMjU4V0ROMUtESk1xLWRLV21sU2VISzU0SHkwRS1aOEdSVlE?oc=5"
+      },
       {
         "title": "트럼프, 이란 ‘호르무즈 재개방 7일안’ 거부…“선거 뒤 폭격 재개 가능성” - 한겨레",
         "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1mclUwTnlOem56Rm1nZTgwUG1hN2xmbFJFTjJod2U5T1VOQ3VvTjJBM3kwRjdYRklQMlNPNExQeGNOR3lsT0ctWXFUOWVBWDJPbHJHaEQ0ZWM0Sk1vUFB5dkVUa1h2aTdoZ3U4Z0pwWUNaODA?oc=5"
       },
       {
-        "title": "트럼프 “중국도 만족할 것”, 시진핑 “안정 관계 발전”···무역 휴전 2달 연장 - 경향신문",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5JbjVscEs2Z3FBVUZGbE81bVU3eU9oSUFCN0lyNzBXRC02aGtMSHcyWEhuQTVRX1o3UDdReEZIek5FX2RHQWVPem9kMHNQMl92V0xYS09nSVBPd9IBX0FVX3lxTE1pRXZ2aGNYblY3MTQzcHFldU9nNTBWd0RyUnlJN2VTTWNOSnRVWEVJdU81UGt0ZUtUcFU0QWN5dGRWUTF6eGROQUlZNWRDWDd1eWlhR29qYXYzLTI3MDVz?oc=5"
+        "title": "박지원 “당권·대권 눈먼 장·안·나·한…‘북풍 조작당’이 용공음해” - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFAwVVFYeGNDOU0xOGFoYkNRSWl2bjRPTEJ6bE9PazhTRVRDTHg0Y0hLdTNtUlpoRF9uOHdmc3hkMU1oSjRlZHZlZi1pZ1Y5Q0hJckQxOU9qUkpHWVktNTVRU1ZRTGJCUFJYeWtwTTdQRnRKVFdU?oc=5"
       },
       {
-        "title": "조희대 ‘재제청 거부’에... 與 “외부세력 결탁” 野 “겁박 중단하라” - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPcDZCbmpCdjJiaG1pZ0hjQXhTcHg1SXExbFpmc3cwQ0hHMC1PQ1plNU10cTkzeWV6bzc4ZmVySUFlT1ItSjVOSXVtR3lEZ0liSW1IVGU1bmFtaUFPclZ1NkE5NWtuRDh6NDVjUTZfZ0ZSNmRPVzVUcVIyejJIUko2d2hXaUtCLUVhSmlMWDhfUGk?oc=5"
+        "title": "유엔서 다자협의 틀 제안·트럼프와 안보협상 물꼬…이 대통령, 미국·멕시코 순방 마치고 귀국길 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE16aklUWmR0VVByVzVYZWVIZ2JSclhILWdHQ1p3N3Z4RDE2cW1WSkhmWUwwY2lFb1ZManVkbU9raUI1bmhFUE02Qkg2b3F2Qy1uZzZ3ZDFHNTdHUdIBX0FVX3lxTE1RODFNTXhCZUJGRXE5cXJsV1B1MlFkeEExVnhSZXhXcHM1VlNibmRwaFdWNWhEckJtQmZsSV9SVTByd2lfdXdoN2xETFd6VjU1QU9SYnBlbDV3c2ZJLUdZ?oc=5"
       },
       {
-        "title": "추석 연휴 마지막날 대체로 맑음… 남부·제주도에는 비 또는 소나기 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE95MU9YTmNDWlJfM2hKT2VDYzdhc0dReDRRU3B5UjViZlU4UUpxVU9KRElaTjd0YThOUFJQejltYVVicFYxdjRUbFBtb0dxZUxsSXV1c1ptNmNKZ2FSNGdTVlZpcGlzWUd6OEdYdA?oc=5"
+        "title": "민주 \"국민의힘, 조희대 감싸기 멈춰야…입법부 권위 무너뜨려\" - 뉴스핌",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFA2ZkR6U1U5NEczZGFIM1E0Tl8zOVR4VXZmUmtFZ1RyQUFhaU5RNVhLMmY2ajNZNWtMV2ViSWMxbURyaml1OTV1Vld6V1BxdjhFMFdVNWZ3dG1VbEFl?oc=5"
       },
       {
-        "title": "이 대통령, 미·멕시코 순방 마치고 귀국길…대법관 재제청 등 현안 산적 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9zNENTYVJwMXlMUHhnMkR1ZG9mWkVIMEtQOXFiNEU2ZnY2OFBKNkVfTjNFd045b1J2clhxNUNKRFBDWHhQa04zNWZyYzJ3cUQxN2Nyd0lvSFgwZlVpNDVjeEt4WmZEVUJFOXFz?oc=5"
+        "title": "오세훈 “집·땅 가진 국민, 대통령이 싸워야 할 상대 아냐” 농지전수조사 정면 비판 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5zQWx3MzdsUHpxVVRjS0t0U0V4eXhYWDlhNWJZQ3g0S3o5TFRQZWNLdHFheWQwUm54SDRfVXoyN3lXWGRVTmtGN1VmbVlIZnk5RDBrRl96WTJTd9IBX0FVX3lxTFBYNks5bFlMWjFYUjVVRDc1MXhneXYzaEUxUEhOcXNVUFlPZmw3ajgwQVhBTkNLQ0RvTHZJa2lOOHJhMkp1VHNXZTlNd2xrNHBCOFNNemZvdmFsS3gwMkd3?oc=5"
       },
       {
-        "title": "‘DMZ 지뢰 폭발’ 5일 만에…군·유엔사, 현장조사 준비 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9aUTBkeFJqNU1BLV9iNG8tZjBocnJaTHBINFZoTlFiNFdTTk8tRjdicWQzdktMVy1ZajJNSXQ1YUEwVVAtZklWV1h5ZG9UelRjN0tRZlpocC1lTGRmTWpvWFJ1NWJQQzRfVU5FcFZLaG5xSmVn?oc=5"
-      },
-      {
-        "title": "[아시안게임] 여자 농구 대표팀, 일본 물리치고 12년 만에 금메달 - MBC 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9Gc3QyazRseHZ4WXRzVjQwU05mQVRNOEk0LWFyZG9BUjJNUXgzVHBQLU9rMEpDS253VjdMNmd4QkpkT0IwWFI5Ti1CbEYteVB5d0tUM3VzdEMzNEJ5VW1qV1lGYjNMelJFUGdNdWtOYk1JN3BqMXfSAXZBVV95cUxNTHE5MFhVYjZZNkctNTE4R08wb0lCa1lHaUJsUnkzc0wybnR1Q0dqbVJkenRoZkUyQmV1dkV2LXRNZTJsbloyd0xVaURyeEd0SmNISjNUaE5hbnJBSy1RTklndVpOMmJUd2VlQTJzeEt2WHBKY3R3?oc=5"
-      },
-      {
-        "title": "‘부캉이보러’ 8만 3천명 부산 북항으로…사흘간 32만명 방문 - KBS 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE8wSlVhUUlNSmh5VkdDZjE2eG5mZEZNYUF2R0FvdkhJVFJqVmtFRExxOVYzRkxXMGd4eTNtaExjTVhqalVvUmNROXZMekIyNEt0TnZVdzd4NkR6MlE?oc=5"
-      },
-      {
-        "title": "추석 연휴 마지막날 524만대 이동‥오후 4~5시 귀경길 정체 절정 - MBC 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5xYUJsUWVub25aM0RiWXVwS3Z0WnpDR3JMTF9fLTdnX0t0OUROXzBlWFNhMXhTRGFUcUxMQ0duNXRlYjVGeGVZSC1DbnlobXZYd2wtY0RrekFvdzBFYW9qZGV3eDI3Sm90ckJDNFZUaGhVTEV0Wjhn0gF3QVVfeXFMT1NHeFJkemU3R0R2MVNpWHA0dDhRYXl4Y2UxczY1NjZwaXhSNy1rMndrSVhRc2FkLXZSRUVBblFrbHJPZGhfSk1FV2pnTkVieFp3ME5Cb0NxazJYSXl1Y0E4Z0ZOV1NUWWFtc1pXR21qM0VtdW0tanM?oc=5"
-      },
-      {
-        "title": "강훈식 사의 표명에…與 서울시장 보궐 후보군 다시 주목 - 동아일보",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE0xSzhZSFNkWkpSeXNEcGVfSnpXT0tWMjFKWE5tU256bjRWdGNUa1BidFZubERiSzREeE81MGVvTC1WdlNjOFgwbU5nWV9QclMzRFY4Y0tBWkFhNVdaam5KOWR5X1pPeEQwTXQ0R3pzNmxaLVRKb21n0gFmQVVfeXFMTkFFYW9JOEFFWUlBQ1NiaU5pa2R1YTBCcFJXWUhoM1RZek04VDN5SFJIbnIySWxBc29jRXFHeS1CbFdiTE5EcjVoZkZsZndmeEh2MGJRUTRBM0U0MTN0UGtjRTlYeDdB?oc=5"
+        "title": "분당 중식당 테러 용의자 4명은 중국인…“범행 당일 출국” - KBS 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE8tR2oyTDBjZm1lRVVqTzlULWVrVVY1LXN2dUt5OFRhZlJiTVFCTzVFRnYyR1B6SEFkckhTbkpMZzZUOXJNVGdfYVlvUFBfNThmSFJxU1NoaWlxSEU?oc=5"
       }
     ],
     "bbc-news-list": [
+      {
+        "title": "Controversial Orange Order march to go ahead for first time in nearly 30 years after late night drama",
+        "url": "https://www.bbc.co.uk/news/articles/ckjrxx22wqgdo?at_medium=RSS&at_campaign=rss"
+      },
       {
         "title": "Burnham announces scheme to help first-time buyers on to housing ladder",
         "url": "https://www.bbc.co.uk/news/articles/cv8e33gdw17no?at_medium=RSS&at_campaign=rss"
@@ -53,16 +57,12 @@
         "url": "https://www.bbc.co.uk/news/articles/cklye5e40531o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Court of Appeal overturns ban on Drumcree parade",
-        "url": "https://www.bbc.co.uk/news/articles/ckjrxx22wqgdo?at_medium=RSS&at_campaign=rss"
+        "title": "Iran says it will wait for official US response after Trump rejects Strait of Hormuz proposal",
+        "url": "https://www.bbc.co.uk/news/articles/cmvgyyw2jeego?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Heathrow Airport warns third runway could be delayed by four years",
         "url": "https://www.bbc.co.uk/news/articles/crx2zz401935o?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Trump rejects Iran deal to reopen Strait of Hormuz in seven days",
-        "url": "https://www.bbc.co.uk/news/articles/cqgmrr9ekr7ko?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Republic of Ireland to wear black armbands for Israel game",
