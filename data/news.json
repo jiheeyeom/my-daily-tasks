@@ -1,88 +1,88 @@
 {
-  "generatedAt": "2026-09-30T20:01:33Z",
+  "generatedAt": "2026-10-01T00:34:01Z",
   "feeds": {
     "kr-news-list": [
       {
-        "title": "이재명 대통령 \"김지용 중수청장 후보자, '친윤검사' 비난은 납득 어려워\" - MBC 뉴스",
+        "title": "김여정, 지뢰 발뺌하며 되레 협박… 軍 “향후 상황 모두 北책임” - v.daum.net",
+        "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9KM3lPRlZ3RkdnbVRFX0V5cXVmMXJpSUVoaTZzQlBqZHRadUVlOW1zanlNRFYtSEV6cG9oUFBHOXhKRXBFZFR5Y1BlSGJZeVE?oc=5"
+      },
+      {
+        "title": "이재명 대통령 \"김지용 중수청장 후보자, '친윤검사' 비난은 납득 어려워\" - imnews.imbc.com",
         "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE13bVljX1dGZGFJR1AzU1BaUFczRDhtNDNnaV9kbENlTlIxWXI0WElURFNoV255TjRBblFQN29BUDJoWWd0dHBIV3NuZzZGeXZXd0pqbjFpR0xfVHcxSWZYamNfT2hERl9KMzBTQ016bGNoTC1MNDR1NdIBeEFVX3lxTE5XYk4zNURyczlhM1M5b1VvZGxPNzExNDB4YlRlMk83aGgweE4wZnBISWVkNEFMVjJkVDZXUzBUV2M4ZkRrSnd5SmZ3NHdkV3NSY1dKNElZMzV1RmZlV0ZVdGVLSWFHb05zOWRUbUVia09sUXZsWEVHWQ?oc=5"
       },
       {
-        "title": "이 대통령, 지뢰 폭발 사고 부상 장병에 “충분한 예우” 약속 - 경향신문",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE84ZkY5WGtVTk5BMTF4WHdRQUNodF9MdXlLTS1maVVqWWlEZjdpNGNfS0tYUjM1enF3MU1Nc2JFYjdNZWJGZXhNTG5ud3hMSlpNZUZvVS10SnJTUdIBX0FVX3lxTFBmbTBaNV9ZQkJtY3R3UlRYYkNkV3FNUmo2R3ZqR2xMZGVsTlRhNEdvWnZFbXRCM2ZuckZQd3pUelRfalJzckZWWlphZUd0eGpsMWNJMUQwdmhtcHlsaG9v?oc=5"
+        "title": "검찰청 78년만 폐지, 형사사법 체계 대전환…공소청은 ‘미완성’, 중수청은 ‘오리무중’ - 영남일보",
+        "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBIS3BLb3p6NzVtWWNGWlJSaExPaGRGdWR3c3ZiRHhhWElpalhyMjczQ29HMm5tenlmR1hPamhoWE1La19qcWdDUmNjakZ1SFB0TjhvWGVqbVVUd0lqeHFjbDlScw?oc=5"
       },
       {
-        "title": "[단독] 수사권 없는 공소청…중대사건은 피의자 만나 직접 ‘듣는다’ - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNbm9jbDQ0YTBkU19qQWFjRUc3dm1IZ2x4NkNIU0RGcC1NbEdKRVA4akVISmQwTlBEV3Y3dlpoSll1RUI5aENHMjZYYkpWQ25HUkxuaDZiNk1IMWhicWJfbmVxOWVrRjZnNHVPdlhqUWFsbmhDV3hFTFhGSk5rTkhiT2Z3RVpaQmM?oc=5"
+        "title": "10월의 첫날은 찬 공기에 쌀쌀…낮 기온 어제보다 5도 ‘뚝’ - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9aWkR5a09jNnFfMmdUZm50Wk9uWmxEVzZ0Ry1sdjQ5RHVRSHZNck1lYkhSVlQwWXQ0S1VsSkgxQUNsRlBEU0JvYzQ2Y2ExUlBhcFlrSF9KdHZVZ9IBX0FVX3lxTE53VFBTczE4NWtqdUpuXzF1VW9IVzlMaXZZRVBYd1AzaUtCUjlHNk0wSkI3cV9FdVp6RklWRXU1b0RCeFR0QVh0SXFHekdPUUxRR3UteGd2N3EzOTNGZjZj?oc=5"
       },
       {
-        "title": "\"두바이발 여객기 조종사, 동료 흉기 공격\"… 이스라엘 \"대참사 방지\" - VOA 한국어 홈페이지",
-        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9CVmJnMVFuaXRqYndiQ1lpVmtsWkNHM1pwOTBIWmVEVEd2SE5zQjdqdEFNLW50ZWRrTGZOQS1hODF0VDl0aHVLenZvdnpHX3Y1MVJKQk1TLVAwbmU5WTF1MWhWTkx6UGxmUkJTQlJZb0NfTTV4QnVyN1QwRljSAX9BVV95cUxNRU11VVVJUF9mUVhGMnVvczNKeGVMRlNJRi1SQmFkQjNFWDJMeFVsRU1tWWJFQ01hb3FHcDZXNEJvMks3YlJxSnR3WEprQ05IQmtza0tjQkpqVU1ubXRxNlphOFljTlVyZ2VpQ3lWNWFLMW4wUW11OGJoSWtaSDZV?oc=5"
+        "title": "트럼프 대통령-빅테크 수장들, '초지능(SI) 안전 협약' 체결…자율 규제·감시 체계 마련 - VOA 한국어 홈페이지",
+        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1TLVNBUDZab2R5NmlnZGVWYklhRHB4WmdrZi1Nb1NDZzVzQ043SjNNcmI0YW1UZGNNd0pvb3JsRmFrRjRZekNFTUl0Z2ZtRjVLV29IdVZKMElndWhELVZnM2ZpTVFWMGZlRVI1NkhPWdIBckFVX3lxTE9adkNkU3lxVEx3YmdDUXFINnBHZmhFSE0xWjlyb3V6VUM5SEdKRFdLdDA0LUpwX3dlbVc3UGtGeFU2WXRvRGl3Q21fbkZLQ0pIdzJUWkpWelhLWlpILVoxVFJ3MjRRRmVYRF9zVGFUY3hSUQ?oc=5"
       },
       {
-        "title": "이 대통령 SNS에 대외비 문건…국힘 “선관위 특검 내통”, 청 “경찰 치안 보고” - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE54clVua2l2NEo2QXBvTlFEX0czZzRHR1BwUTNzWTJUc3I2U1RQeTdNbUw4UEV6cUJvT1RsV181QzdtOFRIemJCczQ1SXoyOGF0dWxySjg5OFJEc2hvemFhRTJMQVFpSTNBczhSS29hM1N3OERw?oc=5"
+        "title": "이 대통령 “SNS는 국민과의 직접 소통 통로…어려울수록 직접 보고하고 호소해야” - KBS 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9aRU5mZXRELXpYbjNudHloSlhEUnYtc3lkUEtkY1NVbWlEYmttSFBSSjFhSkJ1YzF2STNzeXRlVG5uQjN5SjVWSjNaTG5rTUJwZ180WnpSejRRYUk?oc=5"
       },
       {
-        "title": "10월의 첫날, 전국에 찬 바람…기온 낮아져 - KBS 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5wd2wzTUd1UEFXaS1BLWF5dk1NVmpUTUxrYlRkU0hoV1dqQzBVUjZ4YmFSMW1CSVlmaGlxVzdtSHBNYzJITXZDUi1VTkdZRzZhRW1GYUxvckhmWlk?oc=5"
+        "title": "[속보] 트럼프 \"韓, 2000억달러 대미투자…알래스카 LNG 개발 포함\" - 한국경제",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE83Y3BhZnNZaGhiUm85RldSMVdLWjEyYlpzamJBb3RqbFVzWUUybDVpM3p0eWN4Zlo2SERwU2xxWGloZU9ZOTdraWJQN3VHdlhnMVQxc05NNmhtUQ?oc=5"
       },
       {
-        "title": "탈북녀 유튜버, 암살자(들)에 \"北 선전 영화와 흡사해 충격적\" - 한국경제",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB5d2ZmdzFIT1VJamJaRW83aGVKX0RuNXZXUFMtQWtNX2lJNGEtRGh4TDZhQkx6VzJaR050Yk5yZ09vWDN5bEx5M1JHSFRKb19odlI1NTF4STk0Zw?oc=5"
+        "title": "\"영화계는 좌파\"…'암살자(들)' 논란에 윤계상 발언 재소환 - 한국경제",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBFeXBJYjBTV0p4Nmx1cmZCVmJMT0lWS1ZKSVY5YkRxYVJOTTgyY19oX0NJVllLd3JxbzI3NGt2RHNZdnJEYVdBQ3pGMDh5SDBhWGl3M3lzSzFBQQ?oc=5"
       },
       {
-        "title": "‘미군 정보 유출’ 中특수부대 출신 조선족, ‘혐의 부인’ - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPNklodU96Q29Db2NmVUFDM0YzOHJ2WlBDSDRJZXN6RlZPamR4WWVQVnVSYnh2Y0UyUHFEWEIzQ3g2U2NXZmNXeG1tRU5JSFBYUUxaQkJFMHlIZTF1OUZKSnR0WFloQ3ctM05HeTctRW5ta2M1LTZmazhNcFhMWVdvWWYwU3ByRmM?oc=5"
+        "title": "[단독]검찰, ‘이진숙 체포’ 경찰·검사·판사 불기소…불출석 사유서 은폐 사실도 없어 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB3bWFZUy1rcFpDSFBBU1p1ZzNJMTR2VjdQb25pU0hIZEppR2VQWGN0eE0zZGFWamdUMkJUU1VTT0Y0NEZIWWlBSlFpLU1VTEU0N0ZEOUlIOVpkUdIBX0FVX3lxTE5HZWpSaEMtNi1rYjJuWUtEN0l4RC1LVmtkYkVuY0I5X2R1T1lQTWx0QkFObVB4YmdxaWVFakNia2JRbFc1VHJVUXBhQlVMMHdpMWhjdjJmUW4yNGx2Ui1v?oc=5"
       },
       {
-        "title": "장윤기 1심 무기징역…재판부 “선처 아니다”, 유족 “가석방 없어야” - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE4xaVJjcmZrSUd1cy1WbHVhTHc3ZERYNFhONmJTbDdVQU5vdFM4YklUbWxfS1ZCTTVvZUhRdXZjY1NvRDAtTmNfQkpBZkMtSi1OU09KVVhJU05wa3p1cUtoVw?oc=5"
-      },
-      {
-        "title": "추경호 징역 20년 구형에…대구 시민사회 “내란 진실 밝히고 법적 책임 져야” - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBULThrRHNQOFBQMTQzZ1N2Z2plSkloemcxbnpzcm1XTTJNUEdIQjRTZ1BTcThkS1BzM1ozT3FsX2tjZWpZdi1xRHU0VzZjdzVsNUo1akdYNGN5bjhEeWJEVTVZcEU?oc=5"
+        "title": "추경호 20년 구형에…민주 \"당연한 결과\"·국힘 \"정치보복\" - 연합뉴스TV",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1sUGlJalNQaVB1LW9lNlJmdGRXa3RGMnBNMEwwemRGNHJaSEZxRHE2cFd1MGJCNDlzY0RMdG9VamxtNFhhMmxRX1FhcjlVZ0s1dllfc1F5YzZld3hWck03OXZVeWR1MTA?oc=5"
       }
     ],
     "bbc-news-list": [
       {
-        "title": "'I pulled the controls': Passenger tells Israeli PM how he helped stop attacker",
-        "url": "https://www.bbc.co.uk/news/videos/c6rered722j5o?at_medium=RSS&at_campaign=rss"
+        "title": "Veteran broadcaster Dame Esther Rantzen dies aged 86",
+        "url": "https://www.bbc.co.uk/news/articles/c4g4z255y30o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "UK believes Iran involved in RAF Fairford incident, PM says",
-        "url": "https://www.bbc.co.uk/news/articles/cjwyz59k5y75o?at_medium=RSS&at_campaign=rss"
+        "title": "Dame Esther Rantzen: A presenter who campaigned for change",
+        "url": "https://www.bbc.co.uk/news/videos/cmn8e8736wjyo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "UK-France 'one in, one out' migrant scheme scrapped",
-        "url": "https://www.bbc.co.uk/news/articles/c64gvnv4eqylo?at_medium=RSS&at_campaign=rss"
+        "title": "US Supreme Court allows execution of Christa Pike to go ahead",
+        "url": "https://www.bbc.co.uk/news/articles/cq8r6rjdvlx6o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "China funding UK research and sending it to Beijing's spies, MI5 warns",
-        "url": "https://www.bbc.co.uk/news/articles/cwy7zrljp527o?at_medium=RSS&at_campaign=rss"
+        "title": "Employers should teach primary-age children about work, says Milburn",
+        "url": "https://www.bbc.co.uk/news/articles/cr2kwlw0p3v9o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Teens who died in car that entered River Wear named",
-        "url": "https://www.bbc.co.uk/news/articles/ck5yw1zg8lqgo?at_medium=RSS&at_campaign=rss"
+        "title": "China has cracked down on AI relationships. Is it ahead of the game?",
+        "url": "https://www.bbc.co.uk/news/articles/cm4gjy9lr551o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Brexit referendum 'possible' in Labour election manifesto, Burnham tells BBC",
-        "url": "https://www.bbc.co.uk/news/articles/cmlyewr0lnj3o?at_medium=RSS&at_campaign=rss"
+        "title": "Celebrity Traitors is back - here's what you need to know ahead of the first show",
+        "url": "https://www.bbc.co.uk/news/articles/ckqxvnpy7e49o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Execution of US murderer Christa Pike halted shortly before it was due to happen",
-        "url": "https://www.bbc.co.uk/news/articles/cw20vxxn876no?at_medium=RSS&at_campaign=rss"
+        "title": "Vape prices to rise as new tax takes effect",
+        "url": "https://www.bbc.co.uk/news/articles/c6j4jrjgv2j7o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "We fear for our lives after being told our abusive exes will be freed from jail early",
-        "url": "https://www.bbc.co.uk/news/articles/crz6zq5pew89o?at_medium=RSS&at_campaign=rss"
+        "title": "Tiny image sparks big backlash in Nikon photo contest",
+        "url": "https://www.bbc.co.uk/news/articles/ck4gjn1yzprno?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Ronaldo leaves Portugal camp after coach denies rift",
-        "url": "https://www.bbc.co.uk/sport/football/articles/cm9dw7ddwgzwo?at_medium=RSS&at_campaign=rss"
+        "title": "Swiss glaciers suffer 'disastrous' year of ice loss, threatening water supplies",
+        "url": "https://www.bbc.co.uk/news/articles/c6n9w0ypjwl9o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Singer Lola Young says vaping has made breathing feel like a 'chore'",
-        "url": "https://www.bbc.co.uk/news/articles/c617j41x7jvpo?at_medium=RSS&at_campaign=rss"
+        "title": "BBC should not overspend on shows such as Suits and Schitt's Creek, MPs say",
+        "url": "https://www.bbc.co.uk/news/articles/cr89j4g7v05wo?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
