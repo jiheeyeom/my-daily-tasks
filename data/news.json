@@ -1,51 +1,55 @@
 {
-  "generatedAt": "2026-10-11T19:33:39Z",
+  "generatedAt": "2026-10-12T00:32:23Z",
   "feeds": {
     "kr-news-list": [
       {
-        "title": "트럼프 “러-우크라, 에너지 휴전 합의”…구체적 내용은 없어 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNVW8zRG1HdElNVUc3eTRHbkFXZVZxV0hBX2ZtLUtwY2xDLUFIR3B5czFvM0xGQlVlQ0QtaGEwQ29ZZVpxeDUxeWNGZzIwcXFveVBFVXlOZk9TMVVWN2V6NG1qenJQNVpPRzhDU2licmRjcDhXZHVoZWJrSHBlVDcxSllB?oc=5"
+        "title": "‘사망 12명’ 발생 하루 만에 다시 미사일 공격…사우디 리야드 공항에 화재 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE15NTB6RnhmRktaNlp1Z0c1Tnl1elNpcmRITEZ4RnRXQ0ROUkFic2pNUUcwSVk5ZENCc3NvRC12MlV5RzBzaE1jUzZ0eklRMzJpMFVJeFpBMnVld9IBX0FVX3lxTE1EODhMd2ltVUExREJHTDRwV2NGMy11LXJxVTRMTVg3R0t6MmZCY2EzUWlvcWRHN3gzaHdEMF85TmtYNjBGdkhRUVhLZ29UZW5taFAtZ1ZCVm1qR3pvNU00?oc=5"
       },
       {
-        "title": "미 “동맹 기준 준수를”…한 “신뢰 굳건” - 경향신문",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1WWHN1ZkczU0ZGV1hpLTRiaFI0RGE5X1VUcGlodWd1QTV1UlhKM01ySFpMTmNTcDlObFlKRlhlNkVRcXR4ZHlsQk5Hem1DUG5IMW9NMDEta25uUdIBX0FVX3lxTE0wcEtfaVJJRWlXS3NaejFYRm1kWnBjZkdLVzBtWmJHMGFMa3pkM3o1SjQ3SFl2eU9FMm9PWXlJVEVrTTZJZ1M4WC1RSWRnLXpmU2ZBekh1TGs3Y2ZxdjE0?oc=5"
+        "title": "“한동훈 딸 행위, 사회에 큰 해악”…4년 전 연구자들 성명 낸 까닭 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5qaHVld3poYUxvYlhxV3dDaDZJTmpjZVZQNlROeHVxZFRvY3BacXVvdXM0M1E0blV3TUdYX2FtbDcxMXVic0thcTltbzd5emVVUWZDUEVBdFp0UjE3MlNBeWpnTktJNTRyRWxxeE4zX3BtV0Zi?oc=5"
       },
       {
-        "title": "靑 ‘李, 태릉CC 방문’ 이례적 공개…“골프장서 대구 사고 수습 지시” - 동아일보",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1yNW0wVUhodURuaTRHTTVDekFVd2JOaldITDVMODVhZHFkVHpWTmt1YWl5bjNjRUtId0tiOTNyMkMyTzdBclZNSmJscDlfc2ZtWlZCWGRKVU80WGpFRXc0LXpQZm9ValpycnUzbXhFbkNjTXlTUmU40gFmQVVfeXFMT1ZDMjJtWUlIUXV3RllEbVZHU3ZEb3hIRGtOUnJGcFZqN2l2RU16ZDNzV0VHQXM2bktNNWdSX1pFMmdwTHpvT1A1WGhWQm1vRG5UOXg4dlNqQUVYWkdqbmdoOUxQRzh3?oc=5"
+        "title": "‘반김지용’ 임은정, 중수청 첫 감찰 대상 - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5Ib2JFczVpTF9xQ2hVVTd1T0lkTXpaOXhtbHNGaW8xWklMMVlyVXB1aV92eFlSU2FoMDZtWm5mel83WHNUNThqRGhfTzBfZWVfVkVRTEpaVjhvd9IBX0FVX3lxTE05YmFUYVVJR3BiandoXzQyZkF1VXBlZ0xUdUZWTm96TEp3SGFvbU1PMGJpMzN3UnRyVXVjc0h0WTlRT3BSWk9SLUJzUHVtTW5SLTVGcWFhX3I0WHRUT1NF?oc=5"
       },
       {
-        "title": "외교부 \"사우디 출국 권고\"... 트럼프, 후티 공격 검토 - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQZ0hGZ0JLUjNCdE9oNUYwVkJTd2RqWGpfSV9PN1hZMzFuVUtldWNsNWhEd3dJc19VVW1DcDRHNUVlcS1PVDAwMF9wMGxMUkx6cGt3ZEsya1BuRlpLYXBiZnZRcHoweE5JaGIyTDdIRDlEbFRVUFRFQXMyRmY4OWxKcE1HSXM0YlF3NWdYQlZMQU8xSWt0c0FJZTc2ZnZtZw?oc=5"
+        "title": "“이 대통령, 골프장서 대구 사고 보고받아”…청, 주진우 “황제 골프” 공세에 ‘선공개’ - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1TMkxaMXJhUEdyZ0NTeEhPVzdSR1VBRmF5aXZwbFpSSWtXbm44elh4ejVLSDhqQ1I5alBQLXZ3QUNSd1N1Ml8xaEdMY0g3YmtvbzFOXzNqQ210Z9IBX0FVX3lxTFBkV2pEY09qUktISFlVbmxCOWtlTzlNM2VOWklCV0VfRkpVMUgyM3hfNzl5UEdYR3Z6ajloYVd1dDIxSmE4YkhiX1ViRFN1NUZVUHk3VFdBOTZrZXNnaV9R?oc=5"
       },
       {
-        "title": "중수청 출범 9일만 임은정 광주청장 감찰 지시…기강 세우기 포석 - 연합뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE43SmZFRW9qYVl1bk9qWkIzbnFPS0o5emgxVzE5aGhQdDBaTnA3bGM1NEZPUDVpdE5sTWd5OWFsUFZRVkF5U0IzYlBrUTZqZTRsSm52UEhBSU5WMDDSAWBBVV95cUxPLU45aW1ZTDhYN2tzdGlJdXl6LUpHaG1RYlY0RERQVWtjWHdMX0tmXzRpbGZNdkRna2tlZWFtdzJOTjRTM3luREkzd3A5dnI5X0FreG1oOXdXUlhONU56Ujk?oc=5"
+        "title": "소통 대신 논란 키운 대통령의 ‘X 정치’ - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOR2V5QXNDY3EzUUFPUlZlTnFVTW1yVGlNcWVuQVMzRlYtNmhKUk5kcTl5OTgyMllpTUx2NWgwVmJkalVEZXdPdEY4d2dmald1enpTLXdzdDkzVjc2Z0RDQmZuQTVFV0xyOXhBYlZsWnF5X1BHMVNGUTA3dEd5clB0dmN1WTRIdkltbGJ6NWhDYlc?oc=5"
       },
       {
-        "title": "오늘 중부·경북 내륙 소나기…내일부터 추워져 - KBS 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE4yTGY4RzA0empILXZBa0R5WGpqUlJlUEJNcDRVTUZyZEFRTnkyamNSd3dmQ2JqQURWMURfazdMLVhaYW1OSEdPblg5TmxEVWFBY0h3dmdieThtNWs?oc=5"
+        "title": "트럼프, “러·우 에너지 휴전합의” 했다지만, 러는 공습 계속···젤렌스키는 “처음 들어” - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE92R3lYQW5hbmxPU21IdVBLcjc5V1lBTzRFekdiSHItcUV4cHJXbVdIaEVYdGNlbDZxMGlla0RTNVhaanJKTF9LMjUxSEdGZl9ZU2xDNXZqbjhzQdIBX0FVX3lxTE9mVjVZbVNxRDRaeGFRU29pckpKNDhGMzlMWnR5U09Kak9GUGJ2WGt6bWZSTkxfVmNQaWdoZlZpMkZjWHNxcFRZQzhzZlFjREZPd3Y0d0JkcFZMRHkxRzVZ?oc=5"
       },
       {
-        "title": "李대통령, SNS 행보비판에 정면돌파…박원순·노무현 소환 - 노컷뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE11aXJ6akFrXzJ2bnc0QW5VU2g4T1FOaWVhWm5ibUNyS294Nmx1eElYVk9qLXNkY2RxeDY2ODY3Ylc5TUhVNGlIYzlWUU5NcnNTNWc?oc=5"
+        "title": "與하락세에도 국힘 지지율 횡보…반사이익 부재에 엇갈린 진단 - 연합뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB4cmRrdnpDbnRoejd3RHNzQUdaRUdUV1ZMQy0wN0xpTWhXYWt4ekh4czlRRjk3WXZUQjdZYTVUNzlGMmdYTWZXUF9JdEwwYTRPSVpBdlpaVjhZdm04eXdSMNIBYEFVX3lxTFB4cmRrdnpDbnRoejd3RHNzQUdaRUdUV1ZMQy0wN0xpTWhXYWt4ekh4czlRRjk3WXZUQjdZYTVUNzlGMmdYTWZXUF9JdEwwYTRPSVpBdlpaVjhZdm04eXdSMA?oc=5"
       },
       {
-        "title": "한동훈 “李대통령, ‘권력형 성범죄’ 박원순 추앙하면 안돼\" - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQV1BWZXFBVFlDTmJnVE1xbzVEN3k5WFY3WmwyUmhKNGtXUEh5SjJHTTlqN1F5UjlwdG1pWXoyTWRLVTZRUklOZkNZOWpBTV9xRlRKaXJHc3R3dXUyRnhHMU9aUEFXMVd5cFVJMmk0SXg3N3ZsVk9IREMyU1pJYmpmbGMyWGxlZw?oc=5"
+        "title": "李 \"평생 고관대작, 서민 혈세로 호사 누려\"...추미애 겨냥? - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOUFMwcGQ4NG5hNDFpWWxRS3B4RWg2QmxIVUZ6V3BuZWNlM3JSS3pQYTFPSndyMkJFdVh2aVNiNTlyZjZzdDE4ZWc5R3B0bDhhTHgzcGNQTFZrX0RuTDlYdnVnY29Ea1pRd0dwaE5VdTBaQmxrbktGcEtCYm9OZkx6VXA3cG9zNF9EaTJmQjZ1dUI?oc=5"
       },
       {
         "title": "장모 살해하고 아내 태워 도주한 20대 남성 체포 - MBC 뉴스",
         "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBiRFpmTFN2VDREeVFiYllSdE0xNnQ4XzVFUHNJN1dlbklBWHN0S0dfeTBQeGZETkJ4eWZJbFlaRUw5M3Rlb2ZpU084N2hOOVIwbWhzYXVuVlMzRURIRGs2Z0k1aS10X1RtbngwSGlYdkphWFBod1JB0gF3QVVfeXFMT3NXTjNueG9rSHFOTGstQWF3Z3VsNW8tOVg0MHJmaWUtWmNXcWJpNElYeHJ0aGFUb0tUb2g5dXlKbHNoZjFoTHBfMXpMLTJnQ2c4blg4Q1E0SGhlbEpXRXY0SXBkUHF4RU4zNjJlTjh2NnhDUi1HZEE?oc=5"
       },
       {
-        "title": "‘길 잃은 의제 설정’ 민주당, 지지율 35%…이재명 정부 들어 최저 - 경향신문",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE03dEduZVAtaDc3T3NManh1UHlrYjluSEhvak9qZk41S2NaSHRNMHlxS1FGN2ZENzJxcFVCWlZhc1NwdHg5NXdMNG5FTHNsZVhQQkpjSzdtOHVYQdIBX0FVX3lxTE1CdmY4bXd1MWdGWXdhcmotenZBeURhUVFVTmROZWhGUkNremtwdGJ2QTRnSTRFempGZXBIeENhMTdIbFI1bm9WUEF6RDE0bHlJZXU5YlRDUTFhVFB1RUI0?oc=5"
+        "title": "국정감사 2주 차 시작…행안위 경찰청·외통위 주미대사관 국감 쟁점 예상 - KBS 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBrNkozbG1JTXBoVUVVOE1KOXVfdmZ5MEo1bG9ONGE1dk1VOGg4bEphLW04SndzY1NvaGgzLVd0VDhoRjNMSHZDVzc2SnpISVhmTkxoVFBZZmNvakE?oc=5"
       }
     ],
     "bbc-news-list": [
       {
-        "title": "Saudi capital airport hit by second Houthi strike in two days",
+        "title": "Trump's 'energy ceasefire' claim welcomed by Zelensky but Russia silent",
+        "url": "https://www.bbc.co.uk/news/articles/c6pvg4jyz1m0o?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "One killed, 11 injured in second Houthi strike on Riyadh airport in two days",
         "url": "https://www.bbc.co.uk/news/articles/cr93znyk44e1o?at_medium=RSS&at_campaign=rss"
       },
       {
@@ -69,20 +73,16 @@
         "url": "https://www.bbc.co.uk/news/articles/cwvgde0m2d73o?at_medium=RSS&at_campaign=rss"
       },
       {
+        "title": "Iran war threatens Healey's Budget plans, think tank warns",
+        "url": "https://www.bbc.co.uk/news/articles/cm78pwdp3n5qo?at_medium=RSS&at_campaign=rss"
+      },
+      {
         "title": "Children among 139 dead after boat capsizes off Djibouti, UN says",
         "url": "https://www.bbc.co.uk/news/articles/cwy7lxx60dg5o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Burnham to release details of Man City meetings",
-        "url": "https://www.bbc.co.uk/sport/football/articles/c962y5nd273no?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Buildings swept away as flash floods hit central Nepal",
-        "url": "https://www.bbc.co.uk/news/videos/cwzrdnljedx0o?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Hamilton apologises to Ferrari as Antonelli moves to brink of title",
-        "url": "https://www.bbc.co.uk/sport/formula1/articles/c65yn9kn47eko?at_medium=RSS&at_campaign=rss"
+        "title": "Reform would suspend asylum system for parliamentary term if in government",
+        "url": "https://www.bbc.co.uk/news/articles/cwnv0zmjld51o?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
