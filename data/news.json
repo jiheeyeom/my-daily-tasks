@@ -1,64 +1,80 @@
 {
-  "generatedAt": "2026-11-08T17:55:42Z",
+  "generatedAt": "2026-11-08T22:05:31Z",
   "feeds": {
     "kr-news-list": [
-      {
-        "title": "민주 “비거주 1주택도 종부세 공제 14억, 정부에 강력 요구” - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBlczAyZUdhLW0yMVhCZWx2Y1hWTmRnWVBUQ1Z4S2RURUdXZks2bXJqOWFhSUZVV1dlSWhSQUt2QzBTRVhGQUxxTHlYa0luYTJiYWw1ZmlQV0NHYmZtaURTYXNFbFcxT3lZMlVLTmVWOFpiUHNG?oc=5"
-      },
       {
         "title": "당정, 소방 재정 최소 2조 지원···여당 ‘종부세 공제 14억 통일’ 요청 - 경향신문",
         "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5VeWlnRXFPUF9TMmw4X0lPb0E3ejY0TmZ1THdXNUFkMHhDWTVWc1FHaG0yN2FJY3Y3UVJqNnVkR2ZzTXRUSURnWnJCVmRkUTVNQTZmYXNGWWJ1d9IBX0FVX3lxTE5DRzRXR08taWU1U3NUdVVwM2FwdC1TR0VDRmNqZDBVV0JWWTI1WTlWVVJET2ctdTh3SFNpV3lYaXRfWkRPbXIxc21jQ2xMMjZ6UUhmWnBUTy1QRW5NdHFJ?oc=5"
       },
       {
-        "title": "[사설] 李 선거법 사건도 특검 수사, 대법 판결까지 뒤집겠다는 발상 - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNRTFUU0kwbWN4LV9zSUhPYnFsdWl4cmlTQ0dzeHR0M052WEVtbGlVSTNPTVJ4RlVFanUzOUJaYU8wQUIwVVlDU2NOeWNGcUhOclc0b2VjQ1dZY3pUdlluWDNkeVRSZzhfdDRPLWxuUllEczZ4aHRpYkNfQmM4OTBGaWhBWE1aZw?oc=5"
+        "title": "‘대장동 숨은 설계자’ 공세에…이용철 법무장관 후보자 “아는 것 없다” - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBVUlNzTnN4Y3VHTDBGb2dTLThWYnBBeHJhVlptVEJEX2NVOEs4OVZxdE5tS0xnZjV2ZElqd1dFX0RYUC1pU2k5NmpnSmExOEh2WGR1T3RWUXRLeWZnRnVjN0JJSG55YmZVVUE?oc=5"
+      },
+      {
+        "title": "與 “총선 직결” 비거주 1주택도 종부세 공제 14억 요구…靑 “불가” - 동아일보",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9kNXMwZVFVbm9xbGFxRVYxSU1WeUVncnk1alRDLTY4R19WWVlCVVdtMTRIMWhkRnFvclRrSW1WLV9PZmMtb080UkQwYkJzV3IxY0tJUm9oWkRrNkVVYVBUT0JUWjIyWk95UGVyTG5rYXFEWjA0Nmtr0gFmQVVfeXFMUGZqY1FSaGZuaWxUZXNNbjJWbFYtb1VkWEhMNko5WjMxc2xEY2RGS1BOYXRaMmxzUy1UQzZ4b0U4c3pQYlpCRDNTM3NQRnBxS3RYeTkyeGFmMFlDOWFGYURzcDY5WHJR?oc=5"
+      },
+      {
+        "title": "조작기소 특검과 이용철 법무장관… ‘공소취소’ 빌드업 시작인가 - 조선일보",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQTktZaFMwY3Yza1hGNlZtVTZWNzl6V2NUdkZYdTlOM0Z5cEJKazNTOC1wUVNqWDBXeE4xN0ZuSm1IY2V2TDMyX1RvN2dXSThlcmh5WlFkU2lTQmlhZnF6UlhycFhkSV8wN281dmJmYUwzdm9YVTNIN25xbU8ya2FqSE95SU9zTEhDWDEwNWlXd18?oc=5"
+      },
+      {
+        "title": "美하원의장 유력 제프리스 \"백악관 새 비서실장과 협력 않겠다\" - MBC 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE16WDhSVTZvN3JXOTdtMDNvdGxSbFR5MDZCaUhMYmE4NUtHRGtoZ3lvTktzaDdtY3pCWGNkYVEtQkxjNjZDdWR3RHpobE83VmJpa0lYMHlzNXNTUDBIQ3F5bUNSWFdvdGZxRHJLNElOYW5mNTdQ0gF0QVVfeXFMTTI2T2xNSmc4UGpZVFRqOWJYN1ZmY2tpeEMwc1V3SFcyZi0yM1dmSTZyck5BZE5kcHd2TVJZc2dSZ3AxRlpkVHBpNW16OEpSS21SWTlXSUx4SXNiMnY1bFZwem5jRlNzLUdhYjh0Q3FmcGZSb3c?oc=5"
       },
       {
         "title": "유튜브 ‘대통령의 Y’ 4회 제작으로 계획… 회당 1700만원 투입 - 조선일보",
         "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQQUdxZVgxVS15RFRXVXhVd1gtckNrN2dfUFBoRzVJbkZXeVQtRUV1Yk1fNUdUZElhX21WdmZBd3V3NVF5Znh6MmtvXy1wd2xtMGpwTHo5WTRINXVleGdwcGoyVGo5RGdjX0g0bjRQZFpWal9XSTFJNjhwM0xtN3RPc1BsaG5PZw?oc=5"
       },
       {
-        "title": "나라는 '돈벼락' 맞는데…\"난 왜 돈 없나\" 분노 폭발한 까닭 - 한국경제",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9yNkVpM0JteUFiMVFoX3pONDY0X0dUVW9sZFlZazFOWUVWcjFoYVZHZGhpbDJPc29sd1B1ZEx3Zmp5c3VydlBYODdab0xab3NMMERvNmlzeWRzZw?oc=5"
-      },
-      {
-        "title": "여객기 폭파 위협에 총기 난사까지… 공포에 휩싸인 유럽 - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQbkJNR2RVcUdhVGlqUS14bmpDbERmbmd1RG5BQjJqNXlOT0Vub1pPakloNVhrNjBSSWxEQ09VdjJxdklBUWpPS2xhOVY1RTdqbkFSMXUxSWxjN04zRWx6SUdPZ1JPWWQ1aG85dkVqS3o2VWdQMkVOV3JQUlJoN2pYcHZNZ0xuRV9vTzhMYm16SEpwd1pCRm1rX2daY2Z2dw?oc=5"
-      },
-      {
-        "title": "삼성, 12년 만에 한국시리즈 우승…‘왕조 재건의 원년 선포’ - KBS 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1xeDAyMmpLamVZM0VEWmxJRGNYVmtNc0xpaEVSNmxfR1E5b1k1N3NMUG9JaFVaTzdwVFVzM3NZa3RaeGd6NUlMRDJlWTI3RFNHWUZkcGZyRnl2NVh5YlhQWVJ2bmdyQQ?oc=5"
-      },
-      {
-        "title": "“제가 여자친구를 살해했습니다”···20대, 청주서 경찰에 신고 후 체포당해 - 경향신문",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1ESzZoRnFDWWVIZ2lWTnloN0pOUkJEaEdUYkVrV0stUV9uNS1ENWRFVUUwb0ZaOXluN3AtcUM3bUdDU05GNHJJRVROTWl1Z2FCaTlvWFdfZkJrUdIBX0FVX3lxTFBzMThjVFgtOXd0UE45d0hHVVRzYlQ1YktrQnVsaUVhTnRBM3lfbHhKUm43TXhaWmpRa2RiWmpzRnl4NGNBSGRDOGRlNEtpMmQyS29wN19yMVp6RkRjQVJB?oc=5"
-      },
-      {
-        "title": "이용철 법무장관 후보자 인사청문 준비단 구성‥목요일 첫 출근 - MBC 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE53SGNJMmdHNkxuMGI4UnBNVWdURjRKcHJxRjJnemVuYUx1REdBdTJma2pwWTlvVHViRGE0bmtTMlppTEk3a2o4OWprV1Bua2dSQmpRdVo2MkYzQmlkNDRnY3ZOWHlpRmdfVGF2ZUhJak4xMEkxYW5J0gF3QVVfeXFMT2VQbUdCVVNIQVpjNTJ6TUI2V0F6RmtzQzhLNVJqTGkzSG4ySnZpN1NyQTNYT1NrRjJ2X251eGxiTzhWb0xoVUhSWW5DUnhaZGNWTFBpQ19GYUZUdVRwUjFFMVBvU1B6X0VJdXJBVUU0XzRodXdROUU?oc=5"
+        "title": "프로야구 삼성 라이온즈, 한국시리즈 12년 만에 우승…V9 달성 - 연합뉴스TV",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA2XzVXY3l6dFdWM2xoUTh2VlJ3V0FhdUx3V0xjcmsySGxVMWZuVWxmYVZNRExGdHhKZVNfQzduOHNERlZyYlFjN3pVRjFTV0tQMUpFazBvRzhsUmkxZ01KZEx3bFAwcGM?oc=5"
       },
       {
         "title": "광안리 밤하늘 수놓은 불꽃 8만발… 120만명 환호 - 조선일보",
         "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRzlTcEdCNWZPeWh4Y3VWSDA1U245SlBkVTZOWEQxcWNNUVJ6TXYxS1E3Qk05YWpRZ09qWXBGbUNBQmhmdWpsbktpcVdmTm5kN0VfeXNMdDRDb3ptVjJBei15TmFTbkl1LWFab2lNSEt2UlR1LUpvQ0NZZjdPVjRIM2hZRlE2eGJVVlp1NHNwd04?oc=5"
+      },
+      {
+        "title": "필버 등 혼돈 속 내년 예산안 심사 본격화…충청권 동력 확보 배수진 - 대전일보",
+        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9DUWdJTzlUSENSNnNwMllzQmtIdndfRzM2LWktSWxnRGs3aEhNQ0dGUl90MUlGVzNQZzgwOGM5VXZ5b1dSRGI0SFQtMXFIQkZFdWVhcjhBVkl0bnZJMGRjUjRlcDBockIwQm8zNl9PWdIBc0FVX3lxTE95SnlMRnNObGpaRnNPaXhnTVl2bERodXplX0dzQ2dDZGZibThLWEd5ZmhEX1NnMkFzZDE1dnJXNThnTVYtM2h1NTgyd04zTTJxSHRRRmxhbWo1Rjd3QXVuN0V1VnAxN3pyU19NRGNOM3hna0E?oc=5"
+      },
+      {
+        "title": "청주서 여자친구 흉기로 살해한 20대 남성 체포 - 연합뉴스TV",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1LUzY4d2s3LVl1M2N1bDhQeGNhTzQ0Q2ZOUDFuZkxXeHdOMVpYSHVVMEhLZUttV1VpMktlNlVIWVk5Tlo4dVlrVjhNaDZCUkFheVdrS0FXWXo3c2VJMU5yRzRNLVM3OFU?oc=5"
       }
     ],
     "bbc-news-list": [
+      {
+        "title": "Nvidia launches investigation into CEO's affair with suspected Chinese spy",
+        "url": "https://www.bbc.co.uk/news/articles/c3dxw10rjn9no?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Surgeon having lunch near Krakow shooting undoubtedly saved officer's life, colleague says",
+        "url": "https://www.bbc.co.uk/news/articles/c5x2vw4e1gx1o?at_medium=RSS&at_campaign=rss"
+      },
       {
         "title": "King leads solemn Remembrance Sunday service at Cenotaph",
         "url": "https://www.bbc.co.uk/news/articles/cqy8l0gyvvv2o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Footage shows derailed carriages after fatal train crash in Egypt",
-        "url": "https://www.bbc.co.uk/news/videos/cw78p2km7d94o?at_medium=RSS&at_campaign=rss"
+        "title": "Maya Jama steps down as host of reality TV show Love Island",
+        "url": "https://www.bbc.co.uk/news/articles/cwzrd5jj47ndo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Nandy defends linking Erasmus student scheme to Remembrance Sunday after backlash",
-        "url": "https://www.bbc.co.uk/news/articles/cmvg72p1zgvlo?at_medium=RSS&at_campaign=rss"
+        "title": "Seven dead and more than 100 injured after trains collide in Egypt",
+        "url": "https://www.bbc.co.uk/news/articles/cwvgr20mmmevo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Top House Democrat 'a hard yes' on impeaching Hegseth",
+        "url": "https://www.bbc.co.uk/news/articles/cj4g1nwx39wno?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "'Time is up': Minister warns media industry to take abuse seriously in wake of Brand case",
         "url": "https://www.bbc.co.uk/news/articles/ckn9r0zd0ynwo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Nandy defends linking Erasmus student scheme to Remembrance Sunday after backlash",
+        "url": "https://www.bbc.co.uk/news/articles/cmvg72p1zgvlo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Iran executes three men for 'armed unrest' after January protests",
@@ -67,22 +83,6 @@
       {
         "title": "Government looking at banning under-16s from Vinted and eBay",
         "url": "https://www.bbc.co.uk/news/articles/cmzxjvpqrjxro?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Homes and temples glow across India to mark Diwali",
-        "url": "https://www.bbc.co.uk/news/articles/cm70pdwz122ro?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "Two arrested after police officers hurt in brawl outside bare-knuckle fighting event",
-        "url": "https://www.bbc.co.uk/news/articles/c8zxl9417e5vo?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "The Trump coalition is shattered - what will Republicans do now?",
-        "url": "https://www.bbc.co.uk/news/articles/cm3r5gnxqz3jo?at_medium=RSS&at_campaign=rss"
-      },
-      {
-        "title": "My parents chose to die together and I was left to grieve alone",
-        "url": "https://www.bbc.co.uk/news/articles/c81dwllzv113o?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
