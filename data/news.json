@@ -1,80 +1,76 @@
 {
-  "generatedAt": "2026-11-21T11:01:34Z",
+  "generatedAt": "2026-11-21T19:16:08Z",
   "feeds": {
     "kr-news-list": [
+      {
+        "title": "얄타 2.0? 사상 첫 미·중·러 정상회담과 ‘동상삼몽’ - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNNU9QWmF6eW43aWZnRk9HcVpqMXFYdkh6ZkdFZWdSVFdZVXdGSGFlRVpWWkduTGt1Z2haRXk0enI5a0MxMEtWUmQyc0o2b2ZSUEhLV05GYlRDVmp5eHdjVGlBRGZxSUg1emFmSm1la2ZrbDFfWkVYN2JDVlZhRHlFTExB?oc=5"
+      },
+      {
+        "title": "추미애 “한덕수 판결 순억지···조희대 탄핵, 좌고우면하면 안 돼” - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBPNVFaY1lfYjNtai1VQkU3ZnJxOXFaRm1Eal81NXdScTF4VXNpdFpUMTJaUFNlTDkyYTBLanpHaUc0WW9NY05HcE81WV9CTWV6SWp4RmZ4WHV3Z9IBX0FVX3lxTE05MWhMNTBDWjdKOXdSNE5lbUZVQmpCUmpBQjZ2WEF5RFlkZmlUVXFKOGZockJENUt2Zmg0enZmTXpZV1N5UTZRN1UweXhMR2dnXzhoeU45M25ET010eHZr?oc=5"
+      },
+      {
+        "title": "경부선 화물열차 탈선 '일반열차 운행중지'…내일 첫차부터 재개(종합2보) - 연합뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE81dnhLcWVJcUtKUVFuRHBUbnZ3c1VHajU1TTAyRmdMeWFDZHk5NXF2ZEJoek1wenBPMVhrYWhianBPY1h4M0VSR2t4QlY1M3RPRng0a2dqaDVpbDTSAWBBVV95cUxPMjdsbW9INkFwN3Y1OFljbjktaEZ6dDlKU1hGaGw2Z2VCbzc0ZGs1dmxRdTV4d3RNVnNiLWltU2I5ZXNPUkxfNmtwT0ZGdzZPdHlHOE5MaHNDQmN2MTZCN0Y?oc=5"
+      },
       {
         "title": "李 대통령 \"수능 부정 신고포상금, 건당 최소 1억 지급할 것\" - 한국경제",
         "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1uTlhhNGE3ODFaamRYbkVHTWNfR3N2a1d0N05xb2VnbjJ1MlMzbFdzMmJ4RlNMakMtbnlhUFlEUzh0WXA3RzFSWUtXRmFWSzVUbGZ3X3o0Mktodw?oc=5"
       },
       {
-        "title": "민주당 “조희대, 헌법·법률 위반” 국힘 “탄핵은 삼권분립 부정” - KBS 뉴스",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE0yR2d1ZWtwR1NUUmc3dktGSDhFTGQzVlBLSURJaXpackg2cFFHeVluWXZTN0pCUi1PMUdnNW5yaUxod0M3M0cydjJuU3I1cldwYktjMFpKbTJaYkU?oc=5"
-      },
-      {
-        "title": "트럼프, 김정은 언급 없이 “미중러, 한반도 위험 맞서는 문제 논의” - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1CZ1N6VWxWOTRwVk1qLWFIbXFEUC1kazBuQ1NIOVhYVTRtX1VEaG9wZE9zbGxFdkh6MVBOR2ZJWUx6X2p2NDZ1MnpXdE9SS0xIdXhyRUdFRzF2VGJ2UTRKSUtQYnREZkE1MVlFN2huMA?oc=5"
-      },
-      {
-        "title": "\"논술·면접 보러 가야하는데\" 경부선 탈선…수험생 '발동동' - 한국경제",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9tZDJTVlFseWJMZmF1Uzd2cmxmc3ZkWXp1TTlka2JGSUE5M0ZrWkYxZDFhYm5IY3JwSDNKa1ZVRHdmMUZyX0NVcXdPQUdtdEU5UUF1aDlYVmJxdw?oc=5"
-      },
-      {
-        "title": "국어 7→2등급… ‘리트 만점자’ 3년 전 수능에도 물음표 - 조선일보",
+        "title": "출소 뒤 반년만에 국어 7→2등급... 리트 만점자, 3년 전 수능도 의혹 - 조선일보",
         "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNMFRNdVctZjRoS055SEVZS3lZMmJpVGx3MVhRUUJoUFdoZGVYWlhtSy1KbmItR2JzZTN2WkpIU0dvTk9iZWlheDB3Ti05aGFTTTIzbkNzUWZrNUU5QWcyNFE4SHBIaHZfbV9QXzExdG1UOVZlY0d2Q1JtSF9XMmwycFF2b2xGWGQwZkVHZ1BRTW8?oc=5"
       },
       {
-        "title": "달라진 국가자격시험?...\"수정테이프·반지까지 꼼꼼히 보더라\" - 조선일보",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRzlFWXQtR1pzZk1nOUdPOFNEeE9MWFlJeUFRRE43OTBPM3JiRUxURUEyYmNlY25kdFhMSzllR2FiZ0FUbTROcnRxeUVNZUhhbmV4ZW1VS0s0WDlOLXc0OGExRVc1VG5sTkpQOWJIY29OTWItOG4taC13M3dEdjBNUlMtNlRxRjZLX0hmcnVZV0Q?oc=5"
+        "title": "국힘 “조희대 탄핵하면 이재명 정권 붕괴” 대구서 장외집회 - 한겨레",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5rb01oaTEzMnpSTTJiQ3QzRndLRGRUUDBWVmtmVjl0SVZjbGhSR3BUdGpZZEpsd0RDVVd0MGpOZC1nWjdQb3VDQWtFMkFqOVdUbWVPUkZkbjQ5Zk90ajZQcnI3akVPcC1FbkdNY2cxd3NWY1My?oc=5"
       },
       {
-        "title": "민주유공자법 놓고 공방…野 \"운동권 셀프 특혜법\" 與 \"폄하말라\" - 뉴스1",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9QT1YtMHVWc1A4dFBZbzktc3B4X19YYVZFT0ZHQnhSR0lCMGtzaXQyMGQ4WkF1c0Rhak4tSklkS1BlR2YydHRvTEdJUVoyM0dVaC1xeFlBUGJSQQ?oc=5"
+        "title": "[날씨] 전국 아침 영하권 추위 계속‥'도로 살얼음' 주의 - MBC 뉴스",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5UZ3RQMkE3MzJ5Z29mUmZmUk5XdVR2WjZOSEVlc21Ka2FId042WExYZjR3QlpJanlXRzd1MmdCNno5eXZYZEJrVEZLNXQ4akYzdlRtcFhqUFY0TTNPM2dHMXVzX1BzWV9zVUVQd0h6TG9Sa0h0d2NB0gF3QVVfeXFMTlpQdnRmV0RkMDRpWDdtZDY2eEY5blFibk5BQzJ1Vk00ZFRxX1h1TEN4YkFld1JmZExyaVhrVkFaY2tKRGw4ZnAwUC1lM0pZU3FnOUVhWGdudS1tTUZJTjVQNmpaT0VnRHk0aEl1NWpBcER3TVF1blk?oc=5"
       },
       {
-        "title": "아침 영하 8도, 주말 나들이 패딩 필수…곳곳 눈, 제주 대설특보 - 한겨레",
-        "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE02YW1EVE9rbHVNNUtvWWZjNzhMOXNLNnVzQVNqR2pvR1pVV1JvTnBLdmYzV3NEbnBTbWRSS1RGZjF3NVN4LUpYYW9oeGNnOVJDb2V6R2pGb3I0bXMySXlsUDYwRHJ1dlhMOUZEbnJORElQZw?oc=5"
+        "title": "봉화군청소년상담복지센터, 수험생 109명에 응원물품 전달…수능아웃리치 진행 - 국제뉴스",
+        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9JQWx5R2hPMnhzNmRFdlYwejdHNFlxZkpXV1dsOHNBZU5ZbF9ka0dGTGk5ZF9kdjFSaG91OHNyVHo5VThYTDB6R2lmVzd3UVpVWWVja3dXdXJoaTVuUFo1bndZV2lIajVPaG5uYkdR?oc=5"
       },
       {
-        "title": "\"트럼프보다 시진핑 최고\"…8년 묵은 한한령 해제에 관련주 폭발 - 한국경제",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ZUE5NbGlUWjR5X3gzZ1ZHbTdrY1NmdHowaV9DTzFzQk5jZlc5eDBWRU5hZHdFcjFQMk9xWmVGaE12QWUtMzJvcTBxUVJ3OU9lYVFsQU5wMUJlUQ?oc=5"
+        "title": "제주도 산지 대설주의보 해제 - 연합뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9IMHpnR3NYZ2dyaG1BbVJ5LXRWMmVpbEs0V3BVejQzczBTVktxS3RsdGtKQ0s5cVoyWllFRFRMZ1dxTkpQNklXUzBnY0djRjJtMXhXd0w3QTQwYXfSAWBBVV95cUxNanpvQVFTSVZLU25ybDZCOVN4VE9RVmwtMGVsbHpQcFlSUGdFREFBdDRuZXVHT09nQ0N4ekN2QzYwak9udFZqNEFQLVlBZGNGazBPdUNIQW5PbFA4TWUzSlo?oc=5"
       },
       {
-        "title": "태안 연락두절 어선 해광호 수색 중 부이 발견…\"해광호 것\" - 연합뉴스TV",
-        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9SWEk2OVFKUHRPZVJwMUxYVEtHbVVOMV9SVEdNSXdZMng3TVc3ZXdXRGluV1NoY0lIQWRXbGRVWGFyRkNadzBaZDdnUWdoSUxEU0pubzlXQzhLS0VrQWR2UXdpU3I0VDA?oc=5"
+        "title": "'의대 갈등' 전남광주시-서남권 주민대표 후속대책 3개항 합의(종합) - 연합뉴스",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5QaGhkd2M4TEoyOXFWV0NTTUhycExzOTVNSVhZXzNvXzd3UF9ZdE10UWhoWFU1c25YOWNxX2g2d1dzUUxSdE1pcF9yVVk5X1JwUC04RmJKbndCM3fSAWBBVV95cUxOOFJuMFBQU3RDeFBLN2VZS3dlRUp1QWRKakpWcU5KM0Z3alNsWUJ3WjNNT2k2aE5JeDh1YW9HMmNnUFJnY2NvQWMyU05fRUFfSUJwVjI0SkxHb3Z4Vm1VaU0?oc=5"
       }
     ],
     "bbc-news-list": [
       {
-        "title": "Deal with EU not dependent on tuition fees agreement, Miliband says",
-        "url": "https://www.bbc.co.uk/news/articles/cm9w9p4geke8o?at_medium=RSS&at_campaign=rss"
+        "title": "Zelensky says Crimean Bridge strikes 'fair response' as he meets Wes Streeting",
+        "url": "https://www.bbc.co.uk/news/articles/c6wy0qj7w5zqo?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Zelensky says Putin is a 'killer' after Trump calls Russian leader a friend",
-        "url": "https://www.bbc.co.uk/news/articles/cxnv4zvmdy0jo?at_medium=RSS&at_campaign=rss"
+        "title": "Streeting calls Putin a 'cold-blooded killer' as he meets Zelensky in Kyiv",
+        "url": "https://www.bbc.co.uk/news/videos/cqevrddp91z8o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Tech stock sell-off drags markets down as Anthropic shares slide",
-        "url": "https://www.bbc.co.uk/news/articles/c6808ym10vzgo?at_medium=RSS&at_campaign=rss"
+        "title": "Catherine talks openly about how cancer changed her in documentary on BBC",
+        "url": "https://www.bbc.co.uk/news/articles/c85y14zvexz9o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Man convicted of starting Palisades fire in Los Angeles",
-        "url": "https://www.bbc.co.uk/news/articles/c64gn0gy8rj3o?at_medium=RSS&at_campaign=rss"
+        "title": "'We're not meant to carry life's challenges alone', Catherine says in first clip",
+        "url": "https://www.bbc.co.uk/news/videos/cwe85gyedjp5o?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Fight over fossil fuels leaves COP31 climate talks in deadlock",
         "url": "https://www.bbc.co.uk/news/articles/c6ly5w40eg07o?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Trump threatens ban on US firms building AI data centres overseas",
-        "url": "https://www.bbc.co.uk/news/articles/cmde1lw9y54ko?at_medium=RSS&at_campaign=rss"
-      },
-      {
         "title": "Who will be Robert Pattinson's 'Bond girl' - and does the role need to change?",
         "url": "https://www.bbc.co.uk/news/articles/cr4g1l7x52jno?at_medium=RSS&at_campaign=rss"
       },
       {
-        "title": "Phoebe Bridgers banned phones at her gigs, so fans are using art to remember them",
-        "url": "https://www.bbc.co.uk/news/articles/cq7821d0pv49o?at_medium=RSS&at_campaign=rss"
+        "title": "England run up record win over New Zealand in rugby union's Nations Championship",
+        "url": "https://www.bbc.co.uk/sport/rugby-union/articles/cwm2jxd8k15mo?at_medium=RSS&at_campaign=rss"
       },
       {
         "title": "Can AI really help spot Black Friday deals? We put it to the test",
@@ -83,6 +79,10 @@
       {
         "title": "These dead pets were meant to be cremated - then their bodies appeared on a livestream",
         "url": "https://www.bbc.co.uk/news/articles/cmn502ek17yvo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "How Phoebe Bridgers banning phones at concerts sparked a wave of fan artwork",
+        "url": "https://www.bbc.co.uk/news/articles/cq7821d0pv49o?at_medium=RSS&at_campaign=rss"
       }
     ]
   }
